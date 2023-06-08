@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { setTokenCookie } = require('../../utils/auth.js');
-const { User } = require('../../db/models');
+const { setTokenCookie } = require('../utils/auth.js');
+const { User } = require('../db/models');
 
-const { restoreUser } = require('../../utils/auth.js');
-const { requireAuth } = require('../../utils/auth.js');
+const { restoreUser } = require('../utils/auth.js');
+const { requireAuth } = require('../utils/auth.js');
 
 
 router.get('/hello/world', function(req, res) {
