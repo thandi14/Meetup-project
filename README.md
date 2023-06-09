@@ -4,8 +4,8 @@ contents of api
 
 ## Database Schema Design
 
-![db-schema]
+![meetup-db-schema]
 
-[db-schema]: ./images/example.png
+[meetup-db-schema]: ./images/https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-schema.png
 
 ## API Documentation
