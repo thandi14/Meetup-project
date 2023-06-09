@@ -6,7 +6,7 @@ contents of api
 
 ![meetup-db-schema]
 
-[meetup-db-schema]: ./images/https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-schema.png
+[meetup-db-schema]: ./images/meetup-db-schema.png
 
 [meetup-db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-diagram-info.txt
 
