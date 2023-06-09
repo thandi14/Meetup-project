@@ -13,7 +13,7 @@ const router = express.Router();
 router.post(
     '/',
     async (req, res, next) => {
-      const { credential, password } = req.body;
+      const { credential, password, firstName, lastName } = req.body;
 
       const user = await User.unscoped().findOne({
         where: {
@@ -34,6 +34,8 @@ router.post(
 
       const safeUser = {
         id: user.id,
+        firstName,
+        lastName,
         email: user.email,
         username: user.username,
       };
@@ -58,9 +60,12 @@ router.post(
     '/',
     (req, res) => {
       const { user } = req;
+      console.log(req)
       if (user) {
         const safeUser = {
           id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastname,
           email: user.email,
           username: user.username,
         };
@@ -86,7 +91,7 @@ router.post(
     '/',
     validateLogin,
     async (req, res, next) => {
-      const { credential, password } = req.body;
+      const { credential, password, firstName, lastName } = req.body;
 
       const user = await User.unscoped().findOne({
         where: {
@@ -107,6 +112,8 @@ router.post(
 
       const safeUser = {
         id: user.id,
+        firstName,
+        lastName,
         email: user.email,
         username: user.username,
       };
@@ -118,5 +125,5 @@ router.post(
       });
     }
   );
-  
+
 module.exports = router;
