@@ -60,7 +60,6 @@ router.post(
     '/',
     (req, res) => {
       const { user } = req;
-      console.log(req)
       if (user) {
         const safeUser = {
           id: user.id,
