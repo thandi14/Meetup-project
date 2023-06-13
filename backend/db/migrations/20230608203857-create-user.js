@@ -24,7 +24,7 @@ module.exports = {
        // allowNull: false
       },
       username: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING
       },
       email: {
         type: Sequelize.STRING(256)
@@ -46,6 +46,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Users";
-    await queryInterface.dropTable(options);
+    await queryInterface.dropTable("Users", options);
   }
 };

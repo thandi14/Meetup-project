@@ -7,27 +7,6 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
-// router.post(
-//     '/',
-//     async (req, res) => {
-//         const { email, password, username } = req.body;
-//         const hashedPassword = bcrypt.hashSync(password);
-//         const user = await User.create({ email, username, hashedPassword });
-
-//         const safeUser = {
-//             id: user.id,
-//             email: user.email,
-//             username: user.username,
-//         };
-
-//         await setTokenCookie(res, safeUser);
-
-//         return res.json({
-//             user: safeUser
-//         });
-//     }
-//     );
-
     const { check } = require('express-validator');
     const { handleValidationErrors } = require('../../utils/validation');
 
@@ -53,10 +32,11 @@ const router = express.Router();
 
 router.post(
     '/',
-    validateSignup,
+   // validateSignup,
     async (req, res) => {
       const { email, password, username, firstName, lastName } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
+      console.log(username)
 
       const userEmails = await User.findAll({
           attributes: ['email']
@@ -66,8 +46,18 @@ router.post(
         for (let emails of userEmails) {
             allEmails.push(emails.dataValues.email)
         }
+        const userUsername = await User.findAll({
+            attributes: ['username']
+        })
+        let allUsernames = []
+        for (let usernames of userUsername) {
+            allUsernames.push(usernames.dataValues.username)
+        }
+
+        let safeUser
 
         if (allEmails.includes(email)) {
+
             res.json(
                 {
                     message: "User already exists",
@@ -77,17 +67,9 @@ router.post(
                 },
                 res.statusCode = 500
                 )
-            }
+        }
+        else if (allUsernames.includes(username)) {
 
-            const userUsername = await User.findAll({
-                attributes: ['username']
-            })
-            let allUsernames = []
-            for (let usernames of userUsername) {
-                allUsernames.push(usernames.dataValues.username)
-            }
-
-            if (allUsernames.includes(username)) {
                 res.json(
                     {
                         message: "User already exists",
@@ -97,17 +79,20 @@ router.post(
                     },
                     res.statusCode = 500
                     )
-                }
-                const user = await User.create({ email, username, hashedPassword, firstName, lastName });
+        }
+        else {
 
-        const safeUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username,
-        password: user.hashedPassword
+            const user = await User.create({ email, username, hashedPassword, firstName, lastName });
 
+            safeUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            password: user.hashedPassword
+
+        }
       };
 
 

@@ -12,20 +12,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsToMany(
-        models.Event,
-        {
-          through: models.Attendance,
-          foreignKey: 'userId',
-          otherKey: 'eventId'
-        }
-      )
-      User.belongsToMany(
         models.Group,
         {
           through: models.Membership,
           foreignKey: 'userId',
           otherKey: 'groupId'
         }
+        )
+        User.belongsToMany(
+          models.Event,
+          {
+            through: models.Attendance,
+            otherKey: 'eventId',
+            foreignKey: 'userId'
+          }
       )
       User.hasMany(
         models.Group,
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
      // allowNull: false
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      //allowNull: false,
       validate: {
         len: [4, 30],
         isNotEmail(value) {
