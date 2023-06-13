@@ -36,7 +36,6 @@ router.post(
     async (req, res) => {
       const { email, password, username, firstName, lastName } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      console.log(username)
 
       const userEmails = await User.findAll({
           attributes: ['email']
