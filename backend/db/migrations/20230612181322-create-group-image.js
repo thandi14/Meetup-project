@@ -6,46 +6,45 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('GroupImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING(30),
-       // allowNull: false
+      groupId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Group',
+          key: 'id'
+        }
       },
-      lastName: {
-        type: Sequelize.STRING(30),
-       // allowNull: false
+      url: {
+        type: Sequelize.STRING
       },
-      username: {
-        type: Sequelize.STRING(30)
-      },
-      email: {
-        type: Sequelize.STRING(256)
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY
+      preview: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    await queryInterface.dropTable(options);
+    options.tableName = "GroupImages";
+    await queryInterface.dropTable('GroupImages', options);
   }
 };

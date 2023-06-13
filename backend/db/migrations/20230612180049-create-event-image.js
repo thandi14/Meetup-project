@@ -1,51 +1,50 @@
 'use strict';
 
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('EventImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING(30),
-       // allowNull: false
+      eventId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Event',
+          key: 'id'
+        }
       },
-      lastName: {
-        type: Sequelize.STRING(30),
-       // allowNull: false
+      url: {
+        type: Sequelize.STRING
       },
-      username: {
-        type: Sequelize.STRING(30)
-      },
-      email: {
-        type: Sequelize.STRING(256)
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY
+      preview: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    await queryInterface.dropTable(options);
+    options.tableName = "EventImages";
+
+    await queryInterface.dropTable('EventImages', options);
   }
 };
