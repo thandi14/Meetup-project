@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
 
 router.get('/current', requireAuth, async (req, res) => {
         const { user } = req;
-        console.log(user)
 
         let userGroups = await Group.findOne({
             where: {
