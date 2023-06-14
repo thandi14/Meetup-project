@@ -25,17 +25,17 @@ module.exports = {
        {
          userId: 2,
          groupId: 1,
-         status: null
+         status: "co-host"
        },
        {
         userId: 3,
          groupId: 1,
-         status: null
+         status: "member"
        },
        {
         userId: 1,
         groupId: 2,
-        status: 'New York'
+        status: 'co-host'
        },
      ], {});
   },
@@ -49,6 +49,6 @@ module.exports = {
      */
      options.tableName = 'Memberships';
      const Op = Sequelize.Op;
-     return queryInterface.bulkDelete(options, null, {});
+     return queryInterface.bulkDelete(options);
   }
 };

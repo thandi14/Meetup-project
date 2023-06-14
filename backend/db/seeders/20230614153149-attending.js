@@ -25,17 +25,17 @@ module.exports = {
        {
          eventId: 2,
          userId: 1,
-         status: 'New York'
+         status: 'pending'
        },
        {
         eventId: 1,
         userId: 2,
-        status: 'Texas'
+        status: 'attending'
        },
        {
         eventId: 1,
         userId: 3,
-        status: 'Texas'
+        status: 'attending'
        },
      ], {});
   },
@@ -49,6 +49,6 @@ module.exports = {
      */
      options.tableName = 'Attendances';
      const Op = Sequelize.Op;
-     return queryInterface.bulkDelete(options, null, {});
+     return queryInterface.bulkDelete(options);
   }
 };

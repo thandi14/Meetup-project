@@ -44,6 +44,6 @@ module.exports = {
      */
      options.tableName = 'GroupImages';
      const Op = Sequelize.Op;
-     return queryInterface.bulkDelete(options, null, {});
+     return queryInterface.bulkDelete(options);
   }
 };
