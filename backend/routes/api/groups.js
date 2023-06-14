@@ -153,5 +153,55 @@ router.delete("/:id", async (req, res) => {
 
 })
 
+router.get('/:id/venues', requireAuth, async (req, res) => {
+
+    let id = req.params.id;
+
+    let ids = await Group.findByPk(id);
+
+    if (!ids) {
+
+    res.json({"message": "Group couldn't be found"});
+
+    }
+
+    let venue = await Venue.findAll({
+            where: {
+                groupId: id
+            }
+    })
+
+    res.json({
+        venue
+    })
+
+})
+
+router.post('/:id/venues', requireAuth, async (req, res) => {
+    const { address, city, state, lat, lng } = req.body
+    let id = req.params.id;
+
+    let ids = await Group.findByPk(id);
+
+    if (!ids) {
+
+    res.json({"message": "Group couldn't be found"});
+
+    }
+
+    let venue = await Venue.create({
+        groupId: parseInt(id),
+        address,
+        city,
+        state,
+        lat,
+        lng
+    })
+
+
+    res.json({
+        venue
+    })
+})
 
 module.exports = router;
