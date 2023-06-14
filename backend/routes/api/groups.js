@@ -84,7 +84,7 @@ router.post('/', requireAuth, async (req, res) => {
     })
 })
 
-router.post('/:id/images', async (req, res) => {
+router.post('/:id/images', requireAuth, async (req, res) => {
     const { url, preview } = req.body
     let id = req.params.id;
 
@@ -108,7 +108,7 @@ router.post('/:id/images', async (req, res) => {
 
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuth, async (req, res) => {
 
     const { name, about, type, private, city, state } = req.body
     let id = req.params.id;
@@ -138,7 +138,7 @@ router.put('/:id', async (req, res) => {
     })
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", requireAuth, async (req, res) => {
     let id = req.params.id;
 
     let ids = await Group.findByPk(id);
