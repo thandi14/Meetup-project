@@ -123,6 +123,7 @@ router.put('/:id', async (req, res) => {
     }
 
     ids.set({
+        organizerId: parseInt(id),
         name,
         about,
         type,
