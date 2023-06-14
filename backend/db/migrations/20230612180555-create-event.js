@@ -17,14 +17,14 @@ module.exports = {
       venueId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Venue',
+          model: 'Venues',
           key: 'id'
         }
       },
       groupId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Group',
+          model: 'Groups',
           key: 'id'
         }
       },
@@ -35,7 +35,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       capacity: {
         type: Sequelize.INTEGER

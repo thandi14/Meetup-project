@@ -5,8 +5,9 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
+const user = require('../../db/models/user');
 
 const router = express.Router();
 
@@ -14,9 +15,8 @@ const router = express.Router();
 router.post(
  '/',
  async (req, res, next) => {
-  const { password, firstName, lastName, username, email } = req.body;
+  const { credentials, password, firstName, lastName, username, email } = req.body;
 
-      console.log(username)
       const user = await User.unscoped().findOne({
         where: {
           [Op.or]: {
@@ -85,7 +85,7 @@ router.delete(
 
 
 router.get(
-  '/',
+  '/', requireAuth,
   async (req, res) => {
   const { user } = req;
 
@@ -103,9 +103,7 @@ router.get(
     } else {
     return res.json({
     user: null,
-    message: "Authentication required",
     },
-    res.statusCode = 401
     )
     }
 })
@@ -128,13 +126,13 @@ router.post(
   '/',
   validateLogin,
   async (req, res, next) => {
-     const { credential, password, firstName, lastName } = req.body;
+     const { credentials, password, firstName, lastName, username, email } = req.body;
 
      const user = await User.unscoped().findOne({
         where: {
         [Op.or]: {
-         username: credential,
-        email: credential
+        username: username,
+        email: email
         }
         }
         });

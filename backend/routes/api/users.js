@@ -7,8 +7,8 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
-    const { check } = require('express-validator');
-    const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
     const validateSignup = [
     check('email')
@@ -28,7 +28,7 @@ const router = express.Router();
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
-];
+    ];
 
 router.post(
     '/',

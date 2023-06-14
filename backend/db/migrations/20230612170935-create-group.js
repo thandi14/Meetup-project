@@ -6,8 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Groups', {
@@ -20,27 +19,29 @@ module.exports = {
       organizerId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(60)
       },
       about: {
         type: Sequelize.STRING
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       private: {
         type: Sequelize.BOOLEAN
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       state: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

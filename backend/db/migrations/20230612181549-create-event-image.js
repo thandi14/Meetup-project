@@ -1,42 +1,32 @@
 'use strict';
 
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
-
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Venues', {
+    await queryInterface.createTable('EventImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      groupId: {
+      eventId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Group',
+          model: 'Events',
           key: 'id'
         }
       },
-      address: {
+      url: {
         type: Sequelize.STRING
       },
-      city: {
-        type: Sequelize.STRING
-      },
-      state: {
-        type: Sequelize.STRING
-      },
-      lat: {
-        type: Sequelize.DECIMAL
-      },
-      lng: {
-        type: Sequelize.DECIMAL
+      preview: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -53,8 +43,8 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Venues";
+    options.tableName = "EventImages";
 
-    await queryInterface.dropTable('Venues', options);
+    await queryInterface.dropTable('EventImages', options);
   }
 };
