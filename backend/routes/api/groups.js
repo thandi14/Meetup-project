@@ -65,9 +65,13 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
     const { name, about, type, private, city, state} = req.body;
+    const { user } = req;
+    const id = user.dataValues.id;
+
     let group = await Group.create({
+        organizerId: id,
         name,
         about,
         type,
