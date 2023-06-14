@@ -26,7 +26,7 @@ module.exports = {
          groupId: 2,
          name: 'Brunch',
          description: 'Getting togeather with close friends for a bite to eat',
-         type: 'In Person',
+         type: 'In person',
          capacity: 6,
          price: 300
        },
