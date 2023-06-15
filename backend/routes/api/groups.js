@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 //const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth, } = require('../../utils/auth');
 
-const { User, Group, Venue, GroupImage } = require('../../db/models');
+const { User, Group, Venue, GroupImage, Event, EventImage } = require('../../db/models');
 
 const router = express.Router();
 
@@ -206,6 +206,34 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
     res.json({
         venue
     })
+})
+
+router.get('/:id/events', async (req, res) => {
+    let id = req.params.id;
+
+    let ids = await Group.findByPk(id);
+
+    if (!ids) {
+
+    res.json({"message": "Group couldn't be found"});
+
+    }
+
+    let events = await Event.findByPk(id, {
+        include: [
+            {
+                model: Venue
+            },
+            {
+                model: Group
+            },
+        ]
+    })
+
+    res.json({
+        events
+    })
+
 })
 
 module.exports = router;
