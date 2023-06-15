@@ -1,0 +1,58 @@
+const express = require('express');
+const { Op } = require('sequelize');
+
+//const bcrypt = require('bcryptjs');
+//const { check } = require('express-validator');
+//const { handleValidationErrors } = require('../../utils/validation');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+
+const { EventImage, Attendance, Membership } = require('../../db/models');
+
+
+const router = express.Router();
+
+router.delete('/:id', requireAuth, async (req, res) => {
+
+    let id = req.params.id
+    const { user } = req
+
+    let attende = await Attendance.findOne({
+        where: {
+            userId: user.dataValues.id,
+        },
+    })
+
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+        },
+    })
+
+    let image = await EventImage.findByPk(id, {
+        where: {
+            eventId: member.dataValues.eventId
+        }
+    })
+
+
+    if (member.dataValues.status === "co-host" && attende.dataValues.eventId == id ) {
+
+      image.destroy()
+
+        res.json(
+            {
+                message: "Successfully deleted"
+            }
+        )
+
+    }
+    else {
+        res.json({
+            message: "Event Image couldn't be found"
+          })
+    }
+    
+})
+
+
+module.exports = router;

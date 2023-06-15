@@ -488,4 +488,5 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
 
 })
 
+
 module.exports = router;

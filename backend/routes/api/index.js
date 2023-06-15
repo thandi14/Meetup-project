@@ -5,7 +5,8 @@ const usersRouter = require('./users.js');
 const groupsRouter = require('./groups');
 const venuesRouter = require('./venues');
 const eventsRouter = require('./events')
-const membershipsRouter = require('./memberships')
+const groupimagesRouter = require('./group-images')
+const eventimagesRouter = require('./event-images')
 
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -23,9 +24,11 @@ router.use('/groups', groupsRouter);
 
 router.use('/venues', venuesRouter);
 
-router.use('/events', eventsRouter)
+router.use('/events', eventsRouter);
 
-router.use('/memberships', membershipsRouter)
+router.use('/group-images', groupimagesRouter)
+
+router.use('/event-images', eventimagesRouter)
 
 
 router.post('/test', (req, res) => {
