@@ -13,15 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Event.hasMany(
         models.EventImage,
-        { foreignKey: 'eventId' }
+        { foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true}
       )
       Event.belongsToMany(
         models.User,
         {
           through: models.Attendance,
           foreignKey: 'eventId',
-          otherKey: 'userId'
-        }
+          otherKey: 'userId',
+          onDelete: 'CASCADE'
+        },
+      )
+      Event.belongsTo(
+        models.Venue,
+        { foreignKey: 'venueId'}
+      )
+      Event.belongsTo(
+        models.Group,
+        { foreignKey: 'groupId'}
       )
     }
   }
@@ -33,11 +42,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     venueId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
+    name: {
+     type: DataTypes.STRING,
+     validate: {
+      len: [5, Infinity]
+     }
+
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     type: DataTypes.ENUM("In person", "Online"),
     capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    price: DataTypes.DECIMAL,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE
   }, {

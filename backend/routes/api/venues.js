@@ -17,7 +17,17 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     let id = req.params.id;
 
-    let ids = await Venue.findByPk(id);
+    let ids = await Venue.findByPk(id, {
+        include: [
+        {
+            model: Venue
+        },
+        {
+            model: Group
+        },
+    ]
+    }
+    );
 
     if (!ids) {
 

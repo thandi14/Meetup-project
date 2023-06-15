@@ -236,4 +236,31 @@ router.get('/:id/events', async (req, res) => {
 
 })
 
+router.post('/:id/events', requireAuth, async (req, res) => {
+    const { venueId, name, type, capacity, price, description } = req.body
+    let id = req.params.id;
+    let ids = await Group.findByPk(id);
+
+
+    if (!ids) {
+
+        res.json({"message": "Group couldn't be found"});
+
+    }
+
+    let event = await Event.create({
+        groupId: id,
+        venueId,
+        name,
+        type,
+        capacity,
+        price
+    });
+
+    res.json({
+        event
+    })
+
+})
+
 module.exports = router;

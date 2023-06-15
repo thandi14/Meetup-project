@@ -19,20 +19,23 @@ module.exports = {
         references: {
           model: 'Venues',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       groupId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Groups',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       name: {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       type: {
         type: Sequelize.ENUM("In person", "Online")
@@ -41,7 +44,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL
       },
       startDate: {
         type: Sequelize.DATE
