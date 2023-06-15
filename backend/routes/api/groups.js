@@ -295,10 +295,19 @@ router.get('/:id/members', async (req, res) => {
         },
     });
     }
-    else {
-        res.json({
-            message: "Group couldn't be found"
-        })
+    else if (member.dataValues.status !== 'pending') {
+        ids = await User.findAll({
+           include: {
+               model: Membership,
+               attributes: ['status'],
+               where: {
+                   groupId: id,
+                   role: {
+                    [Op.ne]: 'pending'
+                   }
+               }
+           },
+       });
     }
 
     res.json({
@@ -377,7 +386,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
     let otherMember = await Membership.findOne({
         where: {
             userId: memberId,
-            groupId: parseInt(id)
+           groupId: parseInt(id)
         }
     })
 
