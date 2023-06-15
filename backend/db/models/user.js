@@ -24,14 +24,22 @@ module.exports = (sequelize, DataTypes) => {
             {
               through: models.Attendance,
               foreignKey: 'userId',
-              otherKey: 'eventId'
+              otherKey: 'eventId',
+              onDelete: 'CASCADE'
             }
             )
       User.hasMany(
         models.Group,
         { foreignKey: 'organizerId' }
       )
-
+      User.hasMany(
+        models.Attendance,
+        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
+      )
+      User.hasMany(
+        models.Membership,
+        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   }
   User.init({
