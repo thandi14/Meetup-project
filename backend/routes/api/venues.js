@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 //const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { User, Group, Venue, GroupImage } = require('../../db/models');
+const { User, Group, Venue, GroupImage, Membership } = require('../../db/models');
 
 
 const router = express.Router();
@@ -14,18 +14,11 @@ const router = express.Router();
 
 router.put('/:id', requireAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body;
+    const { user } = req
 
     let id = req.params.id;
 
     let ids = await Venue.findByPk(id, {
-        include: [
-        {
-            model: Venue
-        },
-        {
-            model: Group
-        },
-    ]
     }
     );
 
@@ -38,7 +31,6 @@ router.put('/:id', requireAuth, async (req, res) => {
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
-            groupId: parseInt(id)
         }
     })
 

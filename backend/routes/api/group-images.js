@@ -28,13 +28,13 @@ router.delete('/:id', requireAuth, async (req, res) => {
         }
     })
 
-    if (member.dataValues.status === "co-host" && member.dataValues.groupId == id ) {
+    if (member.dataValues.status === "co-host" && member.dataValues.groupId === image.dataValues.groupId) {
 
        image.destroy()
 
         res.json(
             {
-             message: "Successfully deleted"
+            message: "Successfully deleted"
             }
         )
 

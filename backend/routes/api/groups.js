@@ -8,6 +8,7 @@ const { setTokenCookie, restoreUser, requireAuth, } = require('../../utils/auth'
 
 const { User, Group, Venue, GroupImage, Event, EventImage, Membership, Attendance } = require('../../db/models');
 const { JsonWebTokenError } = require('jsonwebtoken');
+const group = require('../../db/models/group');
 
 
 
@@ -17,6 +18,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     let groups = await Group.findAll({})
 
+    console.log(groups)
+
+    if (groups.length > 0) {
     let arr = []
 
     for (let group of groups) {
@@ -30,9 +34,79 @@ router.get('/', async (req, res) => {
             }
         })
 
+        let image = await GroupImage.findAll({
+            attributes: ['url'],
+            where: {
+                groupId: arr[i],
+
+            },
+            include: {
+                model: Group,
+                attributes: []
+            }
+        });
+
+        let images = ''
+
+        if (image.length > 1) {
+            image.forEach((element, i) => {
+                if (i === 0) {
+                    images += element.dataValues.url
+                }
+                else {
+                    images += ', ' + element.dataValues.url
+
+                }
+
+            });
+            }
+            else if (image.length == 1) {
+                images += image[0].dataValues.url
+            }
+            else {
+                images = ''
+            }
+
+        groups[i].dataValues.previewImage = images
+
         groups[i].dataValues.numMembers = num
 
     }
+    }
+    else {
+        let num = await Membership.count({
+            where: {
+                groupId: groups[0].dataValues.groupId
+            }
+        })
+
+        let image = await GroupImage.findAll({
+            attributes: ['url'],
+            where: {
+                groupId: groups[0].dataValues.groupId,
+
+            },
+            include: {
+                model: Group,
+                attributes: []
+            }
+        });
+
+        let images = ''
+        image.forEach((element, i) => {
+            if (i === 0) {
+                images += element.dataValues.url
+            }
+            images += ', ' + element.dataValues.url
+
+        });
+
+        groups[0].dataValues.previewImage = images
+
+        groups[0].dataValues.numMembers = num
+    }
+
+
 
     res.json({groups})
 
@@ -41,11 +115,51 @@ router.get('/', async (req, res) => {
 router.get('/current', requireAuth, async (req, res) => {
         const { user } = req;
 
-        let userGroups = await Group.findOne({
+        let userGroups = await Group.findAll({
             where: {
                 organizerId: user.dataValues.id
             }
         })
+
+        let arr = []
+
+    for (let group of userGroups) {
+        arr.push(group.dataValues.id)
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        let num = await Membership.count({
+            where: {
+                groupId: arr[i]
+            }
+        })
+
+        let image = await GroupImage.findAll({
+            attributes: ['url'],
+            where: {
+                groupId: arr[i],
+
+            },
+            include: {
+                model: Group,
+                attributes: []
+            }
+        });
+
+        let images = ''
+        image.forEach((element, i) => {
+            if (i === 0) {
+                images += element.dataValues.url
+            }
+            images += ', ' + element.dataValues.url
+
+        });
+
+        userGroups[i].dataValues.previewImage = images
+
+        userGroups[i].dataValues.numMembers = num
+
+    }
 
         res.json({
         userGroups
@@ -65,16 +179,39 @@ router.get('/:id', async (req, res) => {
 
 
     let group = await Group.findByPk(id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        },
         include: [{
-            model: GroupImage
+            model: GroupImage,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
         },
         {
-            model: User
+            model: User,
+            attributes: ['id','firstName', 'lastName'],
+            through: {
+                  attributes: []
+            }
         },
         {
-            model: Venue
-        }]
+            model: Venue,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        }],
     })
+
+    let num = await Membership.count({
+        where: {
+            groupId: id
+        }
+    })
+
+    group.dataValues.numMembers = num
+
+
 
     res.json({
         group
@@ -98,9 +235,10 @@ router.post('/', requireAuth, async (req, res) => {
 
     let member = await Membership.create({
         userId: user.dataValues.id,
-        groupId: id,
+        groupId: group.id,
         status: 'co-host'
     })
+
 
     res.json({
         group
@@ -110,6 +248,7 @@ router.post('/', requireAuth, async (req, res) => {
 router.post('/:id/images', requireAuth, async (req, res) => {
     const { url, preview } = req.body
     let id = req.params.id;
+    const { user } = req
 
     let ids = await Group.findByPk(id);
 
@@ -120,6 +259,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         }
     })
 
+    console.log(user.dataValues.id)
     if (!ids) {
 
     res.json({"message": "Group couldn't be found"});
@@ -132,8 +272,15 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         url,
         preview
     });
+    let createdImage = await GroupImage.findByPk(image.id, {
+        attributes: ['id', 'url', 'preview'],
+        include: {
+            model: Group,
+            attributes: []
+        }
+    })
     res.json({
-        image
+        createdImage
     })
     }
 
@@ -143,6 +290,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     const { name, about, type, private, city, state } = req.body
     let id = req.params.id;
+    const { user } = req
 
     let member = await Membership.findOne({
         where: {
@@ -180,6 +328,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
 router.delete("/:id", requireAuth, async (req, res) => {
     let id = req.params.id;
+    const { user } = req
 
     let ids = await Group.findByPk(id);
 
@@ -211,6 +360,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
 router.get('/:id/venues', requireAuth, async (req, res) => {
 
     let id = req.params.id;
+    const { user } = req
 
     let ids = await Group.findByPk(id);
 
@@ -231,7 +381,10 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
     let venue = await Venue.findAll({
             where: {
                 groupId: id
-            }
+            },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            },
     })
 
     res.json({
@@ -244,6 +397,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 router.post('/:id/venues', requireAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body
     let id = req.params.id;
+    const { user } = req
 
     let ids = await Group.findByPk(id);
 
@@ -260,6 +414,8 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
         }
     })
 
+    console.log(member)
+
     if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let venue = await Venue.create({
         groupId: parseInt(id),
@@ -269,8 +425,13 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
         lat,
         lng
     })
+    let createdVenue = await Venue.findByPk(venue.id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        },
+    })
     res.json({
-        venue
+        createdVenue
     })
     }
 
@@ -288,16 +449,77 @@ router.get('/:id/events', async (req, res) => {
 
     }
 
-    let events = await Event.findByPk(id, {
+    let events = await Event.findAll({
+        where: {
+            groupId: id
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        },
         include: [
             {
-                model: Venue
+                model: Venue,
+                attributes: ['id', 'city', 'state']
             },
             {
-                model: Group
+                model: Group,
+                attributes: ['id', 'name', 'city', 'state']
             },
+
         ]
     })
+
+    if (events.length > 0) {
+    let arr = []
+
+    for (let event of events) {
+        arr.push(event.dataValues.id)
+    }
+
+
+    for (let i = 0; i < arr.length; i++) {
+        let num = await Attendance.count({
+            where: {
+                eventId: arr[i]
+            }
+        })
+
+        let image = await EventImage.findAll({
+            attributes: ['url'],
+            where: {
+                eventId: arr[i],
+
+            },
+            include: {
+                model: Event,
+                attributes: []
+            }
+        });
+
+        let images = ''
+        if (image.length > 1) {
+        image.forEach((element, i) => {
+            if (i === 0) {
+                images += element.dataValues.url
+            }
+            images += ', ' + element.dataValues.url
+
+        });
+        }
+        else if (image.length == 1) {
+            images += image[0].dataValues.url
+        }
+        else {
+            images = ''
+        }
+
+        events[i].dataValues.previewImage = images
+
+        events[i].dataValues.numAttending = num
+
+    }
+
+    }
 
     res.json({
         events
@@ -306,7 +528,7 @@ router.get('/:id/events', async (req, res) => {
 })
 
 router.post('/:id/events', requireAuth, async (req, res) => {
-    const { venueId, name, type, capacity, price, description } = req.body
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
     let id = req.params.id;
     let ids = await Group.findByPk(id);
     let { user } = req
@@ -327,12 +549,15 @@ router.post('/:id/events', requireAuth, async (req, res) => {
 
     if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let event = await Event.create({
-        groupId: id,
+        groupId: parseInt(id),
         venueId,
         name,
         type,
         capacity,
-        price
+        price,
+        description,
+        startDate,
+        endDate
     });
 
     let attending = await Attendance.create({
@@ -341,8 +566,24 @@ router.post('/:id/events', requireAuth, async (req, res) => {
         status: 'attending'
     })
 
+    let createdEvent = await Event.findByPk(event.id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        },
+        include: [{
+            model: Group,
+            attributes: []
+        },
+        {
+            model: Venue,
+            attributes: []
+        }]
+    })
+
+
+
     res.json({
-        event
+        createdEvent
     })
     }
 
@@ -354,9 +595,12 @@ router.get('/:id/members', async (req, res) => {
 
     let member = await Membership.findOne({
         where: {
-            userId: user.dataValues.id
+            userId: user.dataValues.id,
+            groupId: id
         }
     })
+
+    console.log(member)
 
     let group = await Group.findByPk(id);
 
@@ -368,30 +612,42 @@ router.get('/:id/members', async (req, res) => {
 
     let ids
 
-    if (member.dataValues.status === 'co-host') {
-     ids = await User.findAll({
-        include: {
-            model: Membership,
-            attributes: ['status'],
-            where: {
-                groupId: id
-            }
-        },
-    });
+    if (!member) {
+        ids = await User.findAll({
+            include: {
+                model: Membership,
+                attributes: ['status'],
+                where: {
+                    groupId: id,
+                    status: ['member', 'co-host']
+
+                }
+            },
+        });
     }
-    else if (member.dataValues.status !== 'pending') {
+    else if (member.dataValues.status !== 'co-host') {
         ids = await User.findAll({
            include: {
                model: Membership,
                attributes: ['status'],
                where: {
                    groupId: id,
-                   role: {
-                    [Op.ne]: 'pending'
-                   }
+                   status: ['member', 'co-host']
+
                }
            },
        });
+    }
+    else if (member.dataValues.status === 'co-host'){
+        ids = await User.findAll({
+            include: {
+                model: Membership,
+                attributes: ['status'],
+                where: {
+                    groupId: id
+                }
+            },
+        })
     }
 
     res.json({

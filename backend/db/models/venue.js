@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         {
           through: models.Event,
           foreignKey: "venueId",
-          otherKey: 'groupId'
+          otherKey: 'groupId',
+          onDelete: 'CASCADE'
         }
       )
       Venue.belongsTo(
