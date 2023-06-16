@@ -35,6 +35,14 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
+    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     ids.set({
         address,
         city,
@@ -48,6 +56,7 @@ router.put('/:id', requireAuth, async (req, res) => {
     res.json({
         ids
     })
+    }
 
 })
 

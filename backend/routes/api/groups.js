@@ -6,16 +6,33 @@ const { Op } = require('sequelize');
 //const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth, } = require('../../utils/auth');
 
-const { User, Group, Venue, GroupImage, Event, EventImage, Membership } = require('../../db/models');
+const { User, Group, Venue, GroupImage, Event, EventImage, Membership, Attendance } = require('../../db/models');
 const { JsonWebTokenError } = require('jsonwebtoken');
+
+
+
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    let groups = await Group.findAll({
-        include: User
+    let groups = await Group.findAll({})
 
-    })
+    let arr = []
+
+    for (let group of groups) {
+        arr.push(group.dataValues.id)
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        let num = await Membership.count({
+            where: {
+                groupId: arr[i]
+            }
+        })
+
+        groups[i].dataValues.numMembers = num
+
+    }
 
     res.json({groups})
 
@@ -27,8 +44,7 @@ router.get('/current', requireAuth, async (req, res) => {
         let userGroups = await Group.findOne({
             where: {
                 organizerId: user.dataValues.id
-            },
-            include: User
+            }
         })
 
         res.json({
@@ -80,6 +96,12 @@ router.post('/', requireAuth, async (req, res) => {
         state
     })
 
+    let member = await Membership.create({
+        userId: user.dataValues.id,
+        groupId: id,
+        status: 'co-host'
+    })
+
     res.json({
         group
     })
@@ -91,21 +113,29 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     let ids = await Group.findByPk(id);
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
     if (!ids) {
 
     res.json({"message": "Group couldn't be found"});
 
     }
 
+    if (member.dataValues.status === 'co-host') {
     let image = await GroupImage.create({
         groupId: id,
         url,
         preview
     });
-
     res.json({
         image
     })
+    }
 
 })
 
@@ -113,6 +143,13 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     const { name, about, type, private, city, state } = req.body
     let id = req.params.id;
+
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
 
     let ids = await Group.findByPk(id);
 
@@ -122,6 +159,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     }
 
+    if (member.dataValues.status === 'co-host') {
     ids.set({
         organizerId: parseInt(id),
         name,
@@ -131,12 +169,13 @@ router.put('/:id', requireAuth, async (req, res) => {
         city,
         state
     })
-
     await ids.save()
 
     res.json({
         ids
     })
+    }
+
 })
 
 router.delete("/:id", requireAuth, async (req, res) => {
@@ -150,11 +189,22 @@ router.delete("/:id", requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
+    if (member.dataValues.status === 'co-host') {
     await ids.destroy()
 
     res.json({
         message: "Successfully deleted"
     })
+
+    }
+
 
 })
 
@@ -164,12 +214,20 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 
     let ids = await Group.findByPk(id);
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
     if (!ids) {
 
     res.json({"message": "Group couldn't be found"});
 
     }
 
+    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let venue = await Venue.findAll({
             where: {
                 groupId: id
@@ -179,6 +237,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
     res.json({
         venue
     })
+    }
 
 })
 
@@ -194,6 +253,14 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
+    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let venue = await Venue.create({
         groupId: parseInt(id),
         address,
@@ -202,12 +269,13 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
         lat,
         lng
     })
-
-
     res.json({
         venue
     })
+    }
+
 })
+
 
 router.get('/:id/events', async (req, res) => {
     let id = req.params.id;
@@ -241,6 +309,7 @@ router.post('/:id/events', requireAuth, async (req, res) => {
     const { venueId, name, type, capacity, price, description } = req.body
     let id = req.params.id;
     let ids = await Group.findByPk(id);
+    let { user } = req
 
 
     if (!ids) {
@@ -249,6 +318,14 @@ router.post('/:id/events', requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: parseInt(id)
+        }
+    })
+
+    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let event = await Event.create({
         groupId: id,
         venueId,
@@ -258,9 +335,16 @@ router.post('/:id/events', requireAuth, async (req, res) => {
         price
     });
 
+    let attending = await Attendance.create({
+        userId: user.dataValues.id,
+        eventId: event.id,
+        status: 'attending'
+    })
+
     res.json({
         event
     })
+    }
 
 })
 
@@ -284,7 +368,7 @@ router.get('/:id/members', async (req, res) => {
 
     let ids
 
-    if (member.dataValues.status !== 'pending') {
+    if (member.dataValues.status === 'co-host') {
      ids = await User.findAll({
         include: {
             model: Membership,

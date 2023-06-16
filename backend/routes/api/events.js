@@ -12,7 +12,51 @@ const { User, Group, Venue, Attendance, Event, EventImage, Membership } = requir
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    let events = await Event.findAll();
+    let { page, size, name, type, startDate } = req.query
+
+    if (page === undefined || page === NaN) page = 1;
+    if (size === undefined || size === NaN) size = 20;
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+    let pagination = {};
+
+    let where = {}
+
+    if (name) {
+        where.name = name
+    }
+    if (type) {
+        where.type = type
+    }
+    if (startDate) {
+        where.startDate = startDate
+    }
+
+    if ((size > 0 && page > 0) || (size <= 20 && page <= 10)) {
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+    }
+    else {
+       return res.status(400).json({
+        "message": "Bad Request",
+        "errors": {
+          "page": "Page must be greater than or equal to 1",
+          "size": "Size must be greater than or equal to 1",
+          "name": "Name must be a string",
+          "type": "Type must be 'Online' or 'In Person'",
+          "startDate": "Start date must be a valid datetime",
+        }
+      })
+    }
+
+    console.log(pagination)
+
+    let events = await Event.findAll({
+        where,
+        ...pagination
+    });
 
     res.json({events})
 })
@@ -59,6 +103,13 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id
+        }
+    })
+
+    if (member.dataValues.status !== 'pending') {
     let image = await EventImage.create({
         groupId: id,
         url,
@@ -68,6 +119,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
     res.json({
         image
     })
+    }
 })
 
 router.put('/:id', requireAuth, async (req, res) => {
@@ -88,6 +140,13 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id
+        }
+    })
+
+    if (member.dataValues.status !== 'co-host') {
     ids.set({
      groupId: parseInt(id),
      venueId: venueId,
@@ -103,6 +162,7 @@ router.put('/:id', requireAuth, async (req, res) => {
     res.json({
        ids
     })
+    }
 
 
 })
@@ -119,20 +179,23 @@ router.delete("/:id", requireAuth, async (req, res) => {
 
     }
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id
+        }
+    })
 
-
+    if (member.dataValues.status !== 'co-host') {
     await Event.destroy({
         where: {
             id: parseInt(id)
         }
     })
 
-
-
-
     res.json({
         message: "Successfully deleted"
     })
+    }
 
 })
 
@@ -140,7 +203,7 @@ router.get('/:id/attendees', async (req, res) => {
     let id = req.params.id;
     let { user } = req
 
-    let attende = await Attendance.findOne({
+    let attende = await Membership.findOne({
         where: {
             userId: user.dataValues.id
         }
@@ -156,7 +219,7 @@ router.get('/:id/attendees', async (req, res) => {
 
     let ids
 
-    if (attende.dataValues.status !== 'co-host') {
+    if (attende.dataValues.status === 'co-host') {
      ids = await User.findAll({
         include: {
             model: Attendance,
@@ -167,7 +230,7 @@ router.get('/:id/attendees', async (req, res) => {
         },
         });
     }
-    else if (attende.dataValues.status !== 'member') {
+    else if (attende.dataValues.status === 'member') {
         ids = await User.findAll({
            include: {
                model: Attendance,
@@ -372,7 +435,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
             message: "Successfully deleted membership from group"
           })
     }
-   
+
 
 })
 

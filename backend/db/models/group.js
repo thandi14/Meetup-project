@@ -53,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     organizerId: DataTypes.INTEGER,
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         len: [0, 60]
       }
@@ -65,8 +66,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.ENUM("In person", "Online"),
+      allowNull: false
     },
-    private: DataTypes.BOOLEAN,
+    private:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
     city: {
       type: DataTypes.STRING,
       allowNull: false

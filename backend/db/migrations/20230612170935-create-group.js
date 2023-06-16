@@ -24,16 +24,19 @@ module.exports = {
         }
       },
       name: {
-        type: Sequelize.STRING(60)
+        type: Sequelize.STRING(60),
+        allowNull: false
       },
       about: {
         type: Sequelize.STRING
       },
       type: {
-        type: Sequelize.ENUM("In person", "Online")
+        type: Sequelize.ENUM("In person", "Online"),
+        allowNull: false
       },
       private: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       },
       city: {
         type: Sequelize.STRING,

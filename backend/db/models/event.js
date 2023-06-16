@@ -58,10 +58,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     type: DataTypes.ENUM("In person", "Online"),
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.DECIMAL,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    endDate:  {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Event',

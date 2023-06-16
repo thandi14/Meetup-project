@@ -28,7 +28,9 @@ module.exports = {
          description: 'Getting togeather with close friends for a bite to eat',
          type: 'In person',
          capacity: 6,
-         price: 300
+         price: 300,
+         startDate: "2021-11-19 20:00:00",
+         endDate: "2021-11-19 22:00:00"
        },
        {
         venueId: 1,
@@ -37,7 +39,9 @@ module.exports = {
         description: 'Zoom meeting with tennis group about upcoming game',
         type: 'Online',
         capacity: 8,
-        price: 50
+        price: 50,
+        startDate: "2021-11-19 20:00:00",
+        endDate: "2021-11-19 22:00:00"
        },
      ], {});
 

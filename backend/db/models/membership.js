@@ -1,4 +1,5 @@
 'use strict';
+const { Op } = require('sequelize');
 const {
   Model
 } = require('sequelize');
@@ -24,10 +25,36 @@ module.exports = (sequelize, DataTypes) => {
   Membership.init({
     userId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
-    status: DataTypes.ENUM("co-host", "member", "pending")
+    status: {
+      type: DataTypes.ENUM('co-host', 'member', 'pending'),
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'Membership',
+      defaultScope: {
+          where: {
+            status: {
+              [Op.in]: ['co-host', 'member', 'pending']
+            }
+          }
+
+      },
+      scopes: {
+          organizer: {
+            where: {
+              status: 'co-host'
+            }
+          },
+          membership: {
+            where: {
+              status: {
+                [Op.in]: ['co-host', 'member']
+              }
+            }
+          },
+      }
   });
+
   return Membership;
 };
