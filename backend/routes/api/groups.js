@@ -173,7 +173,7 @@ router.get('/:id', async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+    res.status(404).json({"message": "Group couldn't be found"});
 
     }
 
@@ -259,9 +259,15 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+        res.status(404).json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
+
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -299,7 +305,7 @@ router.put('/:id', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-    res.json({
+    res.status(404).json({
         message: "Membership between the user and the group does not exist"
     })
     }
@@ -308,7 +314,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -339,7 +345,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -351,7 +357,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }
@@ -384,14 +390,14 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -421,7 +427,7 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -433,7 +439,7 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
     }
@@ -467,7 +473,7 @@ router.get('/:id/events', async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -558,7 +564,7 @@ router.post('/:id/events', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-        res.json({"message": "Group couldn't be found"});
+        res.status(404).json({message: "Group couldn't be found"});
 
     }
 
@@ -570,7 +576,7 @@ router.post('/:id/events', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }
@@ -629,7 +635,7 @@ router.get('/:id/members', async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }
@@ -638,7 +644,7 @@ router.get('/:id/members', async (req, res) => {
     let group = await Group.findByPk(id);
 
     if (!group) {
-        res.json({
+        res.status(404).json({
             message: "Group couldn't be found"
         })
     }
@@ -698,7 +704,7 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
     let group = await Group.findByPk(id);
 
     if (!group) {
-        res.json({
+        res.status(404).json({
             message: "Group couldn't be found"
         })
     }
@@ -719,12 +725,12 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
         })
     }
     else if (member.dataValues.status === 'pending') {
-        res.json({
+        res.status(400).json({
             "message": "Membership has already been requested"
         })
     }
     else if (member && member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
-        res.json({
+        res.status(404).json({
             message: "User is already a member of the group"
           })
     }
@@ -744,7 +750,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
     let group = await Group.findByPk(id);
 
     if (!group) {
-        res.json({
+        res.status(404).json({
             message: "Group couldn't be found"
         })
     }
@@ -757,7 +763,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
     }
@@ -771,6 +777,15 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
 
     let pendingMember = await User.findByPk(memberId)
 
+    if (!pendingMember) {
+        res.status(400).json({
+                message: "Validation Error",
+                errors: {
+                  memberId: "User couldn't be found"
+                }
+        })
+    }
+
     if (member.dataValues.status === 'co-host') {
         otherMember.set({
             status
@@ -782,16 +797,8 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
             otherMember
         })
     }
-    else if (!pendingMember) {
-        res.json({
-                message: "Validation Error",
-                errors: {
-                  memberId: "User couldn't be found"
-                }
-        })
-    }
     else if (status === pending) {
-        res.json({
+        res.status(400).json({
             message: "Validations Error",
             errors: {
               status : "Cannot change a membership status to pending"
@@ -811,7 +818,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
     let group = await Group.findByPk(id);
 
     if (!group) {
-        res.json({
+        res.status(404).json({
             message: "Group couldn't be found"
         })
     }
@@ -824,7 +831,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }
@@ -837,7 +844,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
     })
 
     if (!otherMember) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
     }
@@ -845,7 +852,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
     let pendingMember = await User.findByPk(memberId)
 
     if (!pendingMember) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
         }

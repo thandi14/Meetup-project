@@ -51,8 +51,6 @@ router.get('/', async (req, res) => {
       })
     }
 
-    console.log(pagination)
-
     let events = await Event.findAll({
         attributes: {
             exclude: ['createdAt', 'updatedAt']
@@ -164,7 +162,7 @@ router.get('/:id', async (req, res) => {
 
     if (!events) {
 
-        res.json({message: "Event couldn't be found"});
+        res.status(404).json({message: "Event couldn't be found"});
 
     }
 
@@ -192,7 +190,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({message: "Event couldn't be found"});
+    res.status(404).json({message: "Event couldn't be found"});
 
     }
 
@@ -204,7 +202,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -240,12 +238,12 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Event couldn't be found"});
+    res.status(404).json({message: "Event couldn't be found"});
 
     }
 
     if (!venueId) {
-        res.json({"message": "Venue couldn't be found"});
+        res.status(404).json({message: "Venue couldn't be found"});
 
     }
 
@@ -257,7 +255,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -287,6 +285,9 @@ router.delete("/:id", requireAuth, async (req, res) => {
     const { user } = req
 
 
+    if (!ids) {
+        res.status(404).json({message: "Event couldn't be found"});
+    }
 
     let member = await Membership.findOne({
         where: {
@@ -296,7 +297,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -312,9 +313,6 @@ router.delete("/:id", requireAuth, async (req, res) => {
     })
     }
     }
-    else {
-    res.json({message: "Event couldn't be found"});
-    }
 
 
 })
@@ -327,7 +325,7 @@ router.get('/:id/attendees', async (req, res) => {
 
     if (!event) {
 
-        res.json({message: "Event couldn't be found"});
+        res.status(404).json({message: "Event couldn't be found"});
 
     }
 
@@ -340,14 +338,12 @@ router.get('/:id/attendees', async (req, res) => {
 
     if (!attende) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
-
-    console.log(event)
     if (!event) {
-        res.json({
+        res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -406,12 +402,12 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Event couldn't be found"});
+        res.status(404).json({message: "Event couldn't be found"});
 
     }
 
     if (!event) {
-        res.json({
+        res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -457,7 +453,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
     let event = await Event.findByPk(id);
 
     if (!event) {
-        res.json({
+        res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -471,7 +467,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!attende) {
 
-        res.json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Attendance between the user and the event does not exist"});
 
     }
 
@@ -485,7 +481,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -498,7 +494,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!otherAttende) {
 
-        res.json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Attendance between the user and the event does not exist"});
 
     }
 
@@ -506,7 +502,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!pendingAttende) {
 
-        res.json({
+        res.status(400).json({
             message: "Validation Error",
             errors: {
              memberId: "User couldnt be found"
@@ -528,7 +524,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         })
     }
     else if (status === 'pending') {
-        res.json({
+        res.status(400).json({
             message: "Validations Error",
             errors: {
               status : "Cannot change an attendance status to pending"
@@ -549,7 +545,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
     let event = await Event.findByPk(id);
 
     if (!event) {
-        res.json({
+        res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -563,7 +559,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!attende) {
 
-        res.json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Attendance between the user and the event does not exist"});
 
     }
 
@@ -576,7 +572,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!member) {
 
-        res.json({message: "Membership between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -589,7 +585,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!otherAttende) {
 
-        res.json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Attendance between the user and the event does not exist"});
 
     }
 
@@ -597,7 +593,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!pendingAttende) {
 
-        res.json({
+        res.status(404).json({
             message: "Validation Error",
             errors: {
               memberId: "User couldn't be found"

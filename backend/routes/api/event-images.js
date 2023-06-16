@@ -29,7 +29,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the event does not exist"
         })
         }
@@ -49,11 +49,11 @@ router.delete('/:id', requireAuth, async (req, res) => {
     })
 
     if (!image) {
-        res.json({
+        res.status(404).json({
             message: "Event Image couldn't be found"
         })
     }
-    
+
     if (member.dataValues.status === "co-host" && image.dataValues.eventId === events.dataValues.id) {
 
       image.destroy()

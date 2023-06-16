@@ -23,7 +23,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
     })
 
     if (!member) {
-        res.json({
+        res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
     }
@@ -35,7 +35,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
     })
 
     if (!image) {
-        res.json({
+        res.status(404).json({
             message: "Group Image couldn't be found"
         })
     }
