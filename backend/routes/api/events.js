@@ -137,14 +137,14 @@ router.get('/:id', async (req, res) => {
         },
         include: [
             {
-                model: Venue,
+                model: Group,
                 attributes: {
                     exclude: ['createdAt', 'updatedAt']
                 },
 
             },
             {
-                model: Group,
+                model: Venue,
                 attributes: {
                     exclude: ['createdAt', 'updatedAt']
                 },

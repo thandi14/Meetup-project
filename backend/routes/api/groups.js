@@ -481,12 +481,12 @@ router.get('/:id/events', async (req, res) => {
         },
         include: [
             {
-                model: Venue,
-                attributes: ['id', 'city', 'state']
-            },
-            {
                 model: Group,
                 attributes: ['id', 'name', 'city', 'state']
+            },
+            {
+                model: Venue,
+                attributes: ['id', 'city', 'state']
             },
 
         ]
@@ -600,11 +600,11 @@ router.post('/:id/events', requireAuth, async (req, res) => {
             exclude: ['createdAt', 'updatedAt']
         },
         include: [{
-            model: Group,
+            model: Venue,
             attributes: []
         },
         {
-            model: Venue,
+            model: Group,
             attributes: []
         }]
     })
