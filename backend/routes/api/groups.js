@@ -756,7 +756,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
             message: "Membership between the user and the group does not exist"
         })
     }
-    else {
+    else if (status === pending) {
         res.json({
             message: "Validations Error",
             errors: {
