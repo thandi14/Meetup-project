@@ -16,14 +16,12 @@ const group = require('../../db/models/group');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    let groups = await Group.findAll({})
+    let Groups = await Group.findAll({})
 
-    console.log(groups)
-
-    if (groups.length > 0) {
+    if (Groups.length > 0) {
     let arr = []
 
-    for (let group of groups) {
+    for (let group of Groups) {
         arr.push(group.dataValues.id)
     }
 
@@ -67,23 +65,23 @@ router.get('/', async (req, res) => {
                 images = ''
             }
 
-        groups[i].dataValues.previewImage = images
+        Groups[i].dataValues.previewImage = images
 
-        groups[i].dataValues.numMembers = num
+        Groups[i].dataValues.numMembers = num
 
     }
     }
     else {
         let num = await Membership.count({
             where: {
-                groupId: groups[0].dataValues.groupId
+                groupId: Groups[0].dataValues.groupId
             }
         })
 
         let image = await GroupImage.findAll({
             attributes: ['url'],
             where: {
-                groupId: groups[0].dataValues.groupId,
+                groupId: Groups[0].dataValues.groupId,
 
             },
             include: {
@@ -101,21 +99,21 @@ router.get('/', async (req, res) => {
 
         });
 
-        groups[0].dataValues.previewImage = images
+        Groups[0].dataValues.previewImage = images
 
-        groups[0].dataValues.numMembers = num
+        Groups[0].dataValues.numMembers = num
     }
 
 
 
-    res.json({groups})
+    res.json({Groups})
 
 })
 
 router.get('/current', requireAuth, async (req, res) => {
         const { user } = req;
 
-        let userGroups = await Group.findAll({
+        let Groups = await Group.findAll({
             where: {
                 organizerId: user.dataValues.id
             }
@@ -123,7 +121,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
         let arr = []
 
-    for (let group of userGroups) {
+    for (let group of Groups) {
         arr.push(group.dataValues.id)
     }
 
@@ -155,14 +153,14 @@ router.get('/current', requireAuth, async (req, res) => {
 
         });
 
-        userGroups[i].dataValues.previewImage = images
+        Groups[i].dataValues.previewImage = images
 
-        userGroups[i].dataValues.numMembers = num
+        Groups[i].dataValues.numMembers = num
 
     }
 
         res.json({
-        userGroups
+        Groups
         })
 
 })
@@ -211,11 +209,7 @@ router.get('/:id', async (req, res) => {
 
     group.dataValues.numMembers = num
 
-
-
-    res.json({
-        group
-    })
+    res.json(group)
 })
 
 router.post('/', requireAuth, async (req, res) => {
@@ -240,9 +234,9 @@ router.post('/', requireAuth, async (req, res) => {
     })
 
 
-    res.json({
+    res.json(
         group
-    })
+    )
 })
 
 router.post('/:id/images', requireAuth, async (req, res) => {
@@ -284,9 +278,9 @@ router.post('/:id/images', requireAuth, async (req, res) => {
             attributes: []
         }
     })
-    res.json({
+    res.json(
         createdImage
-    })
+    )
     }
 
 })
@@ -330,9 +324,9 @@ router.put('/:id', requireAuth, async (req, res) => {
     })
     await ids.save()
 
-    res.json({
+    res.json(
         ids
-    })
+    )
     }
 
 })
@@ -402,7 +396,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
     }
 
     if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
-    let venue = await Venue.findAll({
+    let Venue = await Venue.findAll({
             where: {
                 groupId: id
             },
@@ -411,8 +405,9 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
             },
     })
 
+
     res.json({
-        venue
+        Venue
     })
     }
 
@@ -458,9 +453,9 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
             exclude: ['createdAt', 'updatedAt']
         },
     })
-    res.json({
+    res.json(
         createdVenue
-    })
+    )
     }
 
 })
@@ -477,7 +472,7 @@ router.get('/:id/events', async (req, res) => {
 
     }
 
-    let events = await Event.findAll({
+    let Events = await Event.findAll({
         where: {
             groupId: id
         },
@@ -497,10 +492,10 @@ router.get('/:id/events', async (req, res) => {
         ]
     })
 
-    if (events.length > 0) {
+    if (Events.length > 0) {
     let arr = []
 
-    for (let event of events) {
+    for (let event of Events) {
         arr.push(event.dataValues.id)
     }
 
@@ -541,16 +536,16 @@ router.get('/:id/events', async (req, res) => {
             images = ''
         }
 
-        events[i].dataValues.previewImage = images
+        Events[i].dataValues.previewImage = images
 
-        events[i].dataValues.numAttending = num
+        Events[i].dataValues.numAttending = num
 
     }
 
     }
 
     res.json({
-        events
+        Events
     })
 
 })
@@ -616,9 +611,9 @@ router.post('/:id/events', requireAuth, async (req, res) => {
 
 
 
-    res.json({
+    res.json(
         createdEvent
-    })
+    )
     }
 
 })
@@ -649,10 +644,10 @@ router.get('/:id/members', async (req, res) => {
         })
     }
 
-    let ids
+    let Members
 
     if (!member) {
-        ids = await User.findAll({
+        Members = await User.findAll({
             include: {
                 model: Membership,
                 attributes: ['status'],
@@ -665,7 +660,7 @@ router.get('/:id/members', async (req, res) => {
         });
     }
     else if (member.dataValues.status !== 'co-host') {
-        ids = await User.findAll({
+        Members = await User.findAll({
            include: {
                model: Membership,
                attributes: ['status'],
@@ -678,7 +673,7 @@ router.get('/:id/members', async (req, res) => {
        });
     }
     else if (member.dataValues.status === 'co-host'){
-        ids = await User.findAll({
+        Members = await User.findAll({
             include: {
                 model: Membership,
                 attributes: ['status'],
@@ -690,7 +685,7 @@ router.get('/:id/members', async (req, res) => {
     }
 
     res.json({
-        ids
+        Members
     })
 
 
@@ -735,9 +730,9 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
           })
     }
 
-    res.json({
+    res.json(
         membership
-    })
+    )
 
 })
 
@@ -793,9 +788,9 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
 
         await otherMember.save()
 
-        res.json({
+        res.json(
             otherMember
-        })
+        )
     }
     else if (status === pending) {
         res.status(400).json({

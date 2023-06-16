@@ -51,9 +51,9 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     await ids.save();
 
-    res.json({
+    res.json(
         ids
-    })
+    )
     }
 
 })

@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
       })
     }
 
-    let events = await Event.findAll({
+    let Events = await Event.findAll({
         attributes: {
             exclude: ['createdAt', 'updatedAt']
         },
@@ -69,10 +69,10 @@ router.get('/', async (req, res) => {
 
     });
 
-    if(events.length > 0) {
+    if(Events.length > 0) {
         let arr = []
 
-        for (let event of events) {
+        for (let event of Events) {
             arr.push(event.dataValues.id)
         }
 
@@ -117,14 +117,14 @@ router.get('/', async (req, res) => {
                 images = ''
             }
 
-            events[i].dataValues.previewImage = images
+            Events[i].dataValues.previewImage = images
 
-            events[i].dataValues.numAttending = num
+            Events[i].dataValues.numAttending = num
             }
         }
 
 
-    res.json({events})
+    res.json({Events})
 })
 
 
@@ -176,9 +176,9 @@ router.get('/:id', async (req, res) => {
 
     events.dataValues.numAttending = num
 
-    res.json({
+    res.json(
         events
-    })
+    )
 })
 
 router.post('/:id/images', requireAuth, async (req, res) => {
@@ -220,9 +220,9 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         }
     })
 
-    res.json({
+    res.json(
         createdImage
-    })
+    )
     }
 })
 
@@ -271,9 +271,9 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     await ids.save()
 
-    res.json({
+    res.json(
       ids
-    })
+    )
     }
 
 
@@ -348,7 +348,7 @@ router.get('/:id/attendees', async (req, res) => {
         })
     }
 
-    let ids
+    let Attendees
      if (!attende) {
         ids = await User.findAll({
             include: {
@@ -363,7 +363,7 @@ router.get('/:id/attendees', async (req, res) => {
         });
      }
      else if (attende.dataValues.status === 'co-host') {
-     ids = await User.findAll({
+     Attendees = await User.findAll({
         include: {
             model: Attendance,
             attributes: ['status'],
@@ -374,7 +374,7 @@ router.get('/:id/attendees', async (req, res) => {
         });
     }
     else if (attende.dataValues.status !== 'co-host') {
-        ids = await User.findAll({
+        Attendees = await User.findAll({
            include: {
                model: Attendance,
                attributes: ['status'],
@@ -388,7 +388,7 @@ router.get('/:id/attendees', async (req, res) => {
     }
 
     res.json({
-        ids
+        Attendees
     })
 
 
@@ -438,9 +438,9 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
           })
     }
 
-    res.json({
+    res.json(
         attendance
-    })
+    )
 
 })
 
@@ -519,9 +519,9 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
         await otherAttende.save()
 
-        res.json({
+        res.json(
             otherAttende
-        })
+        )
     }
     else if (status === 'pending') {
         res.status(400).json({
