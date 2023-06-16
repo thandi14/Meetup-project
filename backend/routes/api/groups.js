@@ -220,9 +220,9 @@ router.get('/:id', async (req, res) => {
         private,
         city,
         state,
-        GroupImage: group.toJSON().GroupImages,
+        GroupImages: group.toJSON().GroupImages,
         Organizer: group.toJSON().Users,
-        Venue: group.toJSON().Venues,
+        Venues: group.toJSON().Venues,
         numMembers
     })
 })
