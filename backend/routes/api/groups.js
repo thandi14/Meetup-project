@@ -166,8 +166,8 @@ router.get('/current', requireAuth, async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    let id = req.params.id;
-    let ids = await Group.findByPk(id);
+    let firstId = req.params.id;
+    let ids = await Group.findByPk(firstId);
 
     if (!ids) {
 
@@ -176,7 +176,7 @@ router.get('/:id', async (req, res) => {
     }
 
 
-    let group = await Group.findByPk(id, {
+    let group = await Group.findByPk(firstId, {
         attributes: {
             exclude: ['createdAt', 'updatedAt']
         },
@@ -203,13 +203,28 @@ router.get('/:id', async (req, res) => {
 
     let num = await Membership.count({
         where: {
-            groupId: id
+            groupId: firstId
         }
     })
 
     group.dataValues.numMembers = num
 
-    res.json(group)
+    let { id, organizerId, name, about, type, private, city, state, numMembers } = group.toJSON()
+
+    res.json({
+        id,
+        organizerId,
+        name,
+        about,
+        type,
+        private,
+        city,
+        state,
+        GroupImage: group.toJSON().GroupImages,
+        Organizer: group.toJSON().Users,
+        Venue: group.toJSON().Venues,
+        numMembers
+    })
 })
 
 router.post('/', requireAuth, async (req, res) => {
