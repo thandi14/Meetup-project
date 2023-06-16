@@ -162,6 +162,12 @@ router.get('/:id', async (req, res) => {
         ]
     })
 
+    if (!events) {
+
+        res.json({message: "Event couldn't be found"});
+
+    }
+
 
 
     let num = await Attendance.count({
@@ -171,14 +177,6 @@ router.get('/:id', async (req, res) => {
     })
 
     events.dataValues.numAttending = num
-
-
-
-    if (!events) {
-
-    res.json({"message": "Event couldn't be found"});
-
-    }
 
     res.json({
         events
@@ -194,7 +192,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     if (!ids) {
 
-    res.json({"message": "Event couldn't be found"});
+    res.json({message: "Event couldn't be found"});
 
     }
 
@@ -204,7 +202,13 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         }
     })
 
-    if (member.dataValues.status !== 'pending') {
+    if (!member) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
+
+    if (member.dataValues.status === 'co-host') {
     let image = await EventImage.create({
         eventId: id,
         url,
@@ -251,6 +255,12 @@ router.put('/:id', requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
+
     if (member.dataValues.status === 'co-host') {
     ids.set({
      venueId: venueId,
@@ -284,6 +294,12 @@ router.delete("/:id", requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
+
     if (ids) {
     if (member.dataValues.status === 'co-host') {
     await Event.destroy({
@@ -309,12 +325,24 @@ router.get('/:id/attendees', async (req, res) => {
 
     let event = await Event.findByPk(id);
 
+    if (!event) {
+
+        res.json({message: "Event couldn't be found"});
+
+    }
+
     let attende = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
             groupId: event.groupId
         }
     })
+
+    if (!attende) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
 
 
     console.log(event)
@@ -376,6 +404,12 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
 
     let event = await Event.findByPk(id);
 
+    if (!member) {
+
+        res.json({message: "Event couldn't be found"});
+
+    }
+
     if (!event) {
         res.json({
             message: "Event couldn't be found"
@@ -435,6 +469,12 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         },
     })
 
+    if (!attende) {
+
+        res.json({message: "Attendance between the user and the event does not exist"});
+
+    }
+
 
     let member = await Membership.findOne({
         where: {
@@ -443,6 +483,12 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         },
     })
 
+    if (!member) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
+
     let otherAttende = await Attendance.findOne({
         where: {
             userId,
@@ -450,7 +496,24 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
+    if (!otherAttende) {
+
+        res.json({message: "Attendance between the user and the event does not exist"});
+
+    }
+
     let pendingAttende = await User.findByPk(userId)
+
+    if (!pendingAttende) {
+
+        res.json({
+            message: "Validation Error",
+            errors: {
+             memberId: "User couldnt be found"
+            }
+        });
+
+    }
 
     if (member.dataValues.status === 'co-host') {
         otherAttende.set({
@@ -464,20 +527,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
             otherAttende
         })
     }
-    else if (!pendingAttende) {
-        res.json({
-                message: "Validation Error",
-                errors: {
-                  memberId: "User couldn't be found"
-                }
-        })
-    }
-    else if (!attende || !otherAttende) {
-        res.json({
-            message: "Attendance between the user and the event does not exist"
-        })
-    }
-    else {
+    else if (status === 'pending') {
         res.json({
             message: "Validations Error",
             errors: {
@@ -511,12 +561,24 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
+    if (!attende) {
+
+        res.json({message: "Attendance between the user and the event does not exist"});
+
+    }
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
             groupId: event.groupId
         },
     })
+
+    if (!member) {
+
+        res.json({message: "Membership between the user and the event does not exist"});
+
+    }
 
     let otherAttende = await Attendance.findOne({
         where: {
@@ -525,7 +587,23 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
+    if (!otherAttende) {
+
+        res.json({message: "Attendance between the user and the event does not exist"});
+
+    }
+
     let pendingAttende = await User.findByPk(userId)
+
+    if (!pendingAttende) {
+
+        res.json({
+            message: "Validation Error",
+            errors: {
+              memberId: "User couldn't be found"
+            }
+    })
+    }
 
     if (member.dataValues.status === 'co-host') {
         otherAttende.destroy()
@@ -533,19 +611,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
         res.json({
             message: "Successfully deleted membership from group"
           })
-    }
-     else if (!pendingAttende) {
-        res.json({
-                message: "Validation Error",
-                errors: {
-                  memberId: "User couldn't be found"
-                }
-        })
-    }
-    else if (!attende) {
-        res.json({
-            message: "Membership between the user and the group does not exist"
-        })
+
     } else if (member.dataValues.status === 'member' && userId === user.dataValues.id) {
         attende.destroy()
 

@@ -259,7 +259,6 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(user.dataValues.id)
     if (!ids) {
 
     res.json({"message": "Group couldn't be found"});
@@ -298,6 +297,12 @@ router.put('/:id', requireAuth, async (req, res) => {
             groupId: parseInt(id)
         }
     })
+
+    if (!member) {
+    res.json({
+        message: "Membership between the user and the group does not exist"
+    })
+    }
 
     let ids = await Group.findByPk(id);
 
@@ -345,6 +350,13 @@ router.delete("/:id", requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
+
+
     if (member.dataValues.status === 'co-host') {
     await ids.destroy()
 
@@ -370,6 +382,12 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
             groupId: parseInt(id)
         }
     })
+
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
 
     if (!ids) {
 
@@ -414,7 +432,11 @@ router.post('/:id/venues', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(member)
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
 
     if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
     let venue = await Venue.create({
@@ -547,7 +569,13 @@ router.post('/:id/events', requireAuth, async (req, res) => {
         }
     })
 
-    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
+
+    if (member.dataValues.status === 'co-host') {
     let event = await Event.create({
         groupId: parseInt(id),
         venueId,
@@ -600,7 +628,12 @@ router.get('/:id/members', async (req, res) => {
         }
     })
 
-    console.log(member)
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
+
 
     let group = await Group.findByPk(id);
 
@@ -723,6 +756,12 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
+
     let otherMember = await Membership.findOne({
         where: {
             userId: memberId,
@@ -749,11 +788,6 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
                 errors: {
                   memberId: "User couldn't be found"
                 }
-        })
-    }
-    else if (!member) {
-        res.json({
-            message: "Membership between the user and the group does not exist"
         })
     }
     else if (status === pending) {
@@ -789,6 +823,12 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         }
     })
 
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
+
     let otherMember = await Membership.findOne({
         where: {
             userId: memberId,
@@ -796,7 +836,19 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         }
     })
 
+    if (!otherMember) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
+
     let pendingMember = await User.findByPk(memberId)
+
+    if (!pendingMember) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+        }
 
 
     if (member.dataValues.status === 'co-host') {
@@ -805,19 +857,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         res.json({
             message: "Successfully deleted membership from group"
           })
-    }
-    else if (!pendingMember) {
-        res.json({
-                message: "Validation Error",
-                errors: {
-                  memberId: "User couldn't be found"
-                }
-        })
-    }
-    else if (!otherMember) {
-        res.json({
-            message: "Membership between the user and the group does not exist"
-        })
+
     } else if (member.dataValues.status === 'member' && memberId === user.dataValues.id) {
         member.destroy()
 

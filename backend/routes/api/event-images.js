@@ -28,6 +28,12 @@ router.delete('/:id', requireAuth, async (req, res) => {
         },
     })
 
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the event does not exist"
+        })
+        }
+
     let groups = await Group.findByPk(member.dataValues.groupId)
 
     let events = await Event.findOne({
@@ -42,6 +48,12 @@ router.delete('/:id', requireAuth, async (req, res) => {
         }
     })
 
+    if (!image) {
+        res.json({
+            message: "Event Image couldn't be found"
+        })
+    }
+    
     if (member.dataValues.status === "co-host" && image.dataValues.eventId === events.dataValues.id) {
 
       image.destroy()
@@ -53,11 +65,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
         )
 
     }
-    else {
-        res.json({
-            message: "Event Image couldn't be found"
-          })
-    }
+
 
 })
 

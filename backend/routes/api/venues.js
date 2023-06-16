@@ -34,7 +34,13 @@ router.put('/:id', requireAuth, async (req, res) => {
         }
     })
 
-    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+    if (!member) {
+        res.json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
+
+    if (member.dataValues.status === 'co-host') {
     ids.set({
         address,
         city,
