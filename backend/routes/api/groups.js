@@ -747,6 +747,15 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
 router.put('/:id/membership', requireAuth, async (req, res) => {
     const { memberId, status } = req.body
 
+    if (status === 'pending') {
+        res.status(400).json({
+            message: "Validations Error",
+            errors: {
+              status : "Cannot change an attendance status to pending"
+            }
+          })
+    }
+
     let id = req.params.id;
     let { user } = req
 
@@ -781,7 +790,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
     let pendingMember = await User.findByPk(memberId)
 
     if (!pendingMember) {
-        res.status(400).json({
+        res.status(404).json({
                 message: "Validation Error",
                 errors: {
                   memberId: "User couldn't be found"
@@ -800,15 +809,6 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
             otherMember
         )
     }
-    else if (status === pending) {
-        res.status(400).json({
-            message: "Validations Error",
-            errors: {
-              status : "Cannot change a membership status to pending"
-            }
-          })
-    }
-
 
 })
 

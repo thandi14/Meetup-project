@@ -432,11 +432,12 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
             "message": "Attendance has already been requested"
         })
     }
-    else if (attende && attende.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+    else if (attende && attende.dataValues.status === 'co-host' || attende.dataValues.status === 'member') {
         res.json({
             message: "User is already a attende of the group"
           })
     }
+
 
     res.json(
         attendance
@@ -446,6 +447,15 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
 
 router.put('/:id/attendance', requireAuth, async (req, res) => {
     const { userId, status } = req.body
+
+    if (status === 'pending') {
+        res.status(400).json({
+            message: "Validations Error",
+            errors: {
+              status : "Cannot change an attendance status to pending"
+            }
+          })
+    }
 
     let id = req.params.id;
     let { user } = req
@@ -523,7 +533,8 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
             otherAttende
         )
     }
-    else if (status === 'pending') {
+
+    if (status === 'pending') {
         res.status(400).json({
             message: "Validations Error",
             errors: {
