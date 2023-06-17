@@ -88,6 +88,7 @@ router.get('/', async (req, res) => {
                 attributes: ['url'],
                 where: {
                     eventId: arr[i],
+                    preview: true
 
                 },
                 include: {
@@ -97,25 +98,29 @@ router.get('/', async (req, res) => {
             });
 
            let images = ''
-            if (image.length > 1) {
-            image.forEach((element, i) => {
-                console.log(element)
-                if (i === 0) {
-                    images += element.dataValues.url
-                }
-                else {
-                    images += ', ' + element.dataValues.url
 
-                }
 
-            });
-            }
-            else if (image.length == 1) {
-                images += image[0].dataValues.url
-            }
-            else {
-                images = ''
-            }
+       // image.forEach((element, i) => {
+           if (image.length) {
+           images += image[image.length - 1].dataValues.url
+           }
+
+
+       // });
+            // if (image.length > 1) {
+            // // image.forEach((element, i) => {
+            // //     console.log(element)
+            // //     if (i === 0) {
+            // //         images += element.dataValues.url
+            // //     }
+            // //     else {
+            // //         images += ', ' + element.dataValues.url
+
+            // //     }
+
+            // // });
+            // }
+            console.log(image)
 
             Events[i].dataValues.previewImage = images
 
@@ -400,11 +405,6 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
 
     let event = await Event.findByPk(id);
 
-    if (!member) {
-
-        res.status(404).json({message: "Event couldn't be found"});
-
-    }
 
     if (!event) {
         res.status(404).json({

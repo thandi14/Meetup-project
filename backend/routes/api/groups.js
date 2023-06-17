@@ -136,7 +136,7 @@ router.get('/current', requireAuth, async (req, res) => {
             attributes: ['url'],
             where: {
                 groupId: arr[i],
-
+                preview: true
             },
             include: {
                 model: Group,
@@ -145,13 +145,12 @@ router.get('/current', requireAuth, async (req, res) => {
         });
 
         let images = ''
-        image.forEach((element, i) => {
-            if (i === 0) {
-                images += element.dataValues.url
-            }
-            images += ', ' + element.dataValues.url
 
-        });
+
+        // image.forEach((element, i) => {
+            if (image.length) {
+            images += image[image.length - 1].dataValues.url
+            }
 
         Groups[i].dataValues.previewImage = images
 
@@ -261,6 +260,12 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     let ids = await Group.findByPk(id);
 
+    if (!ids) {
+
+        res.status(404).json({message: "Group couldn't be found"});
+
+    }
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -272,12 +277,6 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
-    }
-
-    if (!ids) {
-
-        res.status(404).json({message: "Group couldn't be found"});
-
     }
 
     if (member.dataValues.status === 'co-host') {
@@ -306,6 +305,14 @@ router.put('/:id', requireAuth, async (req, res) => {
     let id = req.params.id;
     const { user } = req
 
+    let ids = await Group.findByPk(id);
+
+    if (!ids) {
+
+        res.status(404).json({message: "Group couldn't be found"});
+
+    }
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -313,18 +320,11 @@ router.put('/:id', requireAuth, async (req, res) => {
         }
     })
 
+
     if (!member) {
     res.status(404).json({
         message: "Membership between the user and the group does not exist"
     })
-    }
-
-    let ids = await Group.findByPk(id);
-
-    if (!ids) {
-
-        res.status(404).json({message: "Group couldn't be found"});
-
     }
 
     if (member.dataValues.status === 'co-host') {
@@ -391,6 +391,12 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 
     let ids = await Group.findByPk(id);
 
+    if (!ids) {
+
+        res.status(404).json({message: "Group couldn't be found"});
+
+    }
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -402,16 +408,11 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
         res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
-        }
-
-    if (!ids) {
-
-        res.status(404).json({message: "Group couldn't be found"});
-
     }
 
+
     if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
-    let Venue = await Venue.findAll({
+    let Venues = await Venue.findAll({
             where: {
                 groupId: id
             },
@@ -422,7 +423,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 
 
     res.json({
-        Venue
+        Venues
     })
     }
 
@@ -526,6 +527,7 @@ router.get('/:id/events', async (req, res) => {
             attributes: ['url'],
             where: {
                 eventId: arr[i],
+                preview: true
 
             },
             include: {
@@ -535,21 +537,12 @@ router.get('/:id/events', async (req, res) => {
         });
 
         let images = ''
-        if (image.length > 1) {
-        image.forEach((element, i) => {
-            if (i === 0) {
-                images += element.dataValues.url
-            }
-            images += ', ' + element.dataValues.url
 
-        });
-        }
-        else if (image.length == 1) {
-            images += image[0].dataValues.url
-        }
-        else {
-            images = ''
-        }
+
+        // image.forEach((element, i) => {
+        if (image.length) {
+        images += image[image.length - 1].dataValues.url
+         }
 
         Events[i].dataValues.previewImage = images
 
