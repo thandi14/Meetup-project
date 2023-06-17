@@ -7,6 +7,7 @@ const { Op } = require('sequelize');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const { User, Group, Venue, Attendance, Event, EventImage, Membership } = require('../../db/models');
+const { parse } = require('dotenv');
 
 
 const router = express.Router();
@@ -105,23 +106,6 @@ router.get('/', async (req, res) => {
            images += image[image.length - 1].dataValues.url
            }
 
-
-       // });
-            // if (image.length > 1) {
-            // // image.forEach((element, i) => {
-            // //     console.log(element)
-            // //     if (i === 0) {
-            // //         images += element.dataValues.url
-            // //     }
-            // //     else {
-            // //         images += ', ' + element.dataValues.url
-
-            // //     }
-
-            // // });
-            // }
-            console.log(image)
-
             Events[i].dataValues.previewImage = images
 
             Events[i].dataValues.numAttending = num
@@ -201,7 +185,8 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     let member = await Membership.findOne({
         where: {
-            userId: user.dataValues.id
+            userId: user.dataValues.id,
+            groupId: ids.dataValues.groupId
         }
     })
 
@@ -296,7 +281,8 @@ router.delete("/:id", requireAuth, async (req, res) => {
 
     let member = await Membership.findOne({
         where: {
-            userId: user.dataValues.id
+            userId: user.dataValues.id,
+            groupId: ids.dataValues.groupId
         }
     })
 
@@ -326,6 +312,8 @@ router.get('/:id/attendees', async (req, res) => {
     let id = req.params.id;
     let { user } = req
 
+    let Attendees
+
     let event = await Event.findByPk(id);
 
     if (!event) {
@@ -337,25 +325,13 @@ router.get('/:id/attendees', async (req, res) => {
     let attende = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
-            groupId: event.groupId
+            groupId: event.dataValues.groupId
         }
     })
 
     if (!attende) {
 
-        res.status(404).json({message: "Membership between the user and the event does not exist"});
-
-    }
-
-    if (!event) {
-        res.status(404).json({
-            message: "Event couldn't be found"
-        })
-    }
-
-    let Attendees
-     if (!attende) {
-        ids = await User.findAll({
+        Attendees = await User.findAll({
             include: {
                 model: Attendance,
                 attributes: ['status'],
@@ -366,8 +342,10 @@ router.get('/:id/attendees', async (req, res) => {
                 }
             },
         });
-     }
-     else if (attende.dataValues.status === 'co-host') {
+    }
+
+
+    else if (attende.dataValues.status === 'co-host') {
      Attendees = await User.findAll({
         include: {
             model: Attendance,
@@ -419,6 +397,16 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
+    let member = await Membership.findOne({
+        where: {
+            userId: user.dataValues.id,
+            groupId: event.dataValues.groupId
+        }
+    })
+
+
+    console.log(attende)
+
     let attendance
     if (!attende) {
         attendance = await Attendance.create({
@@ -427,13 +415,15 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
             status: 'pending'
         })
     }
-    else if (attende.dataValues.status === 'pending') {
-        res.json({
+
+    if (attende.dataValues.status === 'pending') {
+        res.status(400).json({
             "message": "Attendance has already been requested"
         })
     }
-    else if (attende && attende.dataValues.status === 'co-host' || attende.dataValues.status === 'member') {
-        res.json({
+
+    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+        res.status(400).json({
             message: "User is already a attende of the group"
           })
     }
@@ -468,20 +458,6 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         })
     }
 
-    let attende = await Attendance.findOne({
-        where: {
-            userId: user.dataValues.id,
-            eventId: event.id
-        },
-    })
-
-    if (!attende) {
-
-        res.status(404).json({message: "Attendance between the user and the event does not exist"});
-
-    }
-
-
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -492,6 +468,19 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
     if (!member) {
 
         res.status(404).json({message: "Membership between the user and the event does not exist"});
+
+    }
+
+    let attende = await Attendance.findOne({
+        where: {
+            userId: user.dataValues.id,
+            eventId: event.id
+        },
+    })
+
+    if (!attende) {
+
+        res.status(404).json({message: "Attendance between the user and the event does not exist"});
 
     }
 
@@ -549,6 +538,17 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
 router.delete('/:id/attendance', requireAuth, async (req, res) => {
     const { userId } = req.body
+
+    let findUser = await User.findByPk(userId)
+
+    if (!findUser) {
+        res.status(404).json({
+            message: "Validation Error",
+            errors: {
+              memberId: "User couldn't be found"
+            }
+    })
+    }
 
     let id = req.params.id;
     let { user } = req

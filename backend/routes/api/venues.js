@@ -22,6 +22,8 @@ router.put('/:id', requireAuth, async (req, res) => {
     }
     );
 
+    console.log(ids)
+
     if (!ids) {
 
     res.status(404).json({message: "Venue couldn't be found"});
@@ -31,6 +33,7 @@ router.put('/:id', requireAuth, async (req, res) => {
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
+            groupId: ids.dataValues.groupId
         }
     })
 

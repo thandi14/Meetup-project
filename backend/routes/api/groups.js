@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
             attributes: ['url'],
             where: {
                 groupId: arr[i],
+                preview: true
 
             },
             include: {
@@ -46,24 +47,11 @@ router.get('/', async (req, res) => {
 
         let images = ''
 
-        if (image.length > 1) {
-            image.forEach((element, i) => {
-                if (i === 0) {
-                    images += element.dataValues.url
-                }
-                else {
-                    images += ', ' + element.dataValues.url
 
-                }
-
-            });
-            }
-            else if (image.length == 1) {
-                images += image[0].dataValues.url
-            }
-            else {
-                images = ''
-            }
+        // image.forEach((element, i) => {
+        if (image.length) {
+        images += image[image.length - 1].dataValues.url
+        }
 
         Groups[i].dataValues.previewImage = images
 
@@ -538,11 +526,10 @@ router.get('/:id/events', async (req, res) => {
 
         let images = ''
 
-
         // image.forEach((element, i) => {
         if (image.length) {
         images += image[image.length - 1].dataValues.url
-         }
+        }
 
         Events[i].dataValues.previewImage = images
 
@@ -630,6 +617,8 @@ router.get('/:id/members', async (req, res) => {
     let id = req.params.id;
     let { user }= req
 
+    let Members
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -638,10 +627,18 @@ router.get('/:id/members', async (req, res) => {
     })
 
     if (!member) {
-        res.status(404).json({
-            message: "Membership between the user and the group does not exist"
-        })
-        }
+        Members = await User.findAll({
+            include: {
+                model: Membership,
+                attributes: ['status'],
+                where: {
+                    groupId: id,
+                    status: ['member', 'co-host']
+
+                }
+            },
+        });
+    }
 
 
     let group = await Group.findByPk(id);
@@ -651,8 +648,6 @@ router.get('/:id/members', async (req, res) => {
             message: "Group couldn't be found"
         })
     }
-
-    let Members
 
     if (!member) {
         Members = await User.findAll({
@@ -680,7 +675,7 @@ router.get('/:id/members', async (req, res) => {
            },
        });
     }
-    else if (member.dataValues.status === 'co-host'){
+    else if (member.dataValues.status === 'co-host' ){
         Members = await User.findAll({
             include: {
                 model: Membership,
