@@ -404,9 +404,6 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
-
-    console.log(attende)
-
     let attendance
     if (!attende) {
         attendance = await Attendance.create({
@@ -414,6 +411,10 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
             eventId: parseInt(id),
             status: 'pending'
         })
+
+        res.json(
+            attendance
+        )
     }
 
     if (attende.dataValues.status === 'pending') {
@@ -427,11 +428,6 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
             message: "User is already a attende of the group"
           })
     }
-
-
-    res.json(
-        attendance
-    )
 
 })
 
@@ -461,9 +457,11 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
-            groupId: event.groupId
+            groupId: event.dataValues.groupId
         },
     })
+
+    console.log(event)
 
     if (!member) {
 
@@ -474,13 +472,13 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
     let attende = await Attendance.findOne({
         where: {
             userId: user.dataValues.id,
-            eventId: event.id
+            eventId: event.dataValues.id
         },
     })
 
     if (!attende) {
 
-        res.status(404).json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
 
     }
 
@@ -570,7 +568,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     if (!attende) {
 
-        res.status(404).json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Attendance does not exist for this User"});
 
     }
 
@@ -589,14 +587,14 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
 
     let otherAttende = await Attendance.findOne({
         where: {
-            userId: userId,
+            userId: user.dataValues.id,
             eventId: parseInt(id)
         }
     })
 
     if (!otherAttende) {
 
-        res.status(404).json({message: "Attendance between the user and the event does not exist"});
+        res.status(404).json({message: "Only the User or organizer may delete an Attendance"});
 
     }
 
@@ -619,7 +617,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
             message: "Successfully deleted membership from group"
           })
 
-    } else if (member.dataValues.status === 'member' && userId === user.dataValues.id) {
+    } else if (member.dataValues.status !== 'co-host' && userId === user.dataValues.id) {
         attende.destroy()
 
         res.json({

@@ -31,6 +31,8 @@ router.delete('/:id', requireAuth, async (req, res) => {
         },
     })
 
+    console.log(member)
+
     if (!member) {
         res.status(404).json({
             message: "Membership between the user and the group does not exist"
@@ -47,6 +49,16 @@ router.delete('/:id', requireAuth, async (req, res) => {
             message: "Successfully deleted"
             }
         )
+
+    }
+    else if (member.dataValues.status !== "co-host" && member.dataValues.groupId === image.dataValues.groupId) {
+
+        res.status(403).json(
+            {
+                message: "Only the organizer may delete an Image"
+              }
+        )
+
 
     }
 

@@ -54,6 +54,16 @@ router.delete('/:id', requireAuth, async (req, res) => {
         )
 
     }
+    else if (member.dataValues.status !== "co-host" && events.dataValues.id === image.dataValues.eventId) {
+
+        res.status(403).json(
+            {
+                message: "Only the organizer may delete an Image"
+              }
+        )
+
+
+    }
 
 
 })

@@ -110,6 +110,7 @@ router.get('/current', requireAuth, async (req, res) => {
         let arr = []
 
     for (let group of Groups) {
+        console.log(group)
         arr.push(group.dataValues.id)
     }
 
@@ -317,7 +318,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (member.dataValues.status === 'co-host') {
     ids.set({
-        organizerId: parseInt(id),
+        organizerId: user.dataValues.id,
         name,
         about,
         type,
@@ -698,6 +699,20 @@ router.get('/:id/members', async (req, res) => {
 router.post('/:id/membership', requireAuth, async (req, res) => {
     let id = req.params.id;
     let { user } = req
+    const { memberId, status } = req.body
+
+
+    let pendingMember = await User.findByPk(memberId)
+
+    if (!pendingMember) {
+        res.status(404).json({
+                message: "Validation Error",
+                errors: {
+                  memberId: "User couldn't be found"
+                }
+        })
+    }
+
 
     let group = await Group.findByPk(id);
 
@@ -775,13 +790,6 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
-    let otherMember = await Membership.findOne({
-        where: {
-            userId: memberId,
-           groupId: parseInt(id)
-        }
-    })
-
     let pendingMember = await User.findByPk(memberId)
 
     if (!pendingMember) {
@@ -790,6 +798,19 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
                 errors: {
                   memberId: "User couldn't be found"
                 }
+        })
+    }
+
+    let otherMember = await Membership.findOne({
+        where: {
+            userId: memberId,
+           groupId: parseInt(id)
+        }
+    })
+
+    if (!otherMember) {
+        res.status(404).json({
+            message: "Membership between the user and the group does not exist"
         })
     }
 
@@ -853,7 +874,13 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
-        }
+    }
+
+    if (id !== member.dataValues.groupId) {
+        res.status(404).json({
+            message: "Membership between the user and the group does not exist"
+        })
+    }
 
 
     if (member.dataValues.status === 'co-host') {
