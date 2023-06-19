@@ -9,6 +9,16 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { User, Group, Venue, Attendance, Event, EventImage, Membership } = require('../../db/models');
 const { parse } = require('dotenv');
 
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
+
+
+const validateBody = [
+    check('description')
+     .isLength({ min: 1 })
+     .withMessage('Description is required'),
+     handleValidationErrors
+]
 
 const router = express.Router();
 
@@ -45,9 +55,9 @@ router.get('/', async (req, res) => {
         "errors": {
           "page": "Page must be greater than or equal to 1",
           "size": "Size must be greater than or equal to 1",
-          "name": "Name must be a string",
-          "type": "Type must be 'Online' or 'In Person'",
-          "startDate": "Start date must be a valid datetime",
+        //   "name": "Name must be a string",
+        //   "type": "Type must be 'Online' or 'In Person'",
+        //   "startDate": "Start date must be a valid datetime",
         }
       })
     }
@@ -216,7 +226,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
     }
 })
 
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', validateBody, requireAuth, async (req, res) => {
 
     const { venueId, name, type, capacity, price, description } = req.body
     let id = req.params.id;
@@ -224,7 +234,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     let ids = await Event.findByPk(id);
 
-    console.log(ids)
+    let venues = await Venue.findByPk(venueId)
 
     if (!ids) {
 
@@ -232,14 +242,15 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     }
 
-    if (!venueId) {
+    if (!venues) {
         res.status(404).json({message: "Venue couldn't be found"});
 
     }
 
     let member = await Membership.findOne({
         where: {
-            userId: user.dataValues.id
+            userId: user.dataValues.id,
+            groupId: ids.dataValues.groupId
         }
     })
 
@@ -434,15 +445,6 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
 router.put('/:id/attendance', requireAuth, async (req, res) => {
     const { userId, status } = req.body
 
-    if (status === 'pending') {
-        res.status(400).json({
-            message: "Validations Error",
-            errors: {
-              status : "Cannot change an attendance status to pending"
-            }
-          })
-    }
-
     let id = req.params.id;
     let { user } = req
 
@@ -452,6 +454,15 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
         res.status(404).json({
             message: "Event couldn't be found"
         })
+    }
+
+    if (status === 'pending') {
+        res.status(400).json({
+            message: "Validations Error",
+            errors: {
+              status : "Cannot change an attendance status to pending"
+            }
+          })
     }
 
     let member = await Membership.findOne({
@@ -508,7 +519,7 @@ router.put('/:id/attendance', requireAuth, async (req, res) => {
 
     }
 
-    if (member.dataValues.status === 'co-host') {
+    if (member.dataValues.status === 'co-host' && status !== 'pending') {
         otherAttende.set({
             eventId: id,
             status
@@ -575,14 +586,13 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
-            groupId: event.groupId
+            groupId: event.dataValues.groupId
         },
     })
 
     if (!member) {
 
-        res.status(404).json({message: "Membership between the user and the event does not exist"});
-
+        res.status(404).json({message: "Attendance does not exist for this User"});
     }
 
     let otherAttende = await Attendance.findOne({
@@ -592,7 +602,9 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
         }
     })
 
-    if (!otherAttende) {
+    console.log(member)
+
+    if (!otherAttende && attende.dataValues.eventId === id) {
 
         res.status(404).json({message: "Only the User or organizer may delete an Attendance"});
 
@@ -610,6 +622,11 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
     })
     }
 
+    if (!otherAttende) {
+
+        res.status(404).json({message: "Attendance does not exist for this User"});
+    }
+
     if (member.dataValues.status === 'co-host') {
         otherAttende.destroy()
 
@@ -624,6 +641,7 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
             message: "Successfully deleted membership from group"
           })
     }
+
 
 
 })

@@ -9,8 +9,38 @@ const { setTokenCookie, restoreUser, requireAuth, } = require('../../utils/auth'
 const { User, Group, Venue, GroupImage, Event, EventImage, Membership, Attendance } = require('../../db/models');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const group = require('../../db/models/group');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
+const validateGroup = [
+    check('city')
+     .isLength({ min: 1 })
+     .withMessage('City is required'),
+     check('state')
+     .isLength({ min: 1 })
+     .withMessage('State is required'),
+     handleValidationErrors
+]
 
+const validateVenue = [
+    check('address')
+    .isLength({ min: 1 })
+    .withMessage('Street address is required'),
+    check('city')
+    .isLength({ min: 1 })
+    .withMessage('City is required'),
+    check('state')
+    .isLength({ min: 1 })
+    .withMessage('State is required'),
+    handleValidationErrors
+]
+
+const validateEvent = [
+    check('description')
+    .isLength({ min: 1 })
+    .withMessage('Description is required'),
+   handleValidationErrors
+]
 
 
 const router = express.Router();
@@ -215,7 +245,7 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', validateGroup, requireAuth, async (req, res) => {
     const { name, about, type, private, city, state} = req.body;
     const { user } = req;
     const id = user.dataValues.id;
@@ -288,7 +318,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
 })
 
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', validateGroup, requireAuth, async (req, res) => {
 
     const { name, about, type, private, city, state } = req.body
     let id = req.params.id;
@@ -418,7 +448,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 
 })
 
-router.post('/:id/venues', requireAuth, async (req, res) => {
+router.post('/:id/venues', validateVenue, requireAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body
     let id = req.params.id;
     const { user } = req
@@ -546,11 +576,19 @@ router.get('/:id/events', async (req, res) => {
 
 })
 
-router.post('/:id/events', requireAuth, async (req, res) => {
+router.post('/:id/events', validateEvent, requireAuth, async (req, res) => {
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
     let id = req.params.id;
     let ids = await Group.findByPk(id);
     let { user } = req
+
+    let venue = await Venue.findByPk(venueId)
+
+    if (!venue) {
+
+        res.status(404).json({message: "Venue does not exist"});
+
+    }
 
 
     if (!ids) {
@@ -756,16 +794,6 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
 
 router.put('/:id/membership', requireAuth, async (req, res) => {
     const { memberId, status } = req.body
-
-    if (status === 'pending') {
-        res.status(400).json({
-            message: "Validations Error",
-            errors: {
-              status : "Cannot change an attendance status to pending"
-            }
-          })
-    }
-
     let id = req.params.id;
     let { user } = req
 
@@ -788,6 +816,15 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
         res.status(404).json({
             message: "Membership between the user and the group does not exist"
         })
+    }
+
+    if (status === 'pending') {
+        res.status(400).json({
+            message: "Validations Error",
+            errors: {
+              status : "Cannot change an attendance status to pending"
+            }
+          })
     }
 
     let pendingMember = await User.findByPk(memberId)
@@ -814,7 +851,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
-    if (member.dataValues.status === 'co-host') {
+    if (member.dataValues.status === 'co-host' && status !== 'pending') {
         otherMember.set({
             status
         })
@@ -851,7 +888,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
 
     if (!member) {
         res.status(404).json({
-            message: "Membership between the user and the group does not exist"
+            message: "Only the User or organizer may delete an Attendance"
         })
         }
 
@@ -872,15 +909,20 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
 
     if (!pendingMember) {
         res.status(404).json({
-            message: "Membership between the user and the group does not exist"
+
+                message: "Validation Error",
+                errors: {
+                  "memberId": "User couldn't be found"
+                }
+
         })
     }
 
-    if (id !== member.dataValues.groupId) {
-        res.status(404).json({
-            message: "Membership between the user and the group does not exist"
-        })
-    }
+    // if (id !== member.dataValues.groupId) {
+    //     res.status(404).json({
+    //         message: "Membership between the user and the group does not exist"
+    //     })
+    // }
 
 
     if (member.dataValues.status === 'co-host') {
