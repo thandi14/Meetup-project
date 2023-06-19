@@ -201,7 +201,7 @@ router.get('/:id', async (req, res) => {
         include: [{
             model: GroupImage,
             attributes: {
-                exclude: ['createdAt', 'updatedAt']
+                exclude: ['createdAt', 'updatedAt', 'groupId']
             }
         },
         {
@@ -315,6 +315,11 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         createdImage
     )
     }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may add an image"
+    })
+    }
 
 })
 
@@ -362,6 +367,11 @@ router.put('/:id', validateGroup, requireAuth, async (req, res) => {
         ids
     )
     }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may edit a group"
+    })
+    }
 
 })
 
@@ -399,6 +409,11 @@ router.delete("/:id", requireAuth, async (req, res) => {
     })
 
     }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may delete a group"
+    })
+    }
 
 
 })
@@ -430,7 +445,7 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
     }
 
 
-    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+    if (member.dataValues.status === 'co-host') {
     let Venues = await Venue.findAll({
             where: {
                 groupId: id
@@ -443,6 +458,11 @@ router.get('/:id/venues', requireAuth, async (req, res) => {
 
     res.json({
         Venues
+    })
+    }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may view a venue"
     })
     }
 
@@ -474,7 +494,7 @@ router.post('/:id/venues', validateVenue, requireAuth, async (req, res) => {
         })
     }
 
-    if (member.dataValues.status === 'co-host' || member.dataValues.status === 'member') {
+    if (member.dataValues.status === 'co-host' ) {
     let venue = await Venue.create({
         groupId: parseInt(id),
         address,
@@ -491,6 +511,11 @@ router.post('/:id/venues', validateVenue, requireAuth, async (req, res) => {
     res.json(
         createdVenue
     )
+    }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may add a venue"
+    })
     }
 
 })
@@ -648,6 +673,11 @@ router.post('/:id/events', validateEvent, requireAuth, async (req, res) => {
     res.json(
         createdEvent
     )
+    }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may add an event"
+    })
     }
 
 })
@@ -862,6 +892,11 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
             otherMember
         )
     }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may edit a membership"
+    })
+    }
 
 })
 
@@ -879,6 +914,20 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
+    let pendingMember = await User.findByPk(memberId)
+
+
+    if (!pendingMember) {
+        res.status(404).json({
+
+                message: "Validation Error",
+                errors: {
+                  "memberId": "User couldn't be found"
+                }
+
+        })
+    }
+
     let member = await Membership.findOne({
         where: {
             userId: user.dataValues.id,
@@ -888,9 +937,9 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
 
     if (!member) {
         res.status(404).json({
-            message: "Only the User or organizer may delete an Attendance"
+            message: "Membership between the user and the group does not exist"
         })
-        }
+    }
 
     let otherMember = await Membership.findOne({
         where: {
@@ -905,26 +954,6 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
-    let pendingMember = await User.findByPk(memberId)
-
-    if (!pendingMember) {
-        res.status(404).json({
-
-                message: "Validation Error",
-                errors: {
-                  "memberId": "User couldn't be found"
-                }
-
-        })
-    }
-
-    // if (id !== member.dataValues.groupId) {
-    //     res.status(404).json({
-    //         message: "Membership between the user and the group does not exist"
-    //     })
-    // }
-
-
     if (member.dataValues.status === 'co-host') {
         otherMember.destroy()
 
@@ -938,6 +967,11 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         res.json({
             message: "Successfully deleted membership from group"
           })
+    }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may delete a membership"
+        })
     }
 
 })

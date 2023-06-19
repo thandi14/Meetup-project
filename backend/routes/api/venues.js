@@ -7,12 +7,26 @@ const { Op } = require('sequelize');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const { User, Group, Venue, GroupImage, Membership } = require('../../db/models');
-
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+const validateVenue = [
+    check('address')
+    .isLength({ min: 1 })
+    .withMessage('Street address is required'),
+    check('city')
+    .isLength({ min: 1 })
+    .withMessage('City is required'),
+    check('state')
+    .isLength({ min: 1 })
+    .withMessage('State is required'),
+    handleValidationErrors
+]
 
-router.put('/:id', requireAuth, async (req, res) => {
+
+router.put('/:id', validateVenue, requireAuth, async (req, res) => {
     const { address, city, state, lat, lng } = req.body;
     const { user } = req
 
@@ -57,6 +71,11 @@ router.put('/:id', requireAuth, async (req, res) => {
     res.json(
         ids
     )
+    }
+    else {
+        res.status(404).json({
+            message: "Only the organizer may edit a venue"
+    })
     }
 
 })
