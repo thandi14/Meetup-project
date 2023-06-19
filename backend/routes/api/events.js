@@ -357,6 +357,9 @@ router.get('/:id/attendees', async (req, res) => {
     if (!attende) {
 
         Attendees = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
             include: {
                 model: Attendance,
                 attributes: ['status'],
@@ -405,6 +408,7 @@ router.get('/:id/attendees', async (req, res) => {
 router.post('/:id/attendance', requireAuth, async (req, res) => {
     let id = req.params.id;
     let { user } = req
+    const { userId } = req.body
 
     let event = await Event.findByPk(id);
 
@@ -448,13 +452,16 @@ router.post('/:id/attendance', requireAuth, async (req, res) => {
         )
     }
 
+    if (userId !== user.dataValues.id) {
+        res.status(404).json({message: "Only the user may add an attendance"});
+
+    }
     else if (attende.dataValues.status === 'pending') {
         res.status(400).json({
             "message": "Attendance has already been requested"
         })
     }
-
-    if (attende.dataValues.status === 'attending' && attende) {
+    else if (attende.dataValues.status === 'attending' && attende) {
         res.status(400).json({
             message: "User is already a attende of the group"
           })
@@ -610,6 +617,10 @@ router.delete('/:id/attendance', requireAuth, async (req, res) => {
         },
     })
 
+    if (!member) {
+        res.status(404).json({message: "Membership between the user and the event does not exist"});
+
+    }
 
     if (!member && attende) {
         if (user.dataValues.userId !== userId) {

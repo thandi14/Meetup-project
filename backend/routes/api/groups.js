@@ -697,6 +697,9 @@ router.get('/:id/members', async (req, res) => {
 
     if (!member) {
         Members = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
             include: {
                 model: Membership,
                 attributes: ['status'],
@@ -720,6 +723,9 @@ router.get('/:id/members', async (req, res) => {
 
     if (!member) {
         Members = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
             include: {
                 model: Membership,
                 attributes: ['status'],
@@ -733,6 +739,9 @@ router.get('/:id/members', async (req, res) => {
     }
     else if (member.dataValues.status !== 'co-host') {
         Members = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
            include: {
                model: Membership,
                attributes: ['status'],
@@ -746,6 +755,9 @@ router.get('/:id/members', async (req, res) => {
     }
     else if (member.dataValues.status === 'co-host' ){
         Members = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
             include: {
                 model: Membership,
                 attributes: ['status'],
@@ -768,6 +780,11 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
     let id = req.params.id;
     let { user } = req
     const { memberId, status } = req.body
+
+    if (memberId !== user.dataValues.id) {
+        res.status(404).json({message: "Only the user may add a membership"});
+
+    }
 
 
     let pendingMember = await User.findByPk(memberId)
