@@ -195,9 +195,9 @@ router.get('/:id', async (req, res) => {
 
 
     let group = await Group.findByPk(firstId, {
-        attributes: {
-            exclude: ['createdAt', 'updatedAt']
-        },
+        // attributes: {
+        //     exclude: ['createdAt', 'updatedAt']
+        // },
         include: [{
             model: GroupImage,
             attributes: {
@@ -227,7 +227,7 @@ router.get('/:id', async (req, res) => {
 
     group.dataValues.numMembers = num
 
-    let { id, organizerId, name, about, type, private, city, state, numMembers } = group.toJSON()
+    let { id, organizerId, name, about, type, private, city, state, numMembers, createdAt, updatedAt } = group.toJSON()
 
     res.json({
         id,
@@ -238,6 +238,8 @@ router.get('/:id', async (req, res) => {
         private,
         city,
         state,
+        createdAt,
+        updatedAt,
         GroupImages: group.toJSON().GroupImages,
         Organizer: group.toJSON().Users,
         Venues: group.toJSON().Venues,
