@@ -11,8 +11,6 @@ const user = require('../../db/models/user');
 
 const router = express.Router();
 
-
-
 router.get(
   '/', requireAuth,
   async (req, res) => {
@@ -113,6 +111,15 @@ router.post(
     });
     }
 );
+
+router.delete(
+    '/',
+    (_req, res) => {
+      res.clearCookie('token');
+      return res.json({ message: 'success' });
+    }
+);
+
 
 
 module.exports = router;
