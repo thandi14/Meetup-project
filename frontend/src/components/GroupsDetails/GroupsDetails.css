@@ -1,0 +1,26 @@
+.groupDetails1 {
+    display: flex;
+    justify-content: center;
+    padding-left: 150px;
+    padding-right: 150px;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.groupImg1 {
+    width: 520px;
+    height: 280px
+}
+
+.groupInfo1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 300px;
+    width: 300px
+}
+
+.groupTitle1 {
+    text-align: start;
+}

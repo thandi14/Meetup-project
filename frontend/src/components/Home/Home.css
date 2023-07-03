@@ -81,9 +81,13 @@
 
 .groupLink, .eventLink, .startLink {
     text-align: center;
-    font-size: 18pt;
     color: #00525E;
+    font-size: 18pt;
     text-decoration: none;
+}
+
+.eventLink {
+    color:#00525E
 }
 
 .groupLink:hover, .eventLink:hover, .startLink:hover {

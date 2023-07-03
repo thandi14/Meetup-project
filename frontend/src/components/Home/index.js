@@ -35,7 +35,7 @@ function HomePage() {
             </div>
             <div className="event">
             <img className='eventImg'src='https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384'></img>
-            <Link className='eventLink' to='/'>Find an event</Link>
+            <Link className='eventLink' to='/events'>Find an event</Link>
             <caption className="eventText">Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking.</caption>
             </div>
             <div className="start">

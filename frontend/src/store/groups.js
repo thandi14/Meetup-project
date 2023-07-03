@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_GROUPS = 'groups/getGroups';
-const GET_EVENTS = 'groups/getEvents';
+//const GET_EVENTS = 'groups/getEvents';
 const GET_DETAILS = 'groups/getDetails'
 
 const getGroups = (groups) => {
@@ -11,12 +11,12 @@ const getGroups = (groups) => {
     }
 }
 
-const getEvents = (events) => {
-    return {
-        type: GET_EVENTS,
-        events
-    }
-}
+// const getEvents = (events) => {
+//     return {
+//         type: GET_EVENTS,
+//         events
+//     }
+// }
 
 const getDetails = (details) => {
     return {
@@ -26,26 +26,26 @@ const getDetails = (details) => {
 }
 
 export const getAllGroups = () => async (dispatch) => {
-    const response = await csrfFetch('/api/groups')
-    const data = await response.json();
-    dispatch(getGroups(data.Groups));
-    return response;
+    const response1 = await csrfFetch('/api/groups')
+    const response2 = await csrfFetch(`/api/events`)
+    const data1 = await response1.json();
+    const data2 = await response2.json();
+    data1.Groups['Events'] = data2.Events
+    dispatch(getGroups(data1));
+    return response1;
 }
 
-export const getEventsById = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${id}/events`)
-    const data = await response.json();
-    console.log(data)
-    dispatch(getGroups(data));
-    return response;
-}
+
 
 export const getDetailsById = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${id}`)
-    const data = await response.json();
-    console.log(data)
-    dispatch(getDetails(data));
-    return response;
+    const response1 = await csrfFetch(`/api/groups/${id}`)
+    const response2 = await csrfFetch(`/api/groups/${id}/events`)
+    const data1 = await response1.json();
+    const data2 = await response2.json()
+   // console.log(data2)
+    data1['Events'] = data2.Events
+    dispatch(getDetails(data1));
+    return response1;
 }
 
 const initialState = {}
@@ -58,12 +58,6 @@ const groupsReducer = (state = initialState, action) => {
         return {
             ...state,
             ...groups
-        }
-        case GET_EVENTS:
-        let events = action.events
-        return {
-            ...state,
-            ...events
         }
         case GET_DETAILS:
         let details = action.details
