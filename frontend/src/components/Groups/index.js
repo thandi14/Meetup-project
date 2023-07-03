@@ -1,32 +1,31 @@
 import * as groupActions from '../../store/groups'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import './Groups.css'
 
 function Groups() {
-    const dispatch = useDispatch()
+    const dispatch1 = useDispatch()
+    const dispatch2 = useDispatch()
+    const history = useHistory()
     const groups = useSelector((state) => state.groups)
 
     useEffect(() => {
-        dispatch(groupActions.getAllGroups())
-    }, [dispatch])
-
-
+        dispatch1(groupActions.getAllGroups())
+    }, [dispatch1])
 
     const eachG = Object.values(groups)
 
-   console.log(eachG)
 
-
+    
 
     return (
         <div className='groupsPage'>
         <div className='links'>
-        <NavLink to='/groups'>Groups</NavLink>
-        <NavLink to='/events'>Events</NavLink>
+        <NavLink className='eventLink' to='/events'>Events</NavLink>
+        <NavLink className='groupLink' to='/groups'>Groups</NavLink>
         </div>
-        <div>
+        <div className='title'>
         <h2>Groups in Meetup</h2>
         </div>
         <div className='allGroups'>
@@ -41,7 +40,7 @@ function Groups() {
                 <h2 className='groupTitle'>{g.name}</h2>
                 <p className='location'>{g.city}, {g.state}</p>
                 <p className='about'>{g.about}</p>
-                <div> ## events - {g.private ? "Public" : "Private"}</div>
+                <div className='private'> ## events - {g.private ? "Public" : "Private"}</div>
                 </div>
             </div>
             </>
