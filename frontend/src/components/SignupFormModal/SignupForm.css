@@ -1,0 +1,26 @@
+.signup {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    width: 400px;
+    height: 25px;
+}
+
+.buttonForm {
+    width: 408px;
+    height: 45px;
+    background-color: #FF5A5F;
+    color: white;
+}

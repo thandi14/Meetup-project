@@ -1,10 +1,10 @@
 import React, { useState, useEffect }  from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import SignupFormPage from "./components/SignupFormModal";
 import * as sessionActions from "./store/session"
-import LoginFormPage from "./components/LoginFormModal";
 import Navigation from "./components/Navigation";
+import Home from './components/Home'
+import Groups from './components/Groups'
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +17,17 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Switch></Switch>}
+      <Switch>
+        <Route exact path="/">
+        <Home />
+        </Route>
+        <Route exact path='/groups'>
+        <Groups />
+        </Route>
+        <Route>
+        <h1>404 not found</h1>
+        </Route>
+      </Switch>
     </>
   );
 }

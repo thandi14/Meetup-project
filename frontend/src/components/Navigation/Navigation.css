@@ -1,3 +1,24 @@
 .hidden {
     display: none
 }
+
+.meetup {
+    cursor: pointer;
+    padding-left: 10px;
+    color: #FF5A5F;
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.session {
+    display: flex;
+    gap: 40px;
+    padding-right: 10px;
+}

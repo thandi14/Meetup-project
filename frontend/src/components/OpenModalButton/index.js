@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
+import './Text.css'
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
@@ -15,7 +16,7 @@ function OpenModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return <h1 className='authenText'onClick={onClick}>{buttonText}</h1>;
 }
 
 export default OpenModalButton;

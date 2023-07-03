@@ -1,0 +1,113 @@
+.one {
+    display: flex;
+    padding-top: 25px;
+    padding-left: 150px;
+    padding-right: 150px;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+
+}
+
+.intro {
+    height: 450px
+}
+
+.imgOne {
+    width: 530px;
+    height: 310px;
+}
+
+.oneText {
+    font-size: 35pt;
+    font-weight: bold;
+    /* height: 140px; */
+    font-family: 'Gotham';
+}
+
+.oneP {
+    font-size: 12pt;
+}
+/* section two css */
+
+.two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 60px;
+    height: 5px;
+}
+
+.twoText {
+    font-size: 18pt;
+    font-weight: bold;
+    height: 20px;
+}
+
+.twoCap {
+    font-size: 12pt;
+    width: 400px;
+}
+/* section three css */
+
+.three {
+    display: flex;
+    justify-content: center;
+    padding-left: 300px;
+    padding-right: 300px;
+    gap: 40px;
+}
+
+.group, .event, .start {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.groupImg, .eventImg, .startImg {
+    width: 150px;
+    height: 150px;
+
+}
+
+.groupText, .eventText, .startText {
+    padding-top: 3px;
+    text-align: center;
+    font-size: 12pt;
+}
+
+.groupLink, .eventLink, .startLink {
+    text-align: center;
+    font-size: 18pt;
+    color: #00525E;
+    text-decoration: none;
+}
+
+.groupLink:hover, .eventLink:hover, .startLink:hover {
+    text-decoration: underline;
+}
+
+.startLinkOff {
+    text-align: center;
+    font-size: 18pt;
+    color: gray;
+}
+
+.four {
+    /* height: 100px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+    padding-top: 20px;
+}
+
+.button {
+    width: 120px;
+    height: 40px;
+    color: white;
+    background-color: #00525E;
+    cursor: pointer;
+}

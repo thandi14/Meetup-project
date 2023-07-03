@@ -5,23 +5,24 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-//import * as sessionActions from '../../store/session';
 import './Navigation.css';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   let sessionLinks;
   if (sessionUser && isLoaded) {
     sessionLinks = (
-      <li>
+      <div>
         <ProfileButton user={sessionUser} />
-      </li>
+      </div>
     );
   } else {
     sessionLinks = (
-        <li>
+        <div className='session'>
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -30,17 +31,21 @@ function Navigation({ isLoaded }){
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 
+  let handleClick = () => {
+    history.push('/')
+  }
+
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
-      {sessionLinks}
-    </ul>
+    <div className='nav'>
+        <h1 className='meetup' onClick={handleClick}>Meetup</h1>
+        <div className='authen'>
+        {sessionLinks}
+        </div>
+    </div>
   );
 }
 
