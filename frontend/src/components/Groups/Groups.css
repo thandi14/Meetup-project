@@ -44,7 +44,10 @@
     height: 10px;
     display: flex;
     justify-content: flex-start;
+    cursor: pointer;
 }
+
+
 
 .groups {
     display: flex;
@@ -73,6 +76,7 @@
 .groupImg {
     width: 230px;
     height: 170px;
+    cursor: pointer;
 }
 
 .info {
@@ -87,14 +91,17 @@
     font-size: 12pt;
     height: 5px;
     color: #CCCCCC;
+    cursor: pointer;
 }
 
 .about {
     width: 300px;
     font-size: 10pt;
     height: 52px;
+    cursor: pointer;
 }
 
 .private {
     color: #CCCCCC;
+    cursor: pointer;
 }

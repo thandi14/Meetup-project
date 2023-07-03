@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session"
 import Navigation from "./components/Navigation";
 import Home from './components/Home'
 import Groups from './components/Groups'
+import GroupDetails from "./components/GroupsDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route exact path='/groups'>
         <Groups />
+        </Route>
+        <Route exact path='/groups/:id/'>
+          <GroupDetails />
         </Route>
         <Route>
         <h1>404 not found</h1>
