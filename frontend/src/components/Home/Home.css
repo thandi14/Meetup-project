@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
     height: 5px;
 }
 
@@ -56,7 +56,8 @@
     justify-content: center;
     padding-left: 300px;
     padding-right: 300px;
-    gap: 40px;
+    gap: 35px;
+    align-items: center;
 }
 
 .group, .event, .start {
@@ -67,7 +68,7 @@
 }
 
 .groupImg, .eventImg, .startImg {
-    width: 150px;
+    width: 200px;
     height: 150px;
 
 }
