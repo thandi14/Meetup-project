@@ -1,15 +1,25 @@
 .groupDetails1 {
     display: flex;
     justify-content: center;
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 130px;
+    padding-right: 130px;
     gap: 25px;
     align-items: flex-start;
+    height: 350px;
+    padding-top: 25px;
+}
+
+.groupImage1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    flex-direction: column;
 }
 
 .groupImg1 {
     width: 520px;
-    height: 280px
+    height: 280px;
 }
 
 .groupInfo1 {
@@ -18,9 +28,110 @@
     justify-content: flex-start;
     align-items: flex-start;
     height: 300px;
-    width: 300px
+    width: 300px;
+    padding-top: 20px;
 }
 
 .groupTitle1 {
     text-align: start;
+    height: 10px;
+    width: 500px
+}
+
+.groupText1 {
+    height: 8px;
+    font-size: 11pt;
+    color: #CCCCCC;
+}
+
+.textBox {
+    gap: 10px;
+}
+
+.groupButton1 {
+    margin-top: 125px;
+    height: 50px;
+    width: 180px;
+    color: white;
+    background-color: #FF5A5F;
+}
+
+.linkArea {
+    width: 520px
+}
+
+.allGroups {
+    font-size: 10pt;
+}
+
+.groupsBackground1 {
+    background-color: #CCCCCC;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+}
+
+.details1 {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding-left: 220px
+}
+
+.event1 {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding-left: 220px
+}
+
+.eventBox1 {
+    background-color: white;
+    margin-bottom: 170px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    width: 500px;
+    height: 220px
+}
+
+.box1 {
+    display: flex;
+    gap: 8px
+}
+
+.organizer {
+    height: 2px;
+}
+
+.aboutGroup {
+    height: 2px;
+}
+
+.eventImage1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventImg1 {
+    width: 180px;
+    height: 120px
+}
+
+.eventName1, .eventDate1 {
+    height: 5px
+}
+
+.eventDate1 {
+    color: #00525E;
+}
+
+.eventLocation1 {
+    color: #CCCCCC;
+}
+
+.firstLast {
+    color: #999999;
 }

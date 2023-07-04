@@ -23,23 +23,28 @@ function GroupDetails() {
         console.log(group.Events)
     return (
         <div>
-            <Link to='/groups'>{'<'} Groups</Link>
             <div className="groupDetails1">
             <div className="groupImage1">
+            <div className="linkArea">
+            <Link className='allGroups' to='/groups'>{'<'} Groups</Link>
+            </div>
             <img className='groupImg1' src={group.GroupImages[group.GroupImages.length - 1].url}></img>
             </div>
             <div className='groupInfo1'>
             <h2 className='groupTitle1'>{group.name}</h2>
-            <p>{group.city}, {group.state}</p>
-            <p> {group.Events.length} events - Public </p>
-            <p>organized by {group.Organizer[0].firstName} and {group.Organizer[0].lastName}</p>
-            <button>Join this group</button>
+            <div className="textBox">
+            <p className='groupText1'> {group.city}, {group.state}</p>
+            <p className='groupText1'> {group.Events.length} events - Public </p>
+            <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
+            </div>
+            <button className="groupButton1">Join this group</button>
             </div>
             </div>
+            <div className='groupsBackground1'>
             <div className='details1'>
-            <h2>Organizer</h2>
-            <p>{group.Organizer[0].firstName} and {group.Organizer[0].lastName}</p>
-            <h2>What we're about</h2>
+            <h2 className='organizer'>Organizer</h2>
+            <p className="firstLast">{group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
+            <h2 className="aboutGroup">What we're about</h2>
             <p>{group.about}</p>
             </div>
             {group.Events ?
@@ -47,15 +52,23 @@ function GroupDetails() {
             <h2>Upcoming Events ({group.Events.length})</h2>
             {group.Events.map((event) =>
                 <div className='eventBox1'>
-                <img src={event.previewImage}></img>
-                <h3>{event.name}</h3>
-                <p>{event.Venue.city}, {event.Venue.state}</p>
+                <div className='box1'>
+                <div className='eventImage1'>
+                <img className='eventImg1'src={event.previewImage}></img>
+                </div>
+                <div className='eventDetails1'>
+                <p className='eventDate1'>{event.startDate.slice(0, 10)}</p>
+                <h3 className='eventName1'>{event.name}</h3>
+                <p className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p>
+                </div>
+                </div>
                 <p>{event.description}</p>
                 </div>
             )}
             </div>
             : <div></div> }
         </div>
+            </div>
     )
     }
 }
