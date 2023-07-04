@@ -1,8 +1,7 @@
-.allGroups {
+.allEvents {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px
 }
 
 .links {
@@ -12,12 +11,12 @@
     font-size: 18pt;
 }
 
-.groupLink2 {
+.eventLink3 {
     text-decoration: underline;
     color: #00525E;
 }
 
-.eventLink2 {
+.groupLink3 {
     text-decoration: none;
     color: black;
 }
@@ -31,7 +30,7 @@
     color: #CCCCCC;
 }
 
-.groupsPage {
+.eventsPage {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -40,25 +39,24 @@
     padding-bottom: 60px;
 }
 
-.groupTitle {
-    font-size: 18pt;
-    height: 10px;
+.eventTitle {
+    font-size: 16pt;
+    height: 20px;
     display: flex;
-    justify-content: flex-start;
     cursor: pointer;
 }
 
 
 
-.groups {
+.events {
     display: flex;
     flex-direction: row;
     gap: 3px;
-    padding: 2px;
+    padding: 0.5px;
     justify-content: center;
     align-items: flex-start;
     width: 600px;
-    height: 200px;
+    height: 185px;
 
 }
 
@@ -66,7 +64,7 @@
     border: 1px solid #CCCCCC;
 }
 
-.img {
+.img2 {
     display: flex;
     width: 250px;
     height: 210px;
@@ -74,35 +72,38 @@
     align-items: center;
 }
 
-.groupImg {
-    width: 230px;
-    height: 170px;
+.eventImg {
+    width: 210px;
+    height: 150px;
     cursor: pointer;
 }
 
-.info {
+.info2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 350px;
     text-align: left;
+    height: 150px;
+    padding-right: 60px
 }
 
-.location {
+.location2 {
     font-size: 12pt;
     height: 5px;
     color: #CCCCCC;
     cursor: pointer;
 }
 
-.about {
+.description {
     width: 300px;
     font-size: 10pt;
-    height: 52px;
+    height: 10px;
     cursor: pointer;
+    padding-bottom: 5px;
 }
 
-.private {
-    color: #CCCCCC;
-    cursor: pointer;
+.eventDate {
+    height: 5px;
+    color: #00525E;
 }

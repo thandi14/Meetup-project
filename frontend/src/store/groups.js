@@ -1,7 +1,6 @@
 import { csrfFetch } from "./csrf";
 
 const GET_GROUPS = 'groups/getGroups';
-//const GET_EVENTS = 'groups/getEvents';
 const GET_DETAILS = 'groups/getDetails'
 
 const getGroups = (groups) => {
@@ -10,13 +9,6 @@ const getGroups = (groups) => {
         groups
     }
 }
-
-// const getEvents = (events) => {
-//     return {
-//         type: GET_EVENTS,
-//         events
-//     }
-// }
 
 const getDetails = (details) => {
     return {
@@ -42,7 +34,6 @@ export const getDetailsById = (id) => async (dispatch) => {
     const response2 = await csrfFetch(`/api/groups/${id}/events`)
     const data1 = await response1.json();
     const data2 = await response2.json()
-   // console.log(data2)
     data1['Events'] = data2.Events
     dispatch(getDetails(data1));
     return response1;

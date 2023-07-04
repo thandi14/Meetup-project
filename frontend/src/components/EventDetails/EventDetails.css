@@ -1,0 +1,83 @@
+.background2 {
+    background-color: #CCCCCC;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 200px;
+}
+
+.eventGroup {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    border-radius: 10px;
+    width: 450px;
+    height: 80px;
+    gap: 10px
+}
+
+.eventSec2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.eventDetails2 {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 10px;
+    width: 450px;
+    height: 150px
+}
+
+.eventSections {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 20px
+}
+
+.eventImg2 {
+    width: 580px;
+    height: 250px;
+    height: 100%
+}
+
+.details3 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 100px;
+}
+
+.title3 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 95px;
+    padding-top: 65px;
+    padding-bottom: 20px
+}
+
+.eventTitle3, .detailsTitle3, .price3, .type3, .groupName3 {
+    height: 10px
+}
+
+.startDate3, .endDate3 {
+    height: 2px
+}
+
+.groupImg3 {
+    width: 120px;
+    height: 80px
+}
+
+.private3, .groupName3, .groupImg3 {
+    cursor: pointer;
+}

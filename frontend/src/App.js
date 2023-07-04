@@ -6,6 +6,9 @@ import Navigation from "./components/Navigation";
 import Home from './components/Home'
 import Groups from './components/Groups'
 import GroupDetails from "./components/GroupsDetails";
+import Events from "./components/Events";
+import EventDetails from "./components/EventDetails";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +30,12 @@ function App() {
         </Route>
         <Route exact path='/groups/:id/'>
           <GroupDetails />
+        </Route>
+        <Route exact path='/events'>
+          <Events />
+        </Route>
+        <Route exact path='/events/:id/'>
+          <EventDetails />
         </Route>
         <Route>
         <h1>404 not found</h1>

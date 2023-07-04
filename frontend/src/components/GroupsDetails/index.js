@@ -2,14 +2,15 @@ import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import * as groupActions from '../../store/groups'
 import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import './GroupsDetails.css'
+import LoadingScreen from "../LoadingScreen"
 
 
 function GroupDetails() {
     const { id } = useParams()
     const dispatch1 = useDispatch()
-   // const dispatch2 = useDispatch()
+    const history = useHistory()
     const group = useSelector((state) => state.groups)
 
 
@@ -18,9 +19,8 @@ function GroupDetails() {
     }, [dispatch1, id])
 
     const obj = Object.values(group)
-    if (obj.length >= 15) {
+    if (obj && obj.length >= 15) {
 
-        console.log(group.Events)
     return (
         <div>
             <div className="groupDetails1">
@@ -53,16 +53,16 @@ function GroupDetails() {
             {group.Events.map((event) =>
                 <div className='eventBox1'>
                 <div className='box1'>
-                <div className='eventImage1'>
+                <div onClick={(() => history.push(`/events/${event.id}`))} className='eventImage1'>
                 <img className='eventImg1'src={event.previewImage}></img>
                 </div>
                 <div className='eventDetails1'>
-                <p className='eventDate1'>{event.startDate.slice(0, 10)}</p>
-                <h3 className='eventName1'>{event.name}</h3>
-                <p className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)}</p>
+                <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p>
                 </div>
                 </div>
-                <p>{event.description}</p>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className="eventDescription1">{event.description}</p>
                 </div>
             )}
             </div>
@@ -70,6 +70,9 @@ function GroupDetails() {
         </div>
             </div>
     )
+    }
+    else {
+        return <LoadingScreen />
     }
 }
 

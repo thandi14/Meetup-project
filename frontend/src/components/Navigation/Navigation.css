@@ -10,6 +10,17 @@
     font-weight: bold;
 }
 
+.user {
+    padding-right: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.startG {
+    text-decoration: none;
+    color: #00525E;
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -20,5 +31,4 @@
 .session {
     display: flex;
     gap: 40px;
-    padding-right: 10px;
 }

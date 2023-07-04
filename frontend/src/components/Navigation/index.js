@@ -6,7 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import './Navigation.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 function Navigation({ isLoaded }){
@@ -16,7 +16,8 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser && isLoaded) {
     sessionLinks = (
-      <div>
+      <div className='user'>
+        <Link className='startG' to='/'>Start a new group</Link>
         <ProfileButton user={sessionUser} />
       </div>
     );

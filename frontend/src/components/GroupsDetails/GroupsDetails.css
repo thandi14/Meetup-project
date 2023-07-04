@@ -15,6 +15,7 @@
     align-items: center;
     height: 350px;
     flex-direction: column;
+    gap: 5px;
 }
 
 .groupImg1 {
@@ -75,7 +76,7 @@
     display: flex;
     flex-direction: column;
     width: 400px;
-    padding-left: 220px
+    padding-left: 225px
 }
 
 .event1 {
@@ -111,17 +112,17 @@
 
 .eventImage1 {
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .eventImg1 {
     width: 180px;
-    height: 120px
+    height: 120px;
+    cursor: pointer;
 }
 
 .eventName1, .eventDate1 {
-    height: 5px
+    height: 5px;
+    cursor: pointer;
 }
 
 .eventDate1 {
@@ -130,8 +131,13 @@
 
 .eventLocation1 {
     color: #CCCCCC;
+    cursor: pointer;
 }
 
 .firstLast {
     color: #999999;
+}
+
+.eventDescription1 {
+    cursor: pointer;
 }

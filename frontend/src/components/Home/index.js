@@ -45,7 +45,7 @@ function HomePage() {
             </div>
         </section>
         <section className='four'>
-            <button className='button'> Join Meetup</button>
+            {isLoaded ? <div></div> : <button className='button'> Join Meetup</button>}
         </section>
         </>
     )

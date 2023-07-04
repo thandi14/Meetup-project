@@ -2,8 +2,8 @@ import * as groupActions from '../../store/groups'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
-import * as eventActions from '../../store/events'
 import './Groups.css'
+import LoadingScreen from '../LoadingScreen'
 
 function Groups() {
     const dispatch1 = useDispatch()
@@ -51,6 +51,9 @@ function Groups() {
 
 
     )
+    }
+    else {
+        return <LoadingScreen />
     }
 }
 
