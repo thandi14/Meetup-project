@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom"
 import './Home.css'
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../store/session'
 
 function HomePage() {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const user = useSelector((store) => store.session)
     const dispatch = useDispatch();
 
     useEffect(() => {
-     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+     dispatch(sessionActions.restoreUser())
     }, [dispatch]);
+
+    console.log(user)
 
     return (
         <>
@@ -40,12 +42,12 @@ function HomePage() {
             </div>
             <div className="start">
             <img className= 'startImg'src='https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384'></img>
-            {!isLoaded ? <div className='startLinkOff'>Start a new group</div> : <Link className='startLink' to='/'>Start a new group</Link>}
+            {!user.user ? <div className='startLinkOff'>Start a new group</div> : <Link className='startLink' to='/'>Start a new group</Link>}
             <caption className='startText'>You don’t have to be an expert to gather people together and explore shared interests.</caption>
             </div>
         </section>
         <section className='four'>
-            {isLoaded ? <div></div> : <button className='button'> Join Meetup</button>}
+            {user.user ? null : <button className='button'> Join Meetup</button>}
         </section>
         </>
     )

@@ -66,6 +66,7 @@ export const logoutUser = () => async (dispatch) => {
     return response;
 };
 
+
 const initialState = { user: null };
 
 

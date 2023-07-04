@@ -16,15 +16,12 @@ function EventDetails() {
         dispatch(eventActions.getDetailsById(id))
     }, [dispatch, id])
 
-    //console.log(details)
-
     if (Object.values(details).length >= 13) {
         const group = details.Group
-        console.log(group)
 
         return (
             <div>
-            {details ?
+            {group ?
                 <div>
                 <div className='title3'>
                     <Link to='/events'>{'<'}Events</Link>
@@ -60,7 +57,7 @@ function EventDetails() {
                 </div>
                 </div>
                 </div>
-                    : <div></div> }
+                    : <LoadingScreen /> }
             </div>
         )
     }

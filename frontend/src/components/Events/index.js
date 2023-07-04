@@ -38,9 +38,13 @@ function Events() {
                 <img onClick={(() => history.push(`/events/${e.id}`))} className='eventImg' src={e.previewImage}></img>
                 </div>
                 <div className='info2'>
+                {e.startDate ?
                 <p className='eventDate'>{e.startDate.slice(0, 10)} {e.startDate.slice(10, e.startDate.length)}</p>
+                : <p></p>}
                 <h2 onClick={(() => history.push(`/events/${e.id}`))} className='eventTitle'>{e.name}</h2>
+                {e.Venue ?
                 <p onClick={(() => history.push(`/events/${e.id}`))} className='location2'>{e.Venue.city}, {e.Venue.state}</p>
+                : <p></p>}
                 </div>
             </div>
                 <p onClick={(() => history.push(`/events/${e.id}`))} className='description'>{e.description}</p>
