@@ -8,7 +8,8 @@ import Groups from './components/Groups'
 import GroupDetails from "./components/GroupsDetails";
 import Events from "./components/Events";
 import EventDetails from "./components/EventDetails";
-
+import CreateGroup from "./components/CreateGroup";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route exact path='/groups'>
         <Groups />
+        </Route>
+        <Route exact path="/groups/new">
+        <CreateGroup />
         </Route>
         <Route exact path='/groups/:id/'>
           <GroupDetails />

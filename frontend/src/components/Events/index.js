@@ -15,10 +15,12 @@ function Events() {
         dispatch1(eventActions.getAllEvents())
     }, [dispatch1])
 
-    const eachE = Object.values(events)
-    console.log(eachE)
+    let eachE = Object.values(events)
+    console.log(events)
 
     if (eachE) {
+        eachE = eachE.filter((e) => typeof e === 'object')
+        eachE = eachE.filter((e) => e.venueId)
 
     return (
         <div className='eventsPage'>

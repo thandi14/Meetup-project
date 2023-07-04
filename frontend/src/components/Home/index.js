@@ -42,7 +42,7 @@ function HomePage() {
             </div>
             <div className="start">
             <img className= 'startImg'src='https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384'></img>
-            {!user.user ? <div className='startLinkOff'>Start a new group</div> : <Link className='startLink' to='/'>Start a new group</Link>}
+            {!user.user ? <div className='startLinkOff'>Start a new group</div> : <Link className='startLink' to='/groups/new'>Start a new group</Link>}
             <caption className='startText'>You don’t have to be an expert to gather people together and explore shared interests.</caption>
             </div>
         </section>

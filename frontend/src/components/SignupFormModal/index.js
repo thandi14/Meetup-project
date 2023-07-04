@@ -59,7 +59,7 @@ function SignupFormModal() {
             placeholder='Email'
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='error'>{errors.email}</p>}
         <label>
           <input className='input'
             type="text"
@@ -69,7 +69,7 @@ function SignupFormModal() {
             placeholder='Username'
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className='error'>{errors.username}</p>}
         <label>
           <input className='input'
             type="text"
@@ -79,7 +79,7 @@ function SignupFormModal() {
             placeholder='First Name'
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className='error'>{errors.firstName}</p>}
         <label>
           <input className="input"
             type="text"
@@ -89,7 +89,7 @@ function SignupFormModal() {
             placeholder="Last Name"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className='error'>{errors.lastName}</p>}
         <label>
           <input className='input'
             type="password"
@@ -99,7 +99,7 @@ function SignupFormModal() {
             placeholder="Password"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='error'>{errors.password}</p>}
         <label>
           <input className="input"
             type="password"
@@ -109,7 +109,7 @@ function SignupFormModal() {
             placeholder="Confirm Password"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
         <button className="buttonForm" type="submit">Sign Up</button>
       </form>
     </div>
