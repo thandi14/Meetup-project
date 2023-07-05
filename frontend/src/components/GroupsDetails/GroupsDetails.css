@@ -141,3 +141,15 @@
 .eventDescription1 {
     cursor: pointer;
 }
+
+.userAction {
+    display: flex;
+    padding-top: 145px;
+    gap: 10px
+}
+
+.groupButton2 {
+    background-color: #999999;
+    color: white;
+    cursor: pointer;
+}

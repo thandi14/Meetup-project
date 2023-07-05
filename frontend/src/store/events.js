@@ -35,6 +35,27 @@ export const getDetailsById = (id) => async (dispatch) => {
     return response1;
 }
 
+export const createEvent = (data) => async (dispatch) => {
+    if (Object.values(data).length) {
+        const response = await csrfFetch(`/api/groups/${data.groupId}/events`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(data)
+        })
+        data = await response.json()
+        let groupId = parseInt(data.id)
+        let response1
+        if (groupId) {
+            response1 = await csrfFetch(`/api/events/${data.id}`)
+        }
+        const data1 = await response1.json()
+        dispatch(getDetails(data1))
+        return response
+    }
+}
+
 const initialState = {}
 
 const eventsReducer = (state = initialState, action) => {
