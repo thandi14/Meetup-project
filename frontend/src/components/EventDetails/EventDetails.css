@@ -29,11 +29,31 @@
 .eventDetails2 {
     background-color: white;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 30px;
     border-radius: 10px;
     width: 450px;
     height: 150px
+}
+
+.infoForEvents {
+    display: flex;
+    flex-direction: column;
+}
+
+.eventDeleteButton {
+    display: flex;
+    justify-content: flex-end;
+    width: 200px;
+    align-items: flex-end;
+}
+
+.deleteAnEvent {
+    cursor: pointer;
+    height: 25px;
+    width: 80px;
+    color: white;
+    background-color: #999999;
 }
 
 .eventSections {

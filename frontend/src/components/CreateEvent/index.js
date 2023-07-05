@@ -1,11 +1,16 @@
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-
+import { useDispatch } from "react-redux"
+import * as eventActions from '../../store/events'
+import LoadingScreenTwo from "../LoadingScreen2"
+import './CreateEvent.css'
 
 function CreateEvent() {
+    const event = useSelector((store) => store.events)
     const group = useSelector((store) => store.groups)
     const { id } = useParams()
+    const dispatch = useDispatch()
     const [ data, setData ] = useState({})
     const [ name, setName ] = useState('')
     const [ type, setType ] = useState('')
@@ -15,8 +20,12 @@ function CreateEvent() {
     const [ capacity, setCapacity ] = useState(0)
     const [ description, setDescription ] = useState('')
     const  [ errors, setErrors ] = useState({})
+    const [ isLoading, setIsLoading ] = useState(false)
 
-    console.log(id)
+    useEffect(() => {
+        dispatch(eventActions.createEvent(data))
+    }, [dispatch, data])
+
 
     console.log(group)
     const handleSubmit = () => {
@@ -38,50 +47,88 @@ function CreateEvent() {
             es['startDate'] = 'Event start is required'
         }
         if (description.length < 30) {
-            es['description'] = 'Description is required'
+            es['description'] = 'Description must be at least 30 characters long'
         }
 
+        setErrors(es)
+
+        if (Object.values(es).length === 0) {
+           let request = {
+                groupId: id,
+                name,
+                description,
+                type,
+                capacity,
+                price,
+                startDate,
+                endDate
+            }
+
+            setData(request);
+
+            setIsLoading(true)
+
+            setName('')
+            setDescription('')
+            setType('')
+            setCapacity('')
+            setPrice('')
+            setStartDate('')
+            setEndDate('')
+        }
 
     }
 
+    console.log(isLoading)
+
     return (
         <div>
-            <h1>Create an event for group name</h1>
-            <div>
-            <p>What is the name of the event?</p>
-            <input type='text' placeholder="Event name"></input>
+            {!isLoading ?
+            <div className='formEvent'>
+            <h1>Create an event for '{group ? group.name : ''}'</h1>
+            <div className='createName2'>
+            <p className='pEvents'>What is the name of the event?</p>
+            <input className='inputEvent' onChange={((e) => setName(e.target.value))} type='text' placeholder="Event name"></input>
             </div>
+            {errors.name && <p className='error'>{errors.name}</p>}
             <div className='divider'></div>
-            <div>
-            <p>Is this an in person or online event?</p>
-            <select>
+            <div className='createType2'>
+            <p className='pEvents'>Is this an in person or online event?</p>
+            <select className='inputEventType' onChange={((e) => setType(e.target.value))}>
                 <option value=''>(select one)</option>
                 <option value='In person'>in person</option>
                 <option value='Online'>online</option>
             </select>
-            <p>How many people can attend?</p>
-            <input type='number'></input>
-            <p>What is the price for your event?</p>
-            <input type='number'></input>
+            {errors.type && <p className='error'>{errors.type}</p>}
+            <p className="pEvents">How many people can attend?</p>
+            <input className='inputEventType' onChange={((e) => setCapacity(e.target.value))} type='number'></input>
+            {errors.capacity && <p className='error'>{errors.capacity}</p>}
+            <p className='pEvents'>What is the price for your event?</p>
+            <input className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
             </div>
             <div className='divider'></div>
-            <div>
-            <p>When does your event start?</p>
-            <input type='datetime-local'></input>
-            <p>When does your event end?</p>
-            <input type='datetime-local'></input>
+            <div className='createDate2'>
+            <p className='pEvents'>When does your event start?</p>
+            <input className='inputEventDate' onChange={((e) => setStartDate(e.target.value))} type='datetime-local'></input>
+            {errors.startDate && <p className='error'>{errors.startDate}</p>}
+            <p className='pEvents'>When does your event end?</p>
+            <input className='inputEventDate' onChange={((e) => setEndDate(e.target.value))} type='datetime-local'></input>
+            </div>
+            {errors.endDate && <p className='error'>{errors.endDate}</p>}
+            <div className='divider'></div>
+            <div className='createImage2'>
+            <p className='pEvents'>Please add an image url for your event below:</p>
+            <input placeholder='imageUrl' className='inputEvent' type='text'></input>
             </div>
             <div className='divider'></div>
-            <div>
-            <p>Please add an image url for your event below:</p>
-            <input type='text'></input>
+            <div className='createFinale2'>
+            <p className='pEvents'>Please describe your event:</p>
+            <textarea placeholder='Please include at least 30 characters' className='textareaEvent' onChange={((e) => setDescription(e.target.value))} type='text'></textarea>
+            {errors.description && <p className='error'>{errors.description}</p>}
+            <button className='eventButton2' onClick={handleSubmit} >CreateEvent</button>
             </div>
-            <div className='divider'></div>
-            <div>
-            <p>Please describe your event:</p>
-            <input type='text'></input>
-            <button onClick={handleSubmit} >CreateEvent</button>
             </div>
+             : <LoadingScreenTwo /> }
         </div>
     )
 }

@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_EVENTS = 'events/getEvents';
 const GET_DETAILS = 'events/getDetails';
+const REMOVE_EVENT = 'events/removeEvent'
 
 const getEvents = (events) => {
     return {
@@ -17,10 +18,17 @@ const getDetails = (details) => {
     }
 }
 
+const removeEvent = (id) => {
+    return {
+        type: REMOVE_EVENT,
+        id
+    }
+}
+
 export const getAllEvents = () => async (dispatch) => {
     const response = await csrfFetch('/api/events')
     const data = await response.json();
-    dispatch(getEvents(data.Events));
+    dispatch(getEvents(data));
     return response;
 }
 
@@ -36,24 +44,46 @@ export const getDetailsById = (id) => async (dispatch) => {
 }
 
 export const createEvent = (data) => async (dispatch) => {
+    const { name , description, type, capacity, price, startDate, endDate} = data
+    console.log(data)
     if (Object.values(data).length) {
         const response = await csrfFetch(`/api/groups/${data.groupId}/events`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                name,
+                description,
+                type,
+                capacity,
+                price,
+                startDate,
+                endDate
+            })
         })
         data = await response.json()
-        let groupId = parseInt(data.id)
+        let eventId = parseInt(data.id)
         let response1
-        if (groupId) {
+        if (eventId) {
             response1 = await csrfFetch(`/api/events/${data.id}`)
         }
         const data1 = await response1.json()
         dispatch(getDetails(data1))
         return response
     }
+}
+
+export const deleteEvent = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+    })
+    let data = await response.json()
+    dispatch(removeEvent(id))
+    return response
 }
 
 const initialState = {}
@@ -70,9 +100,12 @@ const eventsReducer = (state = initialState, action) => {
         case GET_DETAILS:
         let details = action.details
         return {
-            ...state,
             ...details
         }
+        case REMOVE_EVENT:
+        const newState = { ...state };
+        delete newState[action.id];
+        return newState;
       default:
         return state;
     }

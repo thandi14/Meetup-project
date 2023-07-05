@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import * as groupActions from '../../store/groups'
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom/";
-import LoadingScreenTwo from "../LoadingScreen2";
-import './CreateGroup.css'
+import LoadingScreenTwo from "../LoadingScreen2"
+import './UpdateGroup.css'
 
-function CreateGroup() {
+function UpdateGroup() {
+    const { id } = useParams()
     const [ location, setLocation ] = useState('');
     const [ name, setName ] = useState('');
     const [ about, setAbout] = useState('');
@@ -19,7 +21,7 @@ function CreateGroup() {
 
 
     useEffect(() => {
-        dispatch(groupActions.createGroup(data))
+        dispatch(groupActions.updateGroup(id, data))
     }, [dispatch, data])
 
         console.log(group)
@@ -88,7 +90,7 @@ function CreateGroup() {
             {!isLoading ?
             <div className='formGroup'>
             <div className='introCreate'>
-            <h2 className='formTitle'>BECOME AN ORGANIZER</h2>
+            <h2 className='formTitle'>UPDATE YOUR GROUPS INFORMATION</h2>
             <h1>We'll walk you through a few steps to build your local community</h1>
             </div>
             <div className='divider'></div>
@@ -136,11 +138,11 @@ function CreateGroup() {
             <input className='inputGroup' type="text" placeholder="Image url"></input>
             </div>
             <div className='divider'></div>
-            <button className='formButton' onClick={handleSubmit}>Create group</button>
+            <button className='formButton' onClick={handleSubmit}>Update group</button>
                 </div>
             : <LoadingScreenTwo />}
         </div>
     )
-
 }
-export default CreateGroup
+
+export default UpdateGroup

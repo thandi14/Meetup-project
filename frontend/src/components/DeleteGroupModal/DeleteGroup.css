@@ -1,0 +1,38 @@
+.deleteGroup {
+    width: 400px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deleteGroupButton {
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+}
+
+.yesButton, .noButton {
+    margin-top: 10px;
+    width: 350px;
+    height: 40px;
+    color: white
+}
+
+.yesButton {
+    background-color: #FF5A5F;
+    cursor: pointer;
+}
+
+.noButton {
+    background-color: #999999;
+    cursor: pointer;
+}
+
+.deleteText {
+    height: 10px
+}
+
+.deleteTitle {
+    height: 5px
+}

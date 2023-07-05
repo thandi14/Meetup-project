@@ -5,6 +5,10 @@ import { useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
 import './GroupsDetails.css'
 import LoadingScreen from "../LoadingScreen"
+import DeleteGroupModal from '../DeleteGroupModal'
+import { useModal } from "../../context/Modal";
+
+
 
 
 function GroupDetails() {
@@ -13,9 +17,9 @@ function GroupDetails() {
     const history = useHistory()
     const group = useSelector((state) => state.groups)
     const { user } = useSelector((state) => state.session)
+    const { setModalContent } = useModal();
 
-   // console.log(user.id)
-    console.log(group.organizerId)
+    console.log(group)
     useEffect(() => {
         dispatch1(groupActions.getDetailsById(id))
     }, [dispatch1, id])
@@ -42,8 +46,9 @@ function GroupDetails() {
             {user.id && user.id === group.organizerId ?
             <div className='userAction'>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/events/new`))}>Create event</button>
-                <button className='groupButton2'>Update</button>
-                <button className='groupButton2'>Delete</button>
+                <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/edit`))}>Update</button>
+                <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}/>))}>Delete</button>
+
             </div> :
             <button className="groupButton1">Join this group</button>
             }
@@ -68,7 +73,7 @@ function GroupDetails() {
                 <div className='eventDetails1'>
                 <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)}</p>
                 <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
-                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p>
+                {event.Venue ? <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p> : <p>n/a</p>}
                 </div>
                 </div>
                 <p onClick={(() => history.push(`/events/${event.id}`))} className="eventDescription1">{event.description}</p>

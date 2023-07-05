@@ -609,9 +609,10 @@ router.post('/:id/events', validateEvent, requireAuth, async (req, res) => {
     let ids = await Group.findByPk(id);
     let { user } = req
 
-    let venue = await Venue.findByPk(venueId)
+    let venue
+    if (venueId > 0) venue = await Venue.findByPk(venueId)
 
-    if (!venue) {
+    if (!venue && venueId > 0) {
 
         res.status(404).json({message: "Venue does not exist"});
 

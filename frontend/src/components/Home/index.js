@@ -3,10 +3,13 @@ import './Home.css'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from '../../store/session'
+import { useModal } from '../../context/Modal'
+import SignupFormModal from "../SignupFormModal";
 
 function HomePage() {
     const user = useSelector((store) => store.session)
     const dispatch = useDispatch();
+    const { setModalContent } = useModal()
 
     useEffect(() => {
      dispatch(sessionActions.restoreUser())
@@ -47,7 +50,7 @@ function HomePage() {
             </div>
         </section>
         <section className='four'>
-            {user.user ? null : <button className='button'> Join Meetup</button>}
+            {user.user ? null : <button onClick={(() => setModalContent(<SignupFormModal />))} className='button'> Join Meetup</button>}
         </section>
         </>
     )

@@ -1,0 +1,61 @@
+
+h1 {
+    font-size: 16pt;
+    height: 15px;
+    padding-top: 10px;
+}
+
+.pEvents {
+    font-size: 12pt;
+    height: 10px;
+}
+
+.formEvent {
+    padding-left: 130px;
+    padding-right: 130px
+}
+
+.inputEvent {
+    width: 300px;
+   background-color: rgba(197, 212, 237, 0.65);
+}
+
+.inputEventDate {
+    background-color: rgba(197, 212, 237, 0.65);
+    width: 200px
+}
+
+.inputEventType {
+    background-color: rgba(197, 212, 237, 0.65);
+    width: 100px
+}
+
+.inputEventPrice {
+    background-color: rgba(197, 212, 237, 0.65);
+    width: 50px
+}
+
+.textareaEvent {
+    background-color: rgba(197, 212, 237, 0.65);
+    height: 200px;
+    width: 500px
+}
+
+.createDate2, .createDescription2, .createName2, .createType2, .createImage2, .createFinale2 {
+    padding-bottom: 20px;
+}
+
+.createFinale2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.eventButton2 {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    height: 40px;
+    width: 150px;
+    background-color: #FF5A5F;
+    color: white;
+    cursor: pointer;
+}
