@@ -15,10 +15,14 @@ function Groups() {
         dispatch1(groupActions.getAllGroups())
     }, [dispatch1])
 
-    const eachG = Object.values(groups)
+
     let eachE
-    if (eachG[0]) {
-       eachE = eachG[0].Events
+    if (groups.Groups) {
+
+        let eachG = Object.values(groups.Groups)
+        eachE = groups.Groups.Events
+
+        eachG.pop()
 
     return (
         <div className='groupsPage'>
@@ -30,7 +34,7 @@ function Groups() {
         <h2>Groups in Meetup</h2>
         </div>
         <div className='allGroups'>
-            {eachG[0].map((g) =>
+            {eachG.length ? eachG.map((g) =>
             <>
             <div className='divider'></div>
             <div className='groups'>
@@ -41,11 +45,11 @@ function Groups() {
                 <h2 onClick={(() => history.push(`/groups/${g.id}`))} className='groupTitle'>{g.name}</h2>
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='location'>{g.city}, {g.state}</p>
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='about'>{g.about}</p>
-                <div onClick={(() => history.push(`/groups/${g.id}`))} className='private'> #{eachE.filter((e) => e.groupId === g.id).length} events - {g.private ? "Public" : "Private"}</div>
+                <div onClick={(() => history.push(`/groups/${g.id}`))} className='private'> #{eachE && eachE.length ? eachE.filter((e) => e.groupId === g.id).length : 0} events - {g.private ? "Public" : "Private"}</div>
                 </div>
             </div>
             </>
-            )}
+            ) : null}
         </div>
         </div>
 

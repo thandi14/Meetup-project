@@ -28,13 +28,13 @@ function GroupDetails() {
             <div className="linkArea">
             <Link className='allGroups' to='/groups'>{'<'} Groups</Link>
             </div>
-            <img className='groupImg1' src={group.GroupImages[group.GroupImages.length - 1].url}></img>
+            <img className='groupImg1' src={group.GroupImages && group.GroupImages.length ? group.GroupImages[group.GroupImages.length - 1].url : ''}></img>
             </div>
             <div className='groupInfo1'>
             <h2 className='groupTitle1'>{group.name}</h2>
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
-            <p className='groupText1'> {group.Events.length} events - Public </p>
+            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events - Public </p>
             <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
             <button className="groupButton1">Join this group</button>
@@ -49,7 +49,7 @@ function GroupDetails() {
             </div>
             {group.Events ?
             <div className='event1'>
-            <h2>Upcoming Events ({group.Events.length})</h2>
+            <h2>Upcoming Events ({group.Events && group.Events.length ? group.Events.length : 0})</h2>
             {group.Events.map((event) =>
                 <div className='eventBox1'>
                 <div className='box1'>

@@ -16,7 +16,7 @@ function Events() {
     }, [dispatch1])
 
     let eachE = Object.values(events)
-    console.log(events)
+    console.log(eachE)
 
     if (eachE) {
         eachE = eachE.filter((e) => typeof e === 'object')

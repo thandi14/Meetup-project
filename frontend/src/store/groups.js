@@ -17,6 +17,7 @@ const getDetails = (details) => {
     }
 }
 
+
 export const getAllGroups = () => async (dispatch) => {
     const response1 = await csrfFetch('/api/groups')
     const response2 = await csrfFetch(`/api/events`)
@@ -39,6 +40,27 @@ export const getDetailsById = (id) => async (dispatch) => {
     return response1;
 }
 
+export const createGroup = (data) => async (dispatch) => {
+    if (Object.values(data).length) {
+        const response = await csrfFetch('/api/groups', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(data)
+        })
+        data = await response.json()
+        let groupId = parseInt(data.id)
+        let response1
+        if (groupId) {
+            response1 = await csrfFetch(`/api/groups/${data.id}`)
+        }
+        const data1 = await response1.json()
+        dispatch(getDetails(data1))
+        return response
+    }
+}
+
 const initialState = {}
 
 const groupsReducer = (state = initialState, action) => {
@@ -53,7 +75,6 @@ const groupsReducer = (state = initialState, action) => {
         case GET_DETAILS:
         let details = action.details
         return {
-            ...state,
             ...details
         }
       default:
