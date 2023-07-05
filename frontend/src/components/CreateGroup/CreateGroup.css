@@ -1,0 +1,47 @@
+.formGroup {
+    padding-left: 130px;
+    padding-right: 130px
+}
+
+h1 {
+    font-size: 16pt;
+    height: 15px;
+}
+
+p {
+    font-size: 12pt;
+}
+
+.createLocation, .createAbout, .createName, .createFinale {
+    padding-bottom: 10px;
+}
+
+.formTitle {
+    font-size: 13pt;
+    color: #00525E;
+
+}
+
+.formButton {
+    margin-top: 10px;
+    margin-bottom: 60px;
+    width: 130px;
+    height: 35px;
+    background-color: #FF5A5F;
+    color: white;
+}
+
+.inputGroup {
+    width: 300px;
+   background-color: rgba(197, 212, 237, 0.65);
+}
+
+.textareaGroup {
+    width: 300px;
+    height: 150px;
+    background-color: rgba(197, 212, 237, 0.65);
+}
+
+.selectEvent2 {
+    background-color: rgba(197, 212, 237, 0.65);
+}
