@@ -35,6 +35,7 @@ function EventDetails() {
                 <p>Hosted by {group.Organizer ? group.Organizer[0].firstName : ""} {group.Organizer ? group.Organizer[0].lastName : ""}</p>
                  </div>
                 <div className='background2'>
+                <div className='wholeEvent'>
                 <div className='eventSections'>
                 <div className='eventSec1'>
                 <img className='eventImg2'src={details.EventImages.length ? details.EventImages[details.EventImages.length - 1].url : ""}></img>
@@ -65,6 +66,7 @@ function EventDetails() {
                 <div className='details3'>
                 <h3 className='detailsTitle3'>Details</h3>
                 <p>{details.description}</p>
+                </div>
                 </div>
                 </div>
                 </div>

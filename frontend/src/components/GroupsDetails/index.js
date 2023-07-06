@@ -54,7 +54,7 @@ function GroupDetails() {
             }
             </div>
             </div>
-            <div className='groupsBackground1'>
+            <div className='groupsBackground1'></div>
             <div className='groupsDetailsBox'>
             <div className='details1'>
             <h2 className='organizer'>Organizer</h2>
@@ -84,7 +84,7 @@ function GroupDetails() {
             : <div></div> }
             </div>
         </div>
-            </div>
+            // </div>
     )
     }
     else {
