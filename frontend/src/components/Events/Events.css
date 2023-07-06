@@ -40,12 +40,14 @@
 }
 
 .eventTitle {
-    font-size: 16pt;
+    font-size: 12pt;
     height: 20px;
     display: flex;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden; /* Hide the overflow */
+
 }
 
 
@@ -90,20 +92,22 @@
 }
 
 .location2 {
-    font-size: 12pt;
+    font-size: 8pt;
     height: 5px;
     color: #CCCCCC;
     cursor: pointer;
 }
 
 .description {
-    width: 300px;
+    width: 400px;
     font-size: 10pt;
     height: 10px;
     cursor: pointer;
     padding-bottom: 5px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden; /* Hide the overflow */
+
 }
 
 .eventDate {
