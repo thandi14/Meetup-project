@@ -21,7 +21,7 @@ function CreateEvent() {
     const [ description, setDescription ] = useState('')
     const  [ errors, setErrors ] = useState({})
     const [ isLoading, setIsLoading ] = useState(false)
-    const [ previewImage, setPreviewImage ] = useState('')
+    const [ previewImage, setPreviewImage ] = useState('event')
 
 
     useEffect(() => {

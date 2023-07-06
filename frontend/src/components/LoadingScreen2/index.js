@@ -14,9 +14,15 @@ function LoadingScreenTwo({eventImg, groupImg}) {
     console.log("hello?")
 
     let data
-    if (eventImg.length || groupImg.length) {
+    if (eventImg && eventImg.length && eventImg !== "event") {
         data = {
-            url: eventImg || groupImg,
+            url: eventImg,
+            preview: true
+        }
+    }
+    else if (groupImg && groupImg.length && groupImg !== "group") {
+        data = {
+            url: groupImg,
             preview: true
         }
     }
@@ -26,6 +32,7 @@ function LoadingScreenTwo({eventImg, groupImg}) {
     console.log(eventDetails)
 
     setTimeout(() => {
+
         if (groupImg && groupImg.length) {
             history.push(`/groups/${groupDetails.id}`)
             dispatch(groupActions.addGroupImage(groupDetails.id, data))

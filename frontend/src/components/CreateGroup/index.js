@@ -13,7 +13,7 @@ function CreateGroup() {
     const [ priv, setPriv ] = useState('')
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
-    const [ previewImage, setPreviewImage ] = useState('')
+    const [ previewImage, setPreviewImage ] = useState('group')
     const dispatch = useDispatch()
     const group = useSelector((store) => store.groups)
     const [isLoading, setIsLoading] = useState(false);
