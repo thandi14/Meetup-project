@@ -72,8 +72,7 @@
     left: 0%;
     right: 0%;
     display: flex;
-    padding-bottom: 50%;
-    justify-content: center;
+    padding-bottom: 200px;
     z-index: -1;
 }
 
@@ -126,13 +125,14 @@
 }
 
 .eventName1, .eventDate1 {
-    height: 5px;
+    height: 15px;
     cursor: pointer;
 }
 
 .eventName1 {
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 14px;
 }
 
 .eventDate1 {
@@ -150,6 +150,9 @@
 
 .eventDescription1 {
     cursor: pointer;
+    width: 300px;
+    overflow: hidden; /* Hide the overflow */
+    text-overflow: ellipsis;
 }
 
 .userAction {

@@ -89,11 +89,12 @@
 }
 
 .startDate3, .endDate3 {
-    height: 2px
+    height: 2px;
+    width: 450px
 }
 
 .groupImg3 {
-    width: 120px;
+    width: 130px;
     height: 80px
 }
 

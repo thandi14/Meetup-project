@@ -27,7 +27,7 @@ function LoadingScreenTwo({ imgUrl }) {
             history.push(`/groups/${groupDetails.id}`)
             dispatch(groupActions.addGroupImage(groupDetails.id, data))
         }
-        if (eventDetails.id) {
+        else if (eventDetails.id) {
             history.push(`/events/${eventDetails.id}`)
             dispatch(eventActions.addEventImage(eventDetails.id, data))
 

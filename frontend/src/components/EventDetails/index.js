@@ -52,8 +52,8 @@ function EventDetails() {
                 </div>
                 <div className='eventDetails2'>
                 <div className='infoForEvents'>
-                <p className='startDate3'><span>START</span>   {details.startDate.slice(0, 10)}   {details.startDate.slice(10, details.startDate.length)}</p>
-                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)}   {details.endDate.slice(10, details.endDate.length)}</p>
+                <p className='startDate3'><span>START</span>   {details.startDate.slice(0, 10)} · {details.startDate.slice(10, details.startDate.length)}</p>
+                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {details.endDate.slice(10, details.endDate.length)}</p>
                 <p className='price3'>{details.price}</p>
                 <p className='type3'>{details.type}</p>
                 </div>
