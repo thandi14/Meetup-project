@@ -144,6 +144,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 14px;
+    height: 5px;
 }
 
 .eventDate1 {

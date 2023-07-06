@@ -41,13 +41,11 @@
 
 .eventTitle {
     font-size: 12pt;
-    height: 20px;
+    height: 5px;
     display: flex;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden; /* Hide the overflow */
-
 }
 
 
@@ -88,7 +86,7 @@
     justify-content: center;
     width: 350px;
     text-align: left;
-    height: 150px;
+    height: 120px;
 }
 
 .location2 {

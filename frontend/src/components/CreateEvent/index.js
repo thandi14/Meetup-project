@@ -82,13 +82,13 @@ function CreateEvent() {
 
     }
 
-    console.log(isLoading)
+    console.log(group)
 
     return (
         <div>
             {!isLoading ?
             <div className='formEvent'>
-            <h1>Create an event for '{group ? group.name : ''}'</h1>
+            <h1>Create an event for '{group ? group.name : null}'</h1>
             <div className='createName2'>
             <p className='pEvents'>What is the name of the event?</p>
             <input className='inputEvent' onChange={((e) => setName(e.target.value))} type='text' placeholder="Event name"></input>
@@ -107,7 +107,7 @@ function CreateEvent() {
             <input className='inputEventType' onChange={((e) => setCapacity(e.target.value))} type='number'></input>
             {errors.capacity && <p className='error'>{errors.capacity}</p>}
             <p className='pEvents'>What is the price for your event?</p>
-            <input className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
+            <input placeholder='$' className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
             </div>
             <div className='divider'></div>
             <div className='createDate2'>

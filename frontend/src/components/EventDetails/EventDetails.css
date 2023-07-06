@@ -95,7 +95,7 @@
 }
 
 .eventTitle3, .detailsTitle3, .price3, .type3, .groupName3 {
-    height: 10px
+    height: 15px
 }
 
 .startDate3, .endDate3 {
@@ -131,4 +131,14 @@
 .eventDescription {
     text-overflow: ellipsis;
     overflow: hidden; /* Hide the overflow */
+}
+
+.eventPrice2, .eventType2 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.price3, .type3 {
+    padding-bottom: 4px;
 }

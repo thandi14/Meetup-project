@@ -27,6 +27,8 @@ function GroupDetails() {
     const obj = Object.values(group)
     if (obj && obj.length >= 15) {
 
+        let time
+
     return (
         <div>
             <div className="groupDetails1">
@@ -40,7 +42,7 @@ function GroupDetails() {
             <h2 className='groupTitle1'>{group.name}</h2>
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
-            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events - Public </p>
+            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · Public </p>
             <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
             {user.id && user.id === group.organizerId ?
@@ -72,7 +74,7 @@ function GroupDetails() {
                 <img className='eventImg1'src={event.previewImage}></img>
                 </div>
                 <div className='eventDetails1'>
-                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)}</p>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
                 <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
                 {event.Venue ? <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p> : <p>n/a</p>}
                 </div>

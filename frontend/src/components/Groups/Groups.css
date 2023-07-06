@@ -42,7 +42,7 @@
 
 .groupTitle {
     font-size: 18pt;
-    height: 10px;
+    height: 3px;
     width: 200px;
     display: flex;
     justify-content: flex-start;
@@ -99,7 +99,7 @@
 }
 
 .about {
-    width: 300px;
+    width: 340px;
     font-size: 10pt;
     height: 52px;
     cursor: pointer;
@@ -110,4 +110,5 @@
 .private {
     color: #CCCCCC;
     cursor: pointer;
+    padding-top: 15px;
 }

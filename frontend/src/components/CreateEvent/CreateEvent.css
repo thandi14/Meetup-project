@@ -32,8 +32,10 @@ h1 {
 
 .inputEventPrice {
     background-color: rgba(197, 212, 237, 0.65);
-    width: 50px
+    width: 50px;
+    content: '$'
 }
+
 
 .textareaEvent {
     background-color: rgba(197, 212, 237, 0.65);

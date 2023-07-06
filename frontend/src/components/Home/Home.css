@@ -1,8 +1,7 @@
+
 .one {
     display: flex;
     padding-top: 25px;
-    /* padding-left: 150px;
-    padding-right: 150px; */
     margin: 50px;
     margin-left: 120px;
     margin-right: 120px;
@@ -28,10 +27,14 @@
     font-size: 35pt;
     font-weight: bold;
     height: 140px;
+    white-space: nowrap;
+
 }
 
 .oneP {
     font-size: 12pt;
+    height: 100px;
+    width: 650px;
 }
 /* section two css */
 
@@ -72,7 +75,7 @@
     align-items: center;
 }
 
-.groupImg, .eventImg, .startImg {
+.groupImgH, .eventImgH, .startImgH {
     width: 200px;
     height: 150px;
 
@@ -82,6 +85,8 @@
     padding-top: 3px;
     text-align: center;
     font-size: 12pt;
+    width: 250px;
+    height: 100px;
 }
 
 .groupLink, .eventLink, .startLink {
@@ -89,6 +94,7 @@
     color: #00525E;
     font-size: 18pt;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .eventLink {
@@ -97,12 +103,15 @@
 
 .groupLink:hover, .eventLink:hover, .startLink:hover {
     text-decoration: underline;
+
 }
 
 .startLinkOff {
     text-align: center;
     font-size: 18pt;
     color: gray;
+    white-space: nowrap;
+
 }
 
 .four {

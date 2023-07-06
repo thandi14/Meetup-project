@@ -24,6 +24,7 @@ function Events() {
     console.log(eachE)
 
     if (eachE) {
+        let time
 
     return (
         <div className='eventsPage'>
@@ -32,7 +33,7 @@ function Events() {
         <NavLink className='groupLink3' to='/groups'>Groups</NavLink>
         </div>
         <div className='title'>
-        <h2>Events in Meetup</h2>
+        <h2>Events in Meetus</h2>
         </div>
         <div className='allEvents'>
             {eachE.map((e) =>
@@ -44,7 +45,7 @@ function Events() {
                 </div>
                 <div className='info2'>
                 {e.startDate ?
-                <p className='eventDate'>{e.startDate.slice(0, 10)} · {e.startDate.slice(10, e.startDate.length)}</p>
+                <p className='eventDate'>{e.startDate.slice(0, 10)} · {time = new Date(e.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
                 : <p></p>}
                 <h2 onClick={(() => history.push(`/events/${e.id}`))} className='eventTitle'>{e.name}</h2>
                 {e.Venue ?

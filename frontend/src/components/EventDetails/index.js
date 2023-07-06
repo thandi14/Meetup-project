@@ -24,6 +24,7 @@ function EventDetails() {
     if (Object.values(details).length >= 13) {
         const group = details.Group
         console.log(group)
+        let time
 
         return (
             <div>
@@ -55,12 +56,18 @@ function EventDetails() {
                 <div className='eventTimes'>
                 <i class="fa-regular fa-clock"></i>
                 <div className='times'>
-                <p className='startDate3'><span>START</span>   {details.startDate.slice(0, 10)} · {details.startDate.slice(10, details.startDate.length)}</p>
-                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {details.endDate.slice(10, details.endDate.length)}</p>
+                <p className='startDate3'><span>START</span>  {details.startDate.slice(0, 10)} · {time = new Date(details.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {time = new Date(details.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
                 </div>
                 </div>
-                <p className='price3'><i class="fa-solid fa-dollar-sign"></i>{details.price}</p>
-                <p className='type3'><i class="fa-solid fa-location-crosshairs"></i>{details.type}</p>
+                <div className='eventPrice2'>
+                <i class="fa-solid fa-dollar-sign"></i>
+                <p className='price3'>{details.price}</p>
+                </div>
+                <div className='eventType2'>
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <p className='type3'>{details.type}</p>
+                </div>
                 </div>
                 <div className='eventDeleteButton'>
                     { user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
