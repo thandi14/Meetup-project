@@ -55,6 +55,7 @@ function CreateEvent() {
         setErrors(es)
 
         if (Object.values(es).length === 0) {
+
            let request = {
                 groupId: id,
                 name,
@@ -130,7 +131,7 @@ function CreateEvent() {
             <button className='eventButton2' onClick={handleSubmit} >Create Event</button>
             </div>
             </div>
-             : <LoadingScreenTwo imgUrl={previewImage}/> }
+             : <LoadingScreenTwo eventImg={previewImage}/> }
         </div>
     )
 }

@@ -59,7 +59,9 @@ function CreateGroup() {
             let city = locate[0];
             let state = locate[1]
 
+
             if (Object.values(es).length === 0) {
+
                 const request = {
                     name,
                     about,
@@ -140,7 +142,7 @@ function CreateGroup() {
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Create group</button>
                 </div>
-            : <LoadingScreenTwo imgUrl={previewImage}/>}
+            : <LoadingScreenTwo groupImg={previewImage}/>}
         </div>
     )
 
