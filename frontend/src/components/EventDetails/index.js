@@ -70,7 +70,7 @@ function EventDetails() {
                 </div>
                 <div className='details3'>
                 <h3 className='detailsTitle3'>Details</h3>
-                <p>{details.description}</p>
+                <p className='eventDescription'>{details.description}</p>
                 </div>
                 </div>
                 </div>
