@@ -127,6 +127,11 @@
     cursor: pointer;
 }
 
+.eventName1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .eventDate1 {
     color: #00525E;
 }
