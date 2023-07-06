@@ -24,12 +24,12 @@ module.exports = {
      return queryInterface.bulkInsert(options, [
        {
          eventId: 1,
-         url: "google.com",
+         url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
          preview: true
        },
        {
         eventId: 2,
-         url: "google.com",
+         url: "https://t3.ftcdn.net/jpg/02/32/88/30/360_F_232883099_h2q9uphANCzZ4FRYvULnIg95UyGYF27m.jpg",
          preview: true
        },
      ], {});

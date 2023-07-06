@@ -21,6 +21,8 @@ function CreateEvent() {
     const [ description, setDescription ] = useState('')
     const  [ errors, setErrors ] = useState({})
     const [ isLoading, setIsLoading ] = useState(false)
+    const [ previewImage, setPreviewImage ] = useState('')
+
 
     useEffect(() => {
         dispatch(eventActions.createEvent(data))
@@ -118,7 +120,7 @@ function CreateEvent() {
             <div className='divider'></div>
             <div className='createImage2'>
             <p className='pEvents'>Please add an image url for your event below:</p>
-            <input placeholder='imageUrl' className='inputEvent' type='text'></input>
+            <input onChange={((e) => setPreviewImage(e.target.value))} placeholder='imageUrl' className='inputEvent' type='text'></input>
             </div>
             <div className='divider'></div>
             <div className='createFinale2'>
@@ -128,7 +130,7 @@ function CreateEvent() {
             <button className='eventButton2' onClick={handleSubmit} >CreateEvent</button>
             </div>
             </div>
-             : <LoadingScreenTwo /> }
+             : <LoadingScreenTwo imgUrl={previewImage}/> }
         </div>
     )
 }

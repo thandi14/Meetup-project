@@ -86,6 +86,18 @@ export const deleteEvent = (id) => async (dispatch) => {
     return response
 }
 
+export const addEventImage = (id, data) => async (dispatch) => {
+    console.log(data)
+    const response = await csrfFetch(`/api/events/${id}/images`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return response
+}
+
 const initialState = {}
 
 const eventsReducer = (state = initialState, action) => {

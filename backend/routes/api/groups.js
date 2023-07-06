@@ -248,7 +248,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', validateGroup, requireAuth, async (req, res) => {
-    const { name, about, type, private, city, state} = req.body;
+    const { name, about, type, private, city, state } = req.body;
     const { user } = req;
     const id = user.dataValues.id;
 

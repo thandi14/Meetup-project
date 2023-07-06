@@ -13,6 +13,7 @@ function CreateGroup() {
     const [ priv, setPriv ] = useState('')
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
+    const [ previewImage, setPreviewImage ] = useState('')
     const dispatch = useDispatch()
     const group = useSelector((store) => store.groups)
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,7 @@ function CreateGroup() {
         dispatch(groupActions.createGroup(data))
     }, [dispatch, data])
 
-        console.log(group)
+      //  console.log(group)
 
 
 
@@ -64,23 +65,24 @@ function CreateGroup() {
                     about,
                     type,
                     city,
-                    state
+                    state,
+                    previewImage
                 }
 
                 request['private'] = priv
                 setData(request)
+                console.log(request)
 
                 setName('');
                 setAbout('');
                 setType('');
                 setLocation('');
                 setPriv('');
+               // setPreviewImage('')
                 setIsLoading(true)
             }
 
         }
-
-        console.log(isLoading)
 
 
     return (
@@ -133,12 +135,12 @@ function CreateGroup() {
             </select>
             {errors.priv && <p className='error'>{errors.priv}</p>}
             <p>Please add an image url for your group below:</p>
-            <input className='inputGroup' type="text" placeholder="Image url"></input>
+            <input onChange={((e) => setPreviewImage(e.target.value))} className='inputGroup' type="text" placeholder="Image url"></input>
             </div>
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Create group</button>
                 </div>
-            : <LoadingScreenTwo />}
+            : <LoadingScreenTwo imgUrl={previewImage}/>}
         </div>
     )
 
