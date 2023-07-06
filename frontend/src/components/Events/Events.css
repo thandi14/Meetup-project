@@ -44,6 +44,8 @@
     height: 20px;
     display: flex;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -53,7 +55,6 @@
     flex-direction: row;
     gap: 3px;
     padding: 0.5px;
-    justify-content: center;
     align-items: flex-start;
     width: 600px;
     height: 185px;
@@ -66,16 +67,17 @@
 
 .img2 {
     display: flex;
-    width: 250px;
+    width: 220px;
     height: 210px;
     justify-content: flex-start;
     align-items: center;
 }
 
 .eventImg {
-    width: 210px;
+    width: 200px;
     height: 150px;
     cursor: pointer;
+    padding-bottom: 5px;
 }
 
 .info2 {
@@ -85,7 +87,6 @@
     width: 350px;
     text-align: left;
     height: 150px;
-    padding-right: 60px
 }
 
 .location2 {
@@ -101,6 +102,8 @@
     height: 10px;
     cursor: pointer;
     padding-bottom: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .eventDate {

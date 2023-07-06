@@ -11,6 +11,7 @@ import EventDetails from "./components/EventDetails";
 import CreateGroup from "./components/CreateGroup";
 import CreateEvent from "./components/CreateEvent";
 import UpdateGroup from "./components/UpdateGroup";
+import LoadingScreenTwo from "./components/LoadingScreen2";
 
 function App() {
   const dispatch = useDispatch();

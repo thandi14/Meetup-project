@@ -127,7 +127,7 @@ function CreateEvent() {
             <p className='pEvents'>Please describe your event:</p>
             <textarea placeholder='Please include at least 30 characters' className='textareaEvent' onChange={((e) => setDescription(e.target.value))} type='text'></textarea>
             {errors.description && <p className='error'>{errors.description}</p>}
-            <button className='eventButton2' onClick={handleSubmit} >CreateEvent</button>
+            <button className='eventButton2' onClick={handleSubmit} >Create Event</button>
             </div>
             </div>
              : <LoadingScreenTwo imgUrl={previewImage}/> }

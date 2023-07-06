@@ -44,7 +44,7 @@ function Events() {
                 </div>
                 <div className='info2'>
                 {e.startDate ?
-                <p className='eventDate'>{e.startDate.slice(0, 10)} {e.startDate.slice(10, e.startDate.length)}</p>
+                <p className='eventDate'>{e.startDate.slice(0, 10)} · {e.startDate.slice(10, e.startDate.length)}</p>
                 : <p></p>}
                 <h2 onClick={(() => history.push(`/events/${e.id}`))} className='eventTitle'>{e.name}</h2>
                 {e.Venue ?

@@ -55,6 +55,7 @@ function GroupDetails() {
             </div>
             </div>
             <div className='groupsBackground1'>
+            <div className='groupsDetailsBox'>
             <div className='details1'>
             <h2 className='organizer'>Organizer</h2>
             <p className="firstLast">{group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
@@ -81,6 +82,7 @@ function GroupDetails() {
             )}
             </div>
             : <div></div> }
+            </div>
         </div>
             </div>
     )

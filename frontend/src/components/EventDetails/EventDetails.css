@@ -65,22 +65,21 @@
 
 .eventImg2 {
     width: 580px;
-    height: 250px;
-    height: 100%
+    height: 360px;
 }
 
 .details3 {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-left: 100px;
+    padding-left: 160px;
 }
 
 .title3 {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-left: 95px;
+    padding-left: 150px;
     padding-top: 65px;
     padding-bottom: 20px
 }

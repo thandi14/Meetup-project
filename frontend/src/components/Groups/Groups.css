@@ -43,9 +43,12 @@
 .groupTitle {
     font-size: 18pt;
     height: 10px;
+    width: 200px;
     display: flex;
     justify-content: flex-start;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -100,6 +103,7 @@
     font-size: 10pt;
     height: 52px;
     cursor: pointer;
+    text-overflow: ellipsis;
 }
 
 .private {

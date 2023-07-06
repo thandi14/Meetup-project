@@ -10,7 +10,9 @@
 }
 
 .intro {
-    height: 450px
+    height: 450px;
+    display: flex;
+    flex-direction: column;
 }
 
 .imgOne {
@@ -22,7 +24,6 @@
     font-size: 35pt;
     font-weight: bold;
     height: 140px;
-    font-family: 'Gotham';
 }
 
 .oneP {

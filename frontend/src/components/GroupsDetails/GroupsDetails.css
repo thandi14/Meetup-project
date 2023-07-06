@@ -70,6 +70,8 @@
     position: absolute;
     left: 0%;
     right: 0%;
+    display: flex;
+    padding-bottom: 80px
 }
 
 .details1 {
@@ -88,7 +90,7 @@
 
 .eventBox1 {
     background-color: white;
-    margin-bottom: 170px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -152,4 +154,8 @@
     background-color: #999999;
     color: white;
     cursor: pointer;
+}
+
+.groupsDetailsBox {
+    padding-left: 65px;
 }

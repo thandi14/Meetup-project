@@ -23,8 +23,10 @@
     height: 45px;
     background-color: #FF5A5F;
     color: white;
+    cursor: pointer;
 }
 
 .error {
     color: #FF5A5F;
+    font-size: 10px;
 }

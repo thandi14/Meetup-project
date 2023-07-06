@@ -42,7 +42,7 @@ function EventDetails() {
                 <div className='eventSec2'>
                 <div className='eventGroup'>
                     <div className='groupImage3'>
-                    <img onClick={(() => history.push(`/groups/${group.id}`))} className='groupImg3'src={group.GroupImages.length ? group.GroupImages[group.GroupImages.length - 1].url : ""}></img>
+                    <img onClick={(() => history.push(`/groups/${group.id}`))} className='groupImg3'src={group.GroupImages && group.GroupImages.length ? group.GroupImages[group.GroupImages.length - 1].url : ""}></img>
                     </div>
                     <div className='groupDetails3'>
                     <h3 onClick={(() => history.push(`/groups/${group.id}`))} className='groupName3'>{group.name}</h3>
