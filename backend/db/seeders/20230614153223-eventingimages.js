@@ -24,12 +24,12 @@ module.exports = {
      return queryInterface.bulkInsert(options, [
        {
          eventId: 1,
-         url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
+         url: "https://www.foodandwine.com/thmb/aTb5SZ00S5WOMH92Hu_rHQ9Ebnw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Web_4000-Hungryroot-Feta-Turkey-Burger-with-Sweet-Potato-06-c70ca047123b4ae8b2045dca0f5b4c39.jpg",
          preview: true
        },
        {
         eventId: 2,
-         url: "https://t3.ftcdn.net/jpg/02/32/88/30/360_F_232883099_h2q9uphANCzZ4FRYvULnIg95UyGYF27m.jpg",
+         url: "https://snworksceo.imgix.net/dpn/c1f08449-d72c-493d-97aa-b5707f596399.sized-1000x1000.jpg?w=1000",
          preview: true
        },
      ], {});

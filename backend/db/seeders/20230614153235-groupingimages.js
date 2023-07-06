@@ -24,12 +24,12 @@ module.exports = {
      return queryInterface.bulkInsert(options, [
        {
          groupId: 1,
-         url: "https://media.istockphoto.com/id/817164728/photo/tennis-players-playing-a-match-on-the-court.jpg?s=612x612&w=0&k=20&c=FU20TqadXiFLCQjw_WHDT3aNMDUdBBZYzIvxegz4X6Y=",
+         url: "https://images.pexels.com/photos/8223959/pexels-photo-8223959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
          preview: true
        },
        {
         groupId: 2,
-         url: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGluaW5nJTIwb3V0fGVufDB8fDB8fHww&w=1000&q=80",
+         url: "https://static3.depositphotos.com/1003631/209/i/450/depositphotos_2099183-stock-photo-fine-table-setting-in-gourmet.jpg",
          preview: true
        },
      ], {});
