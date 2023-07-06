@@ -56,6 +56,17 @@
     width: 180px;
     color: white;
     background-color: #FF5A5F;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+    cursor: pointer;
+
+}
+
+.groupButton1:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #9e2b2f;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
 }
 
 .linkArea {
@@ -165,6 +176,15 @@
     background-color: #999999;
     color: white;
     cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+.groupButton2:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
 }
 
 .groupsDetailsBox {

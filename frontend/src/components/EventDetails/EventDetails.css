@@ -56,6 +56,15 @@
     color: white;
     background-color: #999999;
     margin-right: 200px;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+.deleteAnEvent:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
 }
 
 .eventSections {

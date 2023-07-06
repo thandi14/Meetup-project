@@ -25,6 +25,10 @@
     color: #00525E;
 }
 
+.startG:hover {
+    color: #FF5A5F;
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -47,6 +51,12 @@
     align-items: center;
     color: white;
     cursor: pointer;
+}
+
+.profileButton:hover {
+    box-shadow: 1px 1px 8px 4px rgb(246, 246, 206);
+    transition: box-shadow 0.1s ease;
+    color: rgb(246, 246, 206);
 }
 
 .authen {

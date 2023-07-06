@@ -1,8 +1,11 @@
 .one {
     display: flex;
     padding-top: 25px;
-    padding-left: 150px;
-    padding-right: 150px;
+    /* padding-left: 150px;
+    padding-right: 150px; */
+    margin: 50px;
+    margin-left: 120px;
+    margin-right: 120px;
     align-items: center;
     gap: 20px;
     justify-content: center;
@@ -13,7 +16,7 @@
     height: 450px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    /* gap: 40px; */
 }
 
 .imgOne {
@@ -117,4 +120,13 @@
     color: white;
     background-color: #00525E;
     cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+.groupButton1:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #013239;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
 }

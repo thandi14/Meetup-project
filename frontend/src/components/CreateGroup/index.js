@@ -68,19 +68,16 @@ function CreateGroup() {
                     type,
                     city,
                     state,
-                    previewImage
                 }
 
                 request['private'] = priv
                 setData(request)
-                console.log(request)
 
                 setName('');
                 setAbout('');
                 setType('');
                 setLocation('');
                 setPriv('');
-               // setPreviewImage('')
                 setIsLoading(true)
             }
 

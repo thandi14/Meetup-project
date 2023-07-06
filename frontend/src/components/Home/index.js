@@ -21,7 +21,8 @@ function HomePage() {
         <>
         <section className="one">
         <div className='intro'>
-        <h1 className='oneText'>The people platform- Where interests become friendships</h1>
+        <h1 className='oneText'>The people platform- <br>
+        </br>Where interests become friendships</h1>
         <p className='oneP'>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on Meetup. Events are happening every day—sign up to join the fun.</p>
         </div>
         <div>

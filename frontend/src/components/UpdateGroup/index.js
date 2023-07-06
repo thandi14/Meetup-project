@@ -16,6 +16,7 @@ function UpdateGroup() {
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
     const dispatch = useDispatch()
+    const [ previewImage, setPreviewImage ] = useState('')
     const group = useSelector((store) => store.groups)
     const [isLoading, setIsLoading] = useState(false);
 
@@ -82,8 +83,6 @@ function UpdateGroup() {
 
         }
 
-        console.log(isLoading)
-
 
     return (
         <div>
@@ -135,12 +134,12 @@ function UpdateGroup() {
             </select>
             {errors.priv && <p className='error'>{errors.priv}</p>}
             <p>Please add an image url for your group below:</p>
-            <input className='inputGroup' type="text" placeholder="Image url"></input>
+            <input onChange={((e) => setPreviewImage(e.target.value))} className='inputGroup' type="text" placeholder="Image url"></input>
             </div>
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Update group</button>
                 </div>
-            : <LoadingScreenTwo />}
+            : <LoadingScreenTwo groupImg={previewImage}/>}
         </div>
     )
 }
