@@ -52,10 +52,15 @@ function EventDetails() {
                 </div>
                 <div className='eventDetails2'>
                 <div className='infoForEvents'>
+                <div className='eventTimes'>
+                <i class="fa-regular fa-clock"></i>
+                <div className='times'>
                 <p className='startDate3'><span>START</span>   {details.startDate.slice(0, 10)} · {details.startDate.slice(10, details.startDate.length)}</p>
                 <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {details.endDate.slice(10, details.endDate.length)}</p>
-                <p className='price3'>{details.price}</p>
-                <p className='type3'>{details.type}</p>
+                </div>
+                </div>
+                <p className='price3'><i class="fa-solid fa-dollar-sign"></i>{details.price}</p>
+                <p className='type3'><i class="fa-solid fa-location-crosshairs"></i>{details.type}</p>
                 </div>
                 <div className='eventDeleteButton'>
                     { user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
