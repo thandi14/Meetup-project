@@ -27,11 +27,12 @@ function UpdateGroup() {
         dispatch(groupActions.updateGroup(id, data, previewImage))
     }, [dispatch, data, previewImage])
 
-        console.log(group)
+        console.log(id)
 
 
 
         const handleSubmit = () => {
+            console.log('yes')
             const es = {}
             const validExtensions = ['.jpg', '.jpeg', '.png'];
 
@@ -80,7 +81,6 @@ function UpdateGroup() {
                     state
                 }
 
-                request['private'] = priv
                 setData(request)
 
                 setName('');
