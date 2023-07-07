@@ -7,10 +7,12 @@
 h1 {
     font-size: 16pt;
     height: 15px;
+    height: auto;
 }
 
 p {
     font-size: 12pt;
+    height: auto;
 }
 
 .createLocation, .createAbout, .createName, .createFinale {

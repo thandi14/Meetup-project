@@ -30,11 +30,13 @@ function EventDetails() {
             <div>
             {group ?
                 <div>
+                <div className='intro4'>
                 <div className='title3'>
                     <Link to='/events'>{'<'}Events</Link>
                 <h2 className='eventTitle3'>{details.name}</h2>
                 <p>Hosted by {group.Organizer ? group.Organizer[0].firstName : ""} {group.Organizer ? group.Organizer[0].lastName : ""}</p>
                  </div>
+                </div>
                 <div className='background2'>
                 <div className='wholeEvent'>
                 <div className='eventSections'>

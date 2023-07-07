@@ -1,13 +1,15 @@
 
 h1 {
     font-size: 16pt;
-    height: 15px;
+    height: auto;
     padding-top: 10px;
 }
 
 .pEvents {
     font-size: 12pt;
-    height: 10px;
+    /* height: 10px; */
+    height: auto;
+
 }
 
 .formEvent {

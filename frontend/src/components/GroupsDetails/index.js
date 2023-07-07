@@ -100,7 +100,7 @@ function GroupDetails() {
             </div>
             {upComing && upComing.length ?
             <div className='event1'>
-                <h2>Upcoming Events ({upComing && upComing.length ? upComing.length : 0})</h2>
+                <h2 className='upcoming'>Upcoming Events ({upComing && upComing.length ? upComing.length : 0})</h2>
             {upComing.map((event) =>
             <>
                 <div className='eventBox1'>
