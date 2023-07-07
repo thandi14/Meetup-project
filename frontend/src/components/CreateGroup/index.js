@@ -23,9 +23,6 @@ function CreateGroup() {
         dispatch(groupActions.createGroup(data, previewImage))
     }, [dispatch, data, previewImage])
 
-      //  console.log(group)
-
-
 
         const handleSubmit = () => {
             const es = {}
@@ -39,6 +36,7 @@ function CreateGroup() {
                );
 
            }
+           console.log(hasValidExtension, previewImage)
 
             if (!name) {
                 es['name'] = "Name is required"
