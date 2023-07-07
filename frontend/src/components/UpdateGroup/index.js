@@ -25,9 +25,10 @@ function UpdateGroup() {
 
     useEffect(() => {
         dispatch(groupActions.updateGroup(id, data, previewImage))
+        dispatch(groupActions.getDetailsById(id))
     }, [dispatch, data, previewImage])
 
-        console.log(id)
+        console.log(group)
 
 
 
@@ -51,10 +52,10 @@ function UpdateGroup() {
             if (!location) {
                 es['location'] = 'Location is required'
             }
-            if (!location.includes(',')) {
+            if (location && !location.includes(',')) {
                 es['location'] = 'Invalid format (city, state)'
             }
-            if (about.length < 50) {
+            if (about && about.length < 50) {
                 es['about'] = 'Description must be at least 50 characters long'
             }
             if (!type) {
@@ -98,6 +99,8 @@ function UpdateGroup() {
             }
 
         }
+
+        console.log(isLoading)
 
 
     return (
@@ -151,11 +154,12 @@ function UpdateGroup() {
             {errors.priv && <p className='error'>{errors.priv}</p>}
             <p>Please add an image url for your group below:</p>
             <input onChange={((e) => setPreviewImage(e.target.value))} className='inputGroup' type="text" placeholder="Image url"></input>
+            {errors.previewImage && <p className='error'>{errors.previewImage}</p>}
             </div>
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Update group</button>
                 </div>
-            : <LoadingScreenTwo group={'groups'}/>}
+            : <LoadingScreenTwo updateG={'update'}/>}
         </div>
     )
 }
