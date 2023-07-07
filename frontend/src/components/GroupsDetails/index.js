@@ -28,6 +28,7 @@ function GroupDetails() {
     if (obj && obj.length >= 15) {
 
         let time
+        
         let currTime = new Date()
 
         let upComingDates = group.Events.filter((e) => new Date(e.startDate) > currTime)

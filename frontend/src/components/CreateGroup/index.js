@@ -29,6 +29,11 @@ function CreateGroup() {
 
         const handleSubmit = () => {
             const es = {}
+            const validExtensions = ['.jpg', '.jpeg', '.png'];
+
+            const hasValidExtension = validExtensions.some(extension =>
+                previewImage.toLowerCase().endsWith(extension)
+            );
 
             if (!name) {
                 es['name'] = "Name is required"
@@ -47,6 +52,9 @@ function CreateGroup() {
             }
             if (priv === '') {
                 es['priv'] = "Visibility type is required"
+            }
+            if (!hasValidExtension) {
+                es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
             }
 
             setErrors(es)
@@ -113,8 +121,8 @@ function CreateGroup() {
             <p> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea className='textareaGroup' placeholder="Please write atleast 30 characters" onChange={((e) => setAbout(e.target.value))}></textarea>
-            {errors.about && <p className='error'>{errors.about}</p>}
+            <textarea className='textareaGroup' placeholder="Please write at least 30 characters" onChange={((e) => setAbout(e.target.value))} value={about} ></textarea>
+            {errors.about || about.length < 31 && about.length >= 1 ? <p className='error'>Please write at least 30 characters</p> : <div></div>}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
@@ -135,6 +143,7 @@ function CreateGroup() {
             {errors.priv && <p className='error'>{errors.priv}</p>}
             <p>Please add an image url for your group below:</p>
             <input onChange={((e) => setPreviewImage(e.target.value))} className='inputGroup' type="text" placeholder="Image url"></input>
+            {errors.previewImage && <p className='error'>{errors.previewImage}</p>}
             </div>
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Create group</button>

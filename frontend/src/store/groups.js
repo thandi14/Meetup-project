@@ -72,7 +72,7 @@ export const createGroup = (data, img) => async (dispatch) => {
     }
 }
 
-export const updateGroup = (id, data) => async (dispatch) => {
+export const updateGroup = (id, data, img) => async (dispatch) => {
     console.log(data)
     if (Object.values(data).length) {
         const response = await csrfFetch(`/api/groups/${id}`, {
@@ -84,6 +84,7 @@ export const updateGroup = (id, data) => async (dispatch) => {
         })
         data = await response.json()
         dispatch(getDetails(data))
+        if (img) dispatch(addGroupImage(id, { url: img, preview: true}))
         return response
     }
 }

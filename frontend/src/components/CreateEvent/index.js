@@ -32,6 +32,11 @@ function CreateEvent() {
     console.log(group)
     const handleSubmit = () => {
         const es = {}
+        const validExtensions = ['.jpg', '.jpeg', '.png'];
+
+            const hasValidExtension = validExtensions.some(extension =>
+                previewImage.toLowerCase().endsWith(extension)
+            );
 
         if (!name) {
             es['name'] = 'Name is required'
@@ -50,6 +55,9 @@ function CreateEvent() {
         }
         if (description.length < 30) {
             es['description'] = 'Description must be at least 30 characters long'
+        }
+        if (!hasValidExtension) {
+            es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
         }
 
         setErrors(es)
@@ -126,8 +134,8 @@ function CreateEvent() {
             <div className='divider'></div>
             <div className='createFinale2'>
             <p className='pEvents'>Please describe your event:</p>
-            <textarea placeholder='Please include at least 30 characters' className='textareaEvent' onChange={((e) => setDescription(e.target.value))} type='text'></textarea>
-            {errors.description && <p className='error'>{errors.description}</p>}
+            <textarea placeholder='Please include at least 30 characters' className='textareaEvent' value={description} onChange={((e) => setDescription(e.target.value))} type='text'></textarea>
+            {errors.description || description.length < 31 && description.length >= 1 ? <p className='error'>Please write at least 30 characters</p> : <div></div>}
             <button className='eventButton2' onClick={handleSubmit} >Create Event</button>
             </div>
             </div>
