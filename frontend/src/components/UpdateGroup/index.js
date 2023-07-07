@@ -134,8 +134,7 @@ function UpdateGroup() {
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
             <input className='inputGroup' defaultValue={group.name} type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
-            {name.length < 5 && name.length >= 1 && <p className='error'>{"Name must be at least 5 characters"}</p>}
-
+            {name.length > 60 && <p className='error'>{"Name must be less than 60 characters"}</p>}
             </div>
             <div className='divider'></div>
             <div className='createAbout'>
