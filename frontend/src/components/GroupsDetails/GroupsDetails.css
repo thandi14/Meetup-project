@@ -35,7 +35,7 @@
 
 .groupTitle1 {
     text-align: start;
-    height: 10px;
+    max-height: 30px;
     width: 500px
 }
 
@@ -172,7 +172,7 @@
 
 .userAction {
     display: flex;
-    padding-top: 145px;
+    padding-top: 130px;
     gap: 10px
 }
 

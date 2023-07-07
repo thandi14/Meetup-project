@@ -8,16 +8,16 @@ import './UpdateGroup.css'
 
 function UpdateGroup() {
     const { id } = useParams()
-    const [ location, setLocation ] = useState('');
-    const [ name, setName ] = useState('');
-    const [ about, setAbout] = useState('');
-    const [ type, setType ] = useState('');
-    const [ priv, setPriv ] = useState('')
+    const group = useSelector((store) => store.groups)
+    const [ location, setLocation ] = useState(`${group.city}, ${group.state}`);
+    const [ name, setName ] = useState(group.name);
+    const [ about, setAbout] = useState(group.about);
+    const [ type, setType ] = useState(group.type);
+    const [ priv, setPriv ] = useState(group.private ? "true" : "false")
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
     const dispatch = useDispatch()
     const [ previewImage, setPreviewImage ] = useState('')
-    const group = useSelector((store) => store.groups)
     const [isLoading, setIsLoading] = useState(false);
     const validExtensions = ['.jpg', '.jpeg', '.png'];
 
@@ -28,7 +28,13 @@ function UpdateGroup() {
         dispatch(groupActions.getDetailsById(id))
     }, [dispatch, data, previewImage])
 
-        console.log(group)
+        console.log({
+            name,
+            about,
+            type,
+            priv,
+            location
+        })
 
 
 
@@ -90,6 +96,7 @@ function UpdateGroup() {
                     state
                 }
 
+                console.log(es)
                 request['private'] = priv
                 setData(request)
                 console.log(request)
@@ -103,7 +110,6 @@ function UpdateGroup() {
 
         }
 
-        console.log(isLoading)
 
 
     return (

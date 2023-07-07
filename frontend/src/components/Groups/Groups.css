@@ -44,12 +44,12 @@
     font-size: 15pt;
     height: auto;
     width: 350px;
-    display: flex;
-    justify-content: flex-start;
+    /* display: flex; */
+    /* justify-content: flex-start; */
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /* overflow: hidden; Hide the overflow */
+    overflow: hidden;
 
 }
 
