@@ -38,7 +38,7 @@ function CreateEvent() {
 
         if (previewImage) {
              hasValidExtension = validExtensions.some(extension =>
-                previewImage.toLowerCase().endsWith(extension)
+                previewImage.toLowerCase().includes(extension)
             );
 
         }
