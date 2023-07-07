@@ -130,7 +130,6 @@
 
 .eventDescription {
     text-overflow: ellipsis;
-    overflow: hidden; /* Hide the overflow */
 }
 
 .eventPrice2, .eventType2 {

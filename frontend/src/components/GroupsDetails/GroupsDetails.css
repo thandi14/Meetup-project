@@ -163,7 +163,6 @@
 .eventDescription1 {
     cursor: pointer;
     width: 300px;
-    overflow: hidden; /* Hide the overflow */
     text-overflow: ellipsis;
 }
 
@@ -192,4 +191,8 @@
     margin-left: 250px;
     margin-right: 250px;
 
+}
+
+.past {
+    padding-top: 50px
 }

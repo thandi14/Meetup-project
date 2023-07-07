@@ -28,7 +28,7 @@ function GroupDetails() {
     if (obj && obj.length >= 15) {
 
         let time
-        
+
         let currTime = new Date()
 
         let upComingDates = group.Events.filter((e) => new Date(e.startDate) > currTime)
@@ -122,7 +122,7 @@ function GroupDetails() {
             : <div></div> }
             {group.Events ?
             <div className='event1'>
-                <h2>Past Events ({past && past.length ? past.length : 0})</h2>
+                <h2 className='past' >Past Events ({past && past.length ? past.length : 0})</h2>
             {past.map((event) =>
             <>
                 <div className='eventBox1'>

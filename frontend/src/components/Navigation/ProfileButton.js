@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import MenuModal from "./menu";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -12,8 +13,12 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
   const history = useHistory()
 
+  const closeMenu = () => setShowMenu(false);
+
+
   const openMenu = () => {
-    if (showMenu) return;
+    console.log('hello', showMenu)
+    if (showMenu) closeMenu();
     setShowMenu(true);
   };
 
@@ -31,30 +36,29 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const closeMenu = () => setShowMenu(false);
-
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logoutUser()).then(history.push('/'));
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = showMenu ? "profile-dropdown" : " hidden";
 
   return (
     <>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
       {user ? (
+        <>
           <div className='dropdown'>
             <p>{user.username}</p>
-            <p>{user.firstName} {user.lastName}</p>
+            {/* <p>{user.firstName} {user.lastName}</p> */}
             <p>{user.email}</p>
-            <div>
-              <button onClick={logout}>Log Out</button>
-            </div>
+            <div className='divide'></div>
+            <p className='logoutUser' onClick={logout}>Log Out</p>
           </div>
+        </>
         ) : null
         }
-      </ul>
+      </div>
       <div className='profileButton' onClick={openMenu}>
         <i className="fa-regular fa-user"></i>
       </div>

@@ -58,3 +58,7 @@ p {
 .selectEvent2 {
     background-color: rgba(197, 212, 237, 0.65);
 }
+
+.numbers {
+    height: 60px
+}

@@ -118,7 +118,7 @@ function CreateGroup() {
             <div className='createAbout'>
             <h1>Now describe what your group will be about.</h1>
             <p>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
-            <p> 1. What's the purpose of the group? <br></br>
+            <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
             <textarea className='textareaGroup' placeholder="Please write at least 30 characters" onChange={((e) => setAbout(e.target.value))} value={about} ></textarea>

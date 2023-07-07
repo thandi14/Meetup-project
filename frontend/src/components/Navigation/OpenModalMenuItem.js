@@ -12,11 +12,18 @@ function OpenModalMenuItem({
   const onClick = () => {
     if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
-    if (onItemClick) onItemClick();
+
+    // if (onItemClick) onItemClick();
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <>
+     
+    </>
+    // <>
+    // {/* {onModalClose ? onItemClick() : setOnModalClose(onModalClose)} */}
+
+    // </>
   );
 }
 
