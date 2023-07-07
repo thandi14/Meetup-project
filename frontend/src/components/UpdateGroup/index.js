@@ -138,7 +138,7 @@ function UpdateGroup() {
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea defaultValue={group.about} className='textareaGroup' placeholder="Please write atleast 50 characters" value={about} onChange={((e) => setAbout(e.target.value))}></textarea>
+            <textarea defaultValue={group.about} className='textareaGroup' placeholder="Please write atleast 50 characters" onChange={((e) => setAbout(e.target.value))}></textarea>
             {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
             </div>
             <div className='divider'></div>
