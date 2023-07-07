@@ -13,15 +13,15 @@ function CreateGroup() {
     const [ priv, setPriv ] = useState('')
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
-    const [ previewImage, setPreviewImage ] = useState('group')
+    const [ previewImage, setPreviewImage ] = useState('')
     const dispatch = useDispatch()
     const group = useSelector((store) => store.groups)
     const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
-        dispatch(groupActions.createGroup(data))
-    }, [dispatch, data])
+        dispatch(groupActions.createGroup(data, previewImage))
+    }, [dispatch, data, previewImage])
 
       //  console.log(group)
 
@@ -39,8 +39,8 @@ function CreateGroup() {
             if (!location.includes(',')) {
                 es['location'] = 'Invalid format (city, state)'
             }
-            if (about.length < 30) {
-                es['about'] = 'Description must be at least 30 characters long'
+            if (about.length < 50) {
+                es['about'] = 'Description must be at least 50 characters long'
             }
             if (!type) {
                 es['type'] = 'Group type is required'
@@ -139,7 +139,7 @@ function CreateGroup() {
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Create group</button>
                 </div>
-            : <LoadingScreenTwo groupImg={previewImage}/>}
+            : <LoadingScreenTwo group={'groups'}/>}
         </div>
     )
 

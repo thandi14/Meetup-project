@@ -43,7 +43,7 @@ export const getDetailsById = (id) => async (dispatch) => {
     return response1;
 }
 
-export const createEvent = (data) => async (dispatch) => {
+export const createEvent = (data, img) => async (dispatch) => {
     const { name , description, type, capacity, price, startDate, endDate} = data
     console.log(data)
     if (Object.values(data).length) {
@@ -70,6 +70,9 @@ export const createEvent = (data) => async (dispatch) => {
         }
         const data1 = await response1.json()
         dispatch(getDetails(data1))
+
+        if (img) dispatch(addEventImage(eventId, { url: img, preview: true}))
+
         return response
     }
 }
@@ -116,7 +119,7 @@ const eventsReducer = (state = initialState, action) => {
         }
         case REMOVE_EVENT:
         const newState = { ...state };
-        delete newState[action.id];
+        delete newState.id;
         return newState;
       default:
         return state;

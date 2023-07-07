@@ -18,10 +18,9 @@ const getDetails = (details) => {
     }
 }
 
-const removeGroup = (id) => {
+const removeGroup = () => {
     return {
         type: REMOVE_GROUP,
-        id
     }
 }
 
@@ -48,7 +47,7 @@ export const getDetailsById = (id) => async (dispatch) => {
     return response1;
 }
 
-export const createGroup = (data) => async (dispatch) => {
+export const createGroup = (data, img) => async (dispatch) => {
     if (Object.values(data).length) {
         const response = await csrfFetch('/api/groups', {
             method: 'POST',
@@ -64,7 +63,11 @@ export const createGroup = (data) => async (dispatch) => {
             response1 = await csrfFetch(`/api/groups/${data.id}`)
         }
         const data1 = await response1.json()
+
         dispatch(getDetails(data1))
+
+        if (img) dispatch(addGroupImage(groupId, { url: img, preview: true}))
+
         return response
     }
 }
@@ -126,7 +129,7 @@ const groupsReducer = (state = initialState, action) => {
         }
         case REMOVE_GROUP:
         const newState = { ...state };
-        delete newState[action.id];
+        delete newState.id;
         return newState;
       default:
         return state;

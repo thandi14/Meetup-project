@@ -25,8 +25,8 @@ function CreateEvent() {
 
 
     useEffect(() => {
-        dispatch(eventActions.createEvent(data))
-    }, [dispatch, data])
+        dispatch(eventActions.createEvent(data, previewImage))
+    }, [dispatch, data, previewImage])
 
 
     console.log(group)
@@ -131,7 +131,7 @@ function CreateEvent() {
             <button className='eventButton2' onClick={handleSubmit} >Create Event</button>
             </div>
             </div>
-             : <LoadingScreenTwo eventImg={previewImage}/> }
+             : <LoadingScreenTwo event={'events'}/> }
         </div>
     )
 }
