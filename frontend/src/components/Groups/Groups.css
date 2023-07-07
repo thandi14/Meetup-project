@@ -86,9 +86,6 @@
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     width: 350px;
     text-align: left;
 }
@@ -107,6 +104,7 @@
     cursor: pointer;
     text-overflow: ellipsis;
     overflow: hidden; /* Hide the overflow */
+    padding-top: 15px
 }
 
 .private {
