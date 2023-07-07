@@ -36,9 +36,14 @@ function UpdateGroup() {
             const es = {}
             const validExtensions = ['.jpg', '.jpeg', '.png'];
 
-            const hasValidExtension = validExtensions.some(extension =>
-                previewImage.toLowerCase().endsWith(extension)
-            );
+            let hasValidExtension
+
+            if (previewImage) {
+                 hasValidExtension = validExtensions.some(extension =>
+                    previewImage.toLowerCase().endsWith(extension)
+                );
+
+            }
 
             if (!name) {
                 es['name'] = "Name is required"
@@ -49,8 +54,8 @@ function UpdateGroup() {
             if (!location.includes(',')) {
                 es['location'] = 'Invalid format (city, state)'
             }
-            if (about.length < 30) {
-                es['about'] = 'Description must be at least 30 characters long'
+            if (about.length < 50) {
+                es['about'] = 'Description must be at least 50 characters long'
             }
             if (!type) {
                 es['type'] = 'Group type is required'
@@ -58,7 +63,7 @@ function UpdateGroup() {
             if (priv === '') {
                 es['priv'] = "Visibility type is required"
             }
-            if (!hasValidExtension) {
+            if (previewImage && !hasValidExtension) {
                 es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
             }
 
@@ -81,8 +86,9 @@ function UpdateGroup() {
                     state
                 }
 
+                request['private'] = priv
                 setData(request)
-
+                console.log(request)
                 setName('');
                 setAbout('');
                 setType('');
@@ -123,8 +129,8 @@ function UpdateGroup() {
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea className='textareaGroup' placeholder="Please write atleast 30 characters" value={about} onChange={((e) => setAbout(e.target.value))}></textarea>
-            {errors.about || about.length < 31 && about.length >= 1 ? <p className='error'>Please write at least 30 characters</p> : <div></div>}
+            <textarea className='textareaGroup' placeholder="Please write atleast 50 characters" value={about} onChange={((e) => setAbout(e.target.value))}></textarea>
+            {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
@@ -149,7 +155,7 @@ function UpdateGroup() {
             <div className='divider'></div>
             <button className='formButton' onClick={handleSubmit}>Update group</button>
                 </div>
-            : <LoadingScreenTwo groupImg={'groups'}/>}
+            : <LoadingScreenTwo group={'groups'}/>}
         </div>
     )
 }

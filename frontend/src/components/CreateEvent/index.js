@@ -34,9 +34,14 @@ function CreateEvent() {
         const es = {}
         const validExtensions = ['.jpg', '.jpeg', '.png'];
 
-            const hasValidExtension = validExtensions.some(extension =>
+        let hasValidExtension
+
+        if (previewImage) {
+             hasValidExtension = validExtensions.some(extension =>
                 previewImage.toLowerCase().endsWith(extension)
             );
+
+        }
 
         if (!name) {
             es['name'] = 'Name is required'
@@ -56,7 +61,7 @@ function CreateEvent() {
         if (description.length < 30) {
             es['description'] = 'Description must be at least 30 characters long'
         }
-        if (!hasValidExtension) {
+        if (previewImage && !hasValidExtension) {
             es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
         }
 

@@ -31,9 +31,14 @@ function CreateGroup() {
             const es = {}
             const validExtensions = ['.jpg', '.jpeg', '.png'];
 
-            const hasValidExtension = validExtensions.some(extension =>
-                previewImage.toLowerCase().endsWith(extension)
-            );
+            let hasValidExtension
+
+            if (previewImage) {
+                hasValidExtension = validExtensions.some(extension =>
+                   previewImage.toLowerCase().endsWith(extension)
+               );
+
+           }
 
             if (!name) {
                 es['name'] = "Name is required"
@@ -53,7 +58,7 @@ function CreateGroup() {
             if (priv === '') {
                 es['priv'] = "Visibility type is required"
             }
-            if (!hasValidExtension) {
+            if (previewImage && !hasValidExtension) {
                 es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
             }
 
@@ -121,8 +126,8 @@ function CreateGroup() {
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea className='textareaGroup' placeholder="Please write at least 30 characters" onChange={((e) => setAbout(e.target.value))} value={about} ></textarea>
-            {errors.about || about.length < 31 && about.length >= 1 ? <p className='error'>Please write at least 30 characters</p> : <div></div>}
+            <textarea className='textareaGroup' placeholder="Please write at least 50 characters" onChange={((e) => setAbout(e.target.value))} value={about} ></textarea>
+            {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
