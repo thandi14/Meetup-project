@@ -59,6 +59,20 @@
     color: rgb(246, 246, 206);
 }
 
+.profileButtonOn {
+    border-radius: 60px;
+    width: 40px;
+    height: 40px;
+    background: #FF5A5F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(246, 246, 206);
+    cursor: pointer;
+    box-shadow: 1px 1px 8px 4px rgb(246, 246, 206);
+
+}
+
 .authen {
     display: flex;
     flex-direction: row;
@@ -114,4 +128,17 @@ p {
 .divide {
     height: 1px;
     background-color: black;
+    width: auto;
+}
+
+.dropdown > p {
+    padding-left: 10px;
+    font-size: 14px;
+    height: 10px;
+}
+
+.dropdown {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 200px;
 }

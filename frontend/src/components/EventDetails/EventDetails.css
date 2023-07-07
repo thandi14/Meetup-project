@@ -18,7 +18,13 @@
     border-radius: 10px;
     width: 450px;
     height: 80px;
-    gap: 10px
+    gap: 10px;
+    cursor: pointer;
+}
+
+.eventGroup:hover {
+    box-shadow: 10px 10px 10px rgb(158, 158, 150);
+    transition: box-shadow 0.1s ease;
 }
 
 .eventSec2 {

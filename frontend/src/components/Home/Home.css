@@ -133,7 +133,7 @@
     border: 2px solid black;
 }
 
-.groupButton1:hover {
+.button:hover {
     box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
     border: 1.5px solid #013239;
     transition: box-shadow 0.1s ease;

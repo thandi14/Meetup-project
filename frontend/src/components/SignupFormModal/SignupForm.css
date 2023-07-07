@@ -37,3 +37,18 @@
     color: #FF5A5F;
     font-size: 10px;
 }
+
+.log {
+    display: flex;
+    align-items: center;
+    font-size: 12pt;
+    gap: 5px;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+.log > .authenText {
+    padding-bottom: 10px;
+    color: #00525E
+}

@@ -26,6 +26,19 @@
     cursor: pointer;
 }
 
+.sign {
+    display: flex;
+    align-items: center;
+    font-size: 12pt;
+    gap: 5px;
+    height: 30px
+}
+
+.sign > .authenText {
+    padding-bottom: 10px;
+    color: #00525E
+}
+
 .buttonForm:hover {
     box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
     border: 1.5px solid #9e2b2f;

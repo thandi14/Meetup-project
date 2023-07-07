@@ -10,6 +10,7 @@ import MenuModal from "./menu";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [button, setButton] = useState(false)
   const ulRef = useRef();
   const history = useHistory()
 
@@ -17,7 +18,12 @@ function ProfileButton({ user }) {
 
 
   const openMenu = () => {
-    console.log('hello', showMenu)
+    if (!button) {
+      setButton(true)
+    }
+    else if (button) {
+      setButton(false)
+    }
     if (showMenu) closeMenu();
     setShowMenu(true);
   };
@@ -43,13 +49,17 @@ function ProfileButton({ user }) {
 
   const ulClassName = showMenu ? "profile-dropdown" : " hidden";
 
+  const changeButton = button ? "profileButtonOn" : "profileButton"
+
+  console.log(button)
+
   return (
     <>
       <div className={ulClassName} ref={ulRef}>
       {user ? (
         <>
           <div className='dropdown'>
-            <p>{user.username}</p>
+            <p>Hello, {user.username}</p>
             {/* <p>{user.firstName} {user.lastName}</p> */}
             <p>{user.email}</p>
             <div className='divide'></div>
@@ -59,7 +69,7 @@ function ProfileButton({ user }) {
         ) : null
         }
       </div>
-      <div className='profileButton' onClick={openMenu}>
+      <div className={changeButton} onClick={openMenu}>
         <i className="fa-regular fa-user"></i>
       </div>
       </>

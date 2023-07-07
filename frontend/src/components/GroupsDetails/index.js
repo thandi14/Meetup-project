@@ -103,7 +103,7 @@ function GroupDetails() {
                 <h2 className='upcoming'>Upcoming Events ({upComing && upComing.length ? upComing.length : 0})</h2>
             {upComing.map((event) =>
             <>
-                <div className='eventBox1'>
+                <div className='eventBox1'onClick={(() => history.push(`/events/${event.id}`))} >
                 <div className='box1'>
                 <div onClick={(() => history.push(`/events/${event.id}`))} className='eventImage1'>
                 <img className='eventImg1'src={event.previewImage}></img>
@@ -125,7 +125,7 @@ function GroupDetails() {
                 <h2 className='past' >Past Events ({past && past.length ? past.length : 0})</h2>
             {past.map((event) =>
             <>
-                <div className='eventBox1'>
+                <div className='eventBox1' onClick={(() => history.push(`/events/${event.id}`))}>
                 <div className='box1'>
                 <div onClick={(() => history.push(`/events/${event.id}`))} className='eventImage1'>
                 <img className='eventImg1'src={event.previewImage}></img>

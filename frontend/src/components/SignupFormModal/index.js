@@ -4,6 +4,8 @@ import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
 import './SignupForm.css'
 import { useHistory } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 
 
 function SignupFormModal() {
@@ -111,6 +113,10 @@ function SignupFormModal() {
         </label>
         {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
         <button className="buttonForm" type="submit">Sign Up</button>
+        <h3 class='log'>Already have an account? <OpenModalButton
+        buttonText="Log In"
+        modalComponent={<LoginFormModal />}
+      /> </h3>
       </form>
     </div>
   );

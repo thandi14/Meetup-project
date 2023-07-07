@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import './LoginForm.css'
 import { useHistory } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -30,6 +32,10 @@ function LoginFormModal() {
   return (
     <div className='login'>
       <h1>Log In</h1>
+      <h3 className='sign'>Dont have an account? <OpenModalButton
+        buttonText="Sign Up"
+        modalComponent={<SignupFormModal />}
+      /></h3>
       <form className='form' onSubmit={handleSubmit}>
         <label>
           <input className='input'
