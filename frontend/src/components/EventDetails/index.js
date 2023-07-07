@@ -72,7 +72,7 @@ function EventDetails() {
                 </div>
                 </div>
                 <div className='eventDeleteButton'>
-                    { user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
+                    { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>
                 </div>

@@ -19,7 +19,7 @@ function GroupDetails() {
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
 
-    console.log(group)
+    console.log(id)
     useEffect(() => {
         dispatch1(groupActions.getDetailsById(id))
     }, [dispatch1, id])
@@ -79,7 +79,7 @@ function GroupDetails() {
             <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · Public </p>
             <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
-            {user.id && user.id === group.organizerId ?
+            {user && user.id && user.id === group.organizerId ?
             <div className='userAction'>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/events/new`))}>Create event</button>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/edit`))}>Update</button>
