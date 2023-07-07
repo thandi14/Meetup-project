@@ -19,7 +19,7 @@ function GroupDetails() {
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
 
-    console.log(id)
+    console.log(group)
     useEffect(() => {
         dispatch1(groupActions.getDetailsById(id))
     }, [dispatch1, id])
@@ -62,7 +62,7 @@ function GroupDetails() {
             }
 
         })
-
+        
     return (
         <div>
             <div className="groupDetails1">
@@ -76,7 +76,7 @@ function GroupDetails() {
             <h2 className='groupTitle1'>{group.name}</h2>
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
-            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · Public </p>
+            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
             <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
             {user && user.id && user.id === group.organizerId ?

@@ -49,6 +49,9 @@ function UpdateGroup() {
             if (!name) {
                 es['name'] = "Name is required"
             }
+            if (name.length > 60) {
+                es['n'] = "Name must be less than 60 characters"
+            }
             if (!location) {
                 es['location'] = 'Location is required'
             }
@@ -117,6 +120,7 @@ function UpdateGroup() {
             <p>Meetup groups meet locally, in person and online. We'll connect you with people in your area and more can join you online.</p>
             <input className='inputGroup' type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
             {errors.location && <p className='error'>{errors.location}</p>}
+
             </div>
             <div className='divider'></div>
             <div className='createName'>
@@ -124,6 +128,8 @@ function UpdateGroup() {
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
             <input className='inputGroup' type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
+            {name.length < 5 && name.length >= 1 && <p className='error'>{"Name must be at least 5 characters"}</p>}
+
             </div>
             <div className='divider'></div>
             <div className='createAbout'>

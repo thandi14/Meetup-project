@@ -21,7 +21,7 @@ function CreateEvent() {
     const [ description, setDescription ] = useState('')
     const  [ errors, setErrors ] = useState({})
     const [ isLoading, setIsLoading ] = useState(false)
-    const [ previewImage, setPreviewImage ] = useState('event')
+    const [ previewImage, setPreviewImage ] = useState('')
 
 
     useEffect(() => {
@@ -29,7 +29,8 @@ function CreateEvent() {
     }, [dispatch, data, previewImage])
 
 
-    console.log(group)
+
+    console.log(new Date(startDate) > new Date())
     const handleSubmit = () => {
         const es = {}
         const validExtensions = ['.jpg', '.jpeg', '.png'];
@@ -46,6 +47,9 @@ function CreateEvent() {
         if (!name) {
             es['name'] = 'Name is required'
         }
+        if (name.length < 5) {
+            es['n'] = "Name must be at least 5 characters"
+        }
         if (!type) {
             es['type'] = 'Event type is required'
         }
@@ -58,15 +62,26 @@ function CreateEvent() {
         if (!startDate) {
             es['startDate'] = 'Event start is required'
         }
+        if (startDate && new Date(startDate) < new Date()) {
+            es['startDate'] = "Start date muse be in the future"
+        }
+        if (endDate && startDate && new Date(startDate) > new Date(endDate)) {
+            es['endDate'] = "End date must end after start date"
+        }
         if (description.length < 30) {
             es['description'] = 'Description must be at least 30 characters long'
         }
         if (previewImage && !hasValidExtension) {
             es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
         }
+        if (!price) {
+            es['price'] = "Price is required"
+        }
+
 
         setErrors(es)
 
+        console.log(es)
         if (Object.values(es).length === 0) {
 
            let request = {
@@ -107,6 +122,7 @@ function CreateEvent() {
             <input className='inputEvent' onChange={((e) => setName(e.target.value))} type='text' placeholder="Event name"></input>
             </div>
             {errors.name && <p className='error'>{errors.name}</p>}
+            {name.length < 5 && name.length >= 1 && <p className='error'>{"Name must be at least 5 characters"}</p>}
             <div className='divider'></div>
             <div className='createType2'>
             <p className='pEvents'>Is this an in person or online event?</p>
@@ -121,6 +137,7 @@ function CreateEvent() {
             {errors.capacity && <p className='error'>{errors.capacity}</p>}
             <p className='pEvents'>What is the price for your event?</p>
             <input placeholder='$' className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
+            {errors.capacity && <p className='error'>{errors.capacity}</p>}
             </div>
             <div className='divider'></div>
             <div className='createDate2'>
@@ -135,6 +152,7 @@ function CreateEvent() {
             <div className='createImage2'>
             <p className='pEvents'>Please add an image url for your event below:</p>
             <input onChange={((e) => setPreviewImage(e.target.value))} placeholder='imageUrl' className='inputEvent' type='text'></input>
+            {errors.previewImage && <p className='error'>{errors.previewImage}</p>}
             </div>
             <div className='divider'></div>
             <div className='createFinale2'>

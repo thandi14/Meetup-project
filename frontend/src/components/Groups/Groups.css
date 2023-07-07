@@ -42,13 +42,15 @@
 
 .groupTitle {
     font-size: 15pt;
-    height: 3px;
-    width: 200px;
+    height: auto;
+    width: 350px;
     display: flex;
     justify-content: flex-start;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
+    /* overflow: hidden; Hide the overflow */
+
 }
 
 

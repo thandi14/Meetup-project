@@ -29,6 +29,7 @@ function CreateGroup() {
             const validExtensions = ['.jpg', '.jpeg', '.png'];
 
             let hasValidExtension
+            console.log(priv)
 
             if (previewImage) {
                 hasValidExtension = validExtensions.some(extension =>
@@ -40,6 +41,9 @@ function CreateGroup() {
 
             if (!name) {
                 es['name'] = "Name is required"
+            }
+            if (name.length > 60) {
+                es['n'] = "Name must be less than 60 characters"
             }
             if (!location) {
                 es['location'] = 'Location is required'
@@ -116,6 +120,7 @@ function CreateGroup() {
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
             <input className='inputGroup' type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
+            {name.length > 60 && <p className='error'>{"Name must be less than 60 characters"}</p>}
             </div>
             <div className='divider'></div>
             <div className='createAbout'>
