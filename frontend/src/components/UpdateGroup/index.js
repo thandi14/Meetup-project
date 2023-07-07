@@ -118,7 +118,7 @@ function UpdateGroup() {
             <div className='createLocation'>
             <h1>First, set your group's location.</h1>
             <p>Meetup groups meet locally, in person and online. We'll connect you with people in your area and more can join you online.</p>
-            <input className='inputGroup' type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
+            <input className='inputGroup' defaultValue={`${group.city}, ${group.state}`} type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
             {errors.location && <p className='error'>{errors.location}</p>}
 
             </div>
@@ -126,7 +126,7 @@ function UpdateGroup() {
             <div className='createName'>
             <h1>What will your groups name be?</h1>
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
-            <input className='inputGroup' type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
+            <input className='inputGroup' defaultValue={group.name} type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
             {name.length < 5 && name.length >= 1 && <p className='error'>{"Name must be at least 5 characters"}</p>}
 
@@ -138,21 +138,21 @@ function UpdateGroup() {
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea className='textareaGroup' placeholder="Please write atleast 50 characters" value={about} onChange={((e) => setAbout(e.target.value))}></textarea>
+            <textarea defaultValue={group.about} className='textareaGroup' placeholder="Please write atleast 50 characters" value={about} onChange={((e) => setAbout(e.target.value))}></textarea>
             {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
             <h1>Final steps...</h1>
             <p>Is this an in person or online group?</p>
-            <select className='selectEvent2' onChange={((e) => setType(e.target.value))}>
+            <select defaultValue={group.type === "In person" ? 'In person' : 'Online'} className='selectEvent2' onChange={((e) => setType(e.target.value))}>
                 <option value=''>(select one)</option>
                 <option value='In person'>in person</option>
                 <option value='Online'>online</option>
             </select>
             {errors.type && <p className='error'>{errors.type}</p>}
             <p>Is this group private or public?</p>
-            <select className='selectEvent2' onChange={((e) => e.target.value == 'true' ? setPriv(true) : setPriv(false))}>
+            <select defaultValue={group.private ? 'true' : 'false'} className='selectEvent2' onChange={((e) => e.target.value == 'true' ? setPriv(true) : setPriv(false))}>
                 <option >(select one)</option>
                 <option value='true'>private</option>
                 <option value='false'>public</option>
