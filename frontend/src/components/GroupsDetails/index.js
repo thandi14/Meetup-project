@@ -120,7 +120,7 @@ function GroupDetails() {
             )}
             </div>
             : <div></div> }
-            {group.Events ?
+            {past && past.length ?
             <div className='event1'>
                 <h2 className='past' >Past Events ({past && past.length ? past.length : 0})</h2>
             {past.map((event) =>
