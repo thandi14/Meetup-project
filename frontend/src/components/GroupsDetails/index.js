@@ -28,6 +28,39 @@ function GroupDetails() {
     if (obj && obj.length >= 15) {
 
         let time
+        let currTime = new Date()
+
+        let upComingDates = group.Events.filter((e) => new Date(e.startDate) > currTime)
+
+        let upComing = upComingDates.sort((a, b) => {
+
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+
+            if (dateA > dateB) {
+              return -1; // dateA comes before dateB
+            } else if (dateA < dateB) {
+              return 1; // dateA comes after dateB
+            } else {
+              return 0; // dateA and dateB are equal
+            }
+
+        })
+        let pastDates = group.Events.filter((e) => new Date(e.startDate) < currTime)
+        let past = pastDates.sort((a, b) => {
+
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+
+            if (dateA > dateB) {
+              return -1; // dateA comes before dateB
+            } else if (dateA < dateB) {
+              return 1; // dateA comes after dateB
+            } else {
+              return 0; // dateA and dateB are equal
+            }
+
+        })
 
     return (
         <div>
@@ -64,10 +97,11 @@ function GroupDetails() {
             <h2 className="aboutGroup">What we're about</h2>
             <p>{group.about}</p>
             </div>
-            {group.Events ?
+            {upComing && upComing.length ?
             <div className='event1'>
-            <h2>Upcoming Events ({group.Events && group.Events.length ? group.Events.length : 0})</h2>
-            {group.Events.map((event) =>
+                <h2>Upcoming Events ({upComing && upComing.length ? upComing.length : 0})</h2>
+            {upComing.map((event) =>
+            <>
                 <div className='eventBox1'>
                 <div className='box1'>
                 <div onClick={(() => history.push(`/events/${event.id}`))} className='eventImage1'>
@@ -81,11 +115,34 @@ function GroupDetails() {
                 </div>
                 <p onClick={(() => history.push(`/events/${event.id}`))} className="eventDescription1">{event.description}</p>
                 </div>
+                </>
             )}
             </div>
             : <div></div> }
+            {group.Events ?
+            <div className='event1'>
+                <h2>Past Events ({past && past.length ? past.length : 0})</h2>
+            {past.map((event) =>
+            <>
+                <div className='eventBox1'>
+                <div className='box1'>
+                <div onClick={(() => history.push(`/events/${event.id}`))} className='eventImage1'>
+                <img className='eventImg1'src={event.previewImage}></img>
+                </div>
+                <div className='eventDetails1'>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
+                {event.Venue ? <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p> : <p>n/a</p>}
+                </div>
+                </div>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className="eventDescription1">{event.description}</p>
+                </div>
+                </>
+            )}
             </div>
-        </div>
+            : <div></div> }
+           </div>
+          </div>
         </div>
     )
     }

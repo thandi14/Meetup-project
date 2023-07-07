@@ -21,10 +21,23 @@ function Events() {
         eachE = Object.values(events.Events)
     }
 
-    console.log(eachE)
 
     if (eachE) {
         let time
+        let eachEve = eachE.sort((a, b) => {
+
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+
+            if (dateA > dateB) {
+              return -1; // dateA comes before dateB
+            } else if (dateA < dateB) {
+              return 1; // dateA comes after dateB
+            } else {
+              return 0; // dateA and dateB are equal
+            }
+
+        })
 
     return (
         <div className='eventsPage'>
@@ -36,7 +49,8 @@ function Events() {
         <h2>Events in Meetus</h2>
         </div>
         <div className='allEvents'>
-            {eachE.map((e) =>
+
+            {eachEve.map((e) =>
             <>
             <div className='divider'></div>
             <div className='events'>
