@@ -96,7 +96,7 @@ function GroupDetails() {
             <h2 className='organizer'>Organizer</h2>
             <p className="firstLast">{group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             <h2 className="aboutGroup">What we're about</h2>
-            <p>{group.about}</p>
+            <p className='aboutText'>{group.about}</p>
             </div>
             {upComing && upComing.length ?
             <div className='event1'>

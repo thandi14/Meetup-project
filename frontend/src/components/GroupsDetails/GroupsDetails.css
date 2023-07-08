@@ -210,3 +210,9 @@
 .upcoming {
     padding-top: 60px;
 }
+
+.aboutText {
+    width: 800px;
+    word-wrap: break-word;
+    height: auto
+}
