@@ -129,8 +129,9 @@ const groupsReducer = (state = initialState, action) => {
             ...details
         }
         case REMOVE_GROUP:
-        const newState = { ...state };
-        delete newState.id;
+        let newState = {}
+        newState['state'] = state;
+        delete newState.state;
         return newState;
       default:
         return state;
