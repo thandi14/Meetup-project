@@ -100,11 +100,11 @@
 .about {
     width: 340px;
     font-size: 10pt;
-    height: 52px;
+    height: 49px;
     cursor: pointer;
     text-overflow: ellipsis;
     overflow: hidden; /* Hide the overflow */
-    padding-top: 15px;
+    padding-top: 5px;
     word-wrap: break-word;
 }
 
