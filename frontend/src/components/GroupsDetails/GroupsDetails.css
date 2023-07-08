@@ -155,7 +155,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 14px;
-    height: 5px;
+    height: 15px;
+    width: 300px;
+    overflow: hidden;
 }
 
 .eventDate1 {
@@ -173,10 +175,14 @@
 
 .eventDescription1 {
     cursor: pointer;
-    width: 300px;
+    width: 450px;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    height: 68px
+    max-height: 68px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .userAction {
