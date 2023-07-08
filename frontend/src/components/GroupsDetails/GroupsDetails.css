@@ -24,7 +24,6 @@
 }
 
 .groupInfo1 {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     /* align-items: center; */
@@ -35,9 +34,10 @@
 
 .groupTitle1 {
     text-align: start;
-    height: 50px;
+    height: 70px;
     max-width: 300px;
     word-wrap: break-word;
+    padding-bottom: 5px;
 }
 
 .aboutGroup > p {
@@ -54,7 +54,7 @@
     max-width: 400px;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-top: 5px
+    padding-top: 0px
 }
 
 .textBox {
@@ -62,8 +62,8 @@
 }
 
 .groupButton1 {
-    margin-top: 105px;
-    height: 50px;
+    margin-top: 65px;
+    height: 30px;
     width: 180px;
     color: white;
     background-color: #FF5A5F;
