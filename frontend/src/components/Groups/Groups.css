@@ -104,7 +104,8 @@
     cursor: pointer;
     text-overflow: ellipsis;
     overflow: hidden; /* Hide the overflow */
-    padding-top: 15px
+    padding-top: 15px;
+    word-wrap: break-word;
 }
 
 .private {

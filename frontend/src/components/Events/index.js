@@ -21,23 +21,61 @@ function Events() {
         eachE = Object.values(events.Events)
     }
 
-
+    let currTime = new Date()
+    let past
+    let upComing
     if (eachE) {
-        let time
-        let eachEve = eachE.sort((a, b) => {
+        let upComingDates = eachE.filter((e) => new Date(e.startDate) > currTime)
+             upComing = upComingDates.sort((a, b) => {
 
             const dateA = new Date(a.startDate);
             const dateB = new Date(b.startDate);
 
             if (dateA > dateB) {
-              return -1; // dateA comes before dateB
+              return 1; // dateA comes before dateB
             } else if (dateA < dateB) {
-              return 1; // dateA comes after dateB
+              return -1; // dateA comes after dateB
             } else {
               return 0; // dateA and dateB are equal
             }
 
         })
+
+        let pastDates = eachE.filter((e) => new Date(e.startDate) < currTime)
+             past = pastDates.sort((a, b) => {
+
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+
+            if (dateA > dateB) {
+              return 1; // dateA comes before dateB
+            } else if (dateA < dateB) {
+              return -1; // dateA comes after dateB
+            } else {
+              return 0; // dateA and dateB are equal
+            }
+
+        })
+
+    }
+
+
+    if (eachE) {
+        let time
+        let eachEve = upComing.concat(past)//eachE.sort((a, b) => {
+
+        //     const dateA = new Date(a.startDate);
+        //     const dateB = new Date(b.startDate);
+
+        //     if (dateA > dateB) {
+        //       return -1; // dateA comes before dateB
+        //     } else if (dateA < dateB) {
+        //       return 1; // dateA comes after dateB
+        //     } else {
+        //       return 0; // dateA and dateB are equal
+        //     }
+
+        // })
 
     return (
         <div className='eventsPage'>

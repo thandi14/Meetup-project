@@ -62,7 +62,7 @@ function GroupDetails() {
             }
 
         })
-        
+
     return (
         <div>
             <div className="groupDetails1">
@@ -142,6 +142,7 @@ function GroupDetails() {
             )}
             </div>
             : <div></div> }
+            {!past.length && !upComing.length && <h2 className='upcoming'>No upcoming events</h2>}
            </div>
           </div>
         </div>

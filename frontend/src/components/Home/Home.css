@@ -13,8 +13,7 @@
 
 .intro {
     height: 450px;
-    display: flex;
-    flex-direction: column;
+    width: 400px;
     /* gap: 40px; */
 }
 
@@ -24,7 +23,7 @@
 }
 
 .oneText {
-    font-size: 35pt;
+    font-size: 30pt;
     font-weight: bold;
     height: 140px;
     white-space: nowrap;
@@ -34,7 +33,8 @@
 .oneP {
     font-size: 12pt;
     height: 100px;
-    width: 650px;
+    width: auto;
+    word-wrap: break-word;
 }
 /* section two css */
 

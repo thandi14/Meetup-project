@@ -12,13 +12,17 @@ import CreateGroup from "./components/CreateGroup";
 import CreateEvent from "./components/CreateEvent";
 import UpdateGroup from "./components/UpdateGroup";
 import LoadingScreenTwo from "./components/LoadingScreen2";
+import { useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const { user } = useSelector((state) => state.session)
   useEffect(() => {
    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  console.log(user)
 
 
   return (
@@ -32,13 +36,13 @@ function App() {
         <Groups />
         </Route>
         <Route exact path="/groups/new">
-        <CreateGroup />
+        {user ? <CreateGroup /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/events/new'>
-          <CreateEvent />
+         {user ? <CreateEvent /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/edit'>
-          <UpdateGroup />
+          {user ? <UpdateGroup /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/'>
           <GroupDetails />
