@@ -56,22 +56,29 @@ function EventDetails() {
                 <div className='eventDetails2'>
                 <div className='infoForEvents'>
                 <div className='eventTimes'>
+                <div className='icon'>
                 <i class="fa-regular fa-clock"></i>
+                 </div>
                 <div className='times'>
                 <p className='startDate3'><span>START</span>  {details.startDate.slice(0, 10)} · {time = new Date(details.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
                 <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {time = new Date(details.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
                 </div>
                 </div>
                 <div className='eventPrice2'>
+                <div className='icon'>
                 <i class="fa-solid fa-dollar-sign"></i>
+                </div>
                 <p className='price3'>{details.price}</p>
                 </div>
                 <div className='eventType2'>
+                <div>
                 <i className="fa-solid fa-location-crosshairs"></i>
+                </div>
                 <p className='type3'>{details.type}</p>
                 </div>
                 </div>
                 <div className='eventDeleteButton'>
+                    <button onClick={(() => window.alert("feature coming soon"))}className='updateAnEvent'>Update</button>
                     { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>

@@ -98,14 +98,21 @@
 }
 
 .about {
-    width: 340px;
+    max-width: 340px;
     font-size: 10pt;
-    height: 49px;
+    max-height: 65px;
     cursor: pointer;
     text-overflow: ellipsis;
-    overflow: hidden; /* Hide the overflow */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
     padding-top: 5px;
     word-wrap: break-word;
+}
+
+.aboutSection {
+    height: 80px
 }
 
 .private {

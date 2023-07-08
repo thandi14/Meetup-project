@@ -44,7 +44,9 @@ function Groups() {
                 <div className='info'>
                 <h2 onClick={(() => history.push(`/groups/${g.id}`))} className='groupTitle'>{g.name}</h2>
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='location'>{g.city}, {g.state}</p>
+                <div className='aboutSection'>
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='about'>{g.about}</p>
+                </div>
                 <div onClick={(() => history.push(`/groups/${g.id}`))} className='private'> #{eachE && eachE.length ? eachE.filter((e) => e.groupId === g.id).length : 0} events · {g.private ? "Private" : "Public"}</div>
                 </div>
             </div>

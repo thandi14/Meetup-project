@@ -47,14 +47,14 @@ module.exports = (sequelize, DataTypes) => {
     venueId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
     name: {
-     type: DataTypes.STRING,
+     type: DataTypes.TEXT,
      validate: {
       len: [5, Infinity]
      }
 
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     type: DataTypes.ENUM("In person", "Online"),

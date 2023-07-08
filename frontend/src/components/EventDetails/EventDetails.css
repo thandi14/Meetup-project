@@ -55,6 +55,7 @@
     justify-content: flex-end;
     width: 200px;
     align-items: flex-end;
+    gap: 10px;
 }
 
 .deleteAnEvent {
@@ -106,6 +107,10 @@
     height: 15px
 }
 
+.icon {
+    width: 30px
+}
+
 .startDate3, .endDate3 {
     height: 10px;
     width: 350px;
@@ -131,8 +136,27 @@
 
 .eventTimes {
     display: flex;
-    gap: 10px;
     align-items: center;
+}
+
+.updateAnEvent {
+
+    cursor: pointer;
+    height: 25px;
+    width: 80px;
+    color: white;
+    background-color: #999999;
+    /* margin-right: 220px; */
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+.updateAnEvent:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
 }
 
 .fa-solid {
@@ -142,12 +166,19 @@
 
 .eventDescription {
     text-overflow: ellipsis;
+    max-width: 800px;
+    word-break: break-word;
+}
+
+.eventTitle3 {
+    word-break: break-word;
+    height: auto;
 }
 
 .eventPrice2, .eventType2 {
     display: flex;
     align-items: center;
-    gap: 5px;
+    /* gap: 5px; */
     margin-left: 10px;
     height: 35px
 }

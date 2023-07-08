@@ -47,7 +47,7 @@ function CreateEvent() {
         if (!name) {
             es['name'] = 'Name is required'
         }
-        if (name.length < 5) {
+        if (name && name.length < 5) {
             es['n'] = "Name must be at least 5 characters"
         }
         if (!type) {
