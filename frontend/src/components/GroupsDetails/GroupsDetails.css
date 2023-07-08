@@ -175,6 +175,8 @@
     cursor: pointer;
     width: 300px;
     text-overflow: ellipsis;
+    word-wrap: break-word;
+    height: 68px
 }
 
 .userAction {
