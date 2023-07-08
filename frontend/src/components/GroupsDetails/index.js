@@ -79,6 +79,7 @@ function GroupDetails() {
             <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
             <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
+            </div>
             {user && user.id && user.id === group.organizerId ?
             <div className='userAction'>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/events/new`))}>Create event</button>
@@ -88,7 +89,6 @@ function GroupDetails() {
             </div> :
             <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button>
             }
-            </div>
             </div>
             <div className='groupsBackground1'>
             <div className='groupsDetailsBox'>

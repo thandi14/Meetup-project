@@ -34,7 +34,7 @@
 
 .groupTitle1 {
     text-align: start;
-    height: 70px;
+    max-height: 70px;
     max-width: 300px;
     word-wrap: break-word;
     padding-bottom: 5px;
@@ -62,7 +62,7 @@
 }
 
 .groupButton1 {
-    margin-top: 65px;
+    margin-top: 295px;
     height: 30px;
     width: 180px;
     color: white;
@@ -70,6 +70,8 @@
     box-shadow: 2px 2px 2px black;
     border: 2px solid black;
     cursor: pointer;
+    position: absolute;
+    margin-left: 425px;
 
 }
 
@@ -193,7 +195,11 @@
 .userAction {
     display: flex;
     padding-top: 70px;
-    gap: 10px
+    gap: 10px;
+    margin-top: 225px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 480px;
 }
 
 .groupButton2 {
