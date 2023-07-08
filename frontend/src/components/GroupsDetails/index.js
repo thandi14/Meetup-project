@@ -39,9 +39,9 @@ function GroupDetails() {
             const dateB = new Date(b.startDate);
 
             if (dateA > dateB) {
-              return -1; // dateA comes before dateB
+              return 1; // dateA comes before dateB
             } else if (dateA < dateB) {
-              return 1; // dateA comes after dateB
+              return -1; // dateA comes after dateB
             } else {
               return 0; // dateA and dateB are equal
             }
@@ -54,9 +54,9 @@ function GroupDetails() {
             const dateB = new Date(b.startDate);
 
             if (dateA > dateB) {
-              return -1; // dateA comes before dateB
+              return 1; // dateA comes before dateB
             } else if (dateA < dateB) {
-              return 1; // dateA comes after dateB
+              return -1; // dateA comes after dateB
             } else {
               return 0; // dateA and dateB are equal
             }
