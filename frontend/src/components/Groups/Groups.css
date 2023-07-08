@@ -91,10 +91,14 @@
 }
 
 .location {
-    font-size: 12pt;
-    height: 5px;
+    font-size: 11pt;
+    height: 20px;
     color: #CCCCCC;
     cursor: pointer;
+    white-space: nowrap;
+    max-width: 400px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .about {
@@ -107,7 +111,6 @@
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-    padding-top: 5px;
     word-wrap: break-word;
 }
 
@@ -118,5 +121,5 @@
 .private {
     color: #CCCCCC;
     cursor: pointer;
-    padding-top: 15px;
+    padding-top: 5px;
 }

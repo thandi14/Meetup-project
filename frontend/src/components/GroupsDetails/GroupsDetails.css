@@ -47,9 +47,14 @@
 }
 
 .groupText1 {
-    height: 8px;
+    height: 17px;
     font-size: 11pt;
     color: #CCCCCC;
+    white-space: nowrap;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px
 }
 
 .textBox {
@@ -187,7 +192,7 @@
 
 .userAction {
     display: flex;
-    padding-top: 100px;
+    padding-top: 70px;
     gap: 10px
 }
 
