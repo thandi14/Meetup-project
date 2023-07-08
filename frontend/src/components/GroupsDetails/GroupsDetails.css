@@ -35,7 +35,7 @@
 
 .groupTitle1 {
     text-align: start;
-    height: 100px;
+    height: 50px;
     max-width: 300px;
     word-wrap: break-word;
 }
@@ -181,7 +181,7 @@
 
 .userAction {
     display: flex;
-    padding-top: 60px;
+    padding-top: 100px;
     gap: 10px
 }
 

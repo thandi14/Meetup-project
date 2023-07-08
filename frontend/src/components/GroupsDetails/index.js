@@ -86,7 +86,7 @@ function GroupDetails() {
                 <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}/>))}>Delete</button>
 
             </div> :
-            <button className="groupButton1">Join this group</button>
+            <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button>
             }
             </div>
             </div>
