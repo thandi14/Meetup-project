@@ -194,12 +194,12 @@
 
 .userAction {
     display: flex;
-    padding-top: 70px;
+    padding-top: 75px;
     gap: 10px;
     margin-top: 225px;
     cursor: pointer;
     position: absolute;
-    margin-left: 480px;
+    margin-left: 475px;
 }
 
 .groupButton2 {
