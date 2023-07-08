@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     about: {
-     type: DataTypes.STRING,
+     type: DataTypes.TEXT,
       validate: {
         len: [50, Infinity]
       }
