@@ -29,6 +29,14 @@ function LoginFormModal() {
       });
   }
 
+  const demoLition = () => {
+
+    setCredential('Demo-lition')
+    setPassword('password')
+    dispatch(sessionActions.loginUser({ credential, password })).then(history.push('/')).then(closeModal)
+
+  }
+
   return (
     <div className='login'>
       <h1>Log In</h1>
@@ -56,8 +64,9 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p className='error'>{errors.credential}</p>}
-        <button className='buttonForm' type="submit">Log In</button>
+        {password.length > 6 && credential.length > 4 ? <button className='buttonForm' type="submit">Log In</button> : <button disabled={true} className='buttonForm1' type="submit">Log In</button>}
       </form>
+      <div className="demo" onClick={demoLition}>Demo-Lition</div>
     </div>
   );
 }

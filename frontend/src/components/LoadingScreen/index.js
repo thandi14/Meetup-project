@@ -2,7 +2,12 @@ import { useHistory } from "react-router-dom/"
 import { useSelector } from "react-redux/es/hooks/useSelector"
 import './LoadingScreen.css'
 
-function LoadingScreen() {
+function LoadingScreen(deleteGroup) {
+    const history = useHistory()
+
+    if (deleteGroup) {
+        setTimeout(history.push('/groups'), 3000)
+    }
 
     return (
         <div className="backgroundLoad">

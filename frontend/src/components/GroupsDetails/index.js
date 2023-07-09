@@ -54,9 +54,9 @@ function GroupDetails() {
             const dateB = new Date(b.startDate);
 
             if (dateA > dateB) {
-              return 1; // dateA comes before dateB
+              return -1; // dateA comes before dateB
             } else if (dateA < dateB) {
-              return -1; // dateA comes after dateB
+              return 1; // dateA comes after dateB
             } else {
               return 0; // dateA and dateB are equal
             }
@@ -77,7 +77,7 @@ function GroupDetails() {
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
             <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
-            <p className='groupText1'>organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
+            <p className='groupText1'>Organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
             </div>
             </div>
             {user && user.id && user.id === group.organizerId ?
@@ -86,9 +86,8 @@ function GroupDetails() {
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/edit`))}>Update</button>
                 <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}/>))}>Delete</button>
 
-            </div> :
-            <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button>
-            }
+            </div> : null}
+            {user && user.id && user.id !== group.organizerId ? <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button> : null}
             </div>
             <div className='groupsBackground1'>
             <div className='groupsDetailsBox'>
@@ -109,7 +108,7 @@ function GroupDetails() {
                 <img className='eventImg1'src={event.previewImage}></img>
                 </div>
                 <div className='eventDetails1'>
-                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} · {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
                 <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
                 {event.Venue ? <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p> : <p>n/a</p>}
                 </div>
@@ -131,7 +130,7 @@ function GroupDetails() {
                 <img className='eventImg1'src={event.previewImage}></img>
                 </div>
                 <div className='eventDetails1'>
-                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <p onClick={(() => history.push(`/events/${event.id}`))} className='eventDate1'>{event.startDate.slice(0, 10)} · {time = new Date(event.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
                 <h3 onClick={(() => history.push(`/events/${event.id}`))} className='eventName1'>{event.name}</h3>
                 {event.Venue ? <p onClick={(() => history.push(`/events/${event.id}`))} className='eventLocation1'>{event.Venue.city}, {event.Venue.state}</p> : <p>n/a</p>}
                 </div>

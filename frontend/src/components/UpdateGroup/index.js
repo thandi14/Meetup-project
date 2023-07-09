@@ -47,7 +47,7 @@ function UpdateGroup() {
 
             if (previewImage) {
                  hasValidExtension = validExtensions.some(extension =>
-                    previewImage.toLowerCase().includes(extension)
+                    previewImage.toLowerCase().endsWith(extension)
                 );
 
             }
@@ -117,7 +117,7 @@ function UpdateGroup() {
             {!isLoading ?
             <div className='formGroup'>
             <div className='introCreate'>
-            <h2 className='formTitle'>UPDATE YOUR GROUPS INFORMATION</h2>
+            <h2 className='formTitle'>UPDATE YOUR GROUP</h2>
             <h1>We'll walk you through a few steps to build your local community</h1>
             </div>
             <div className='divider'></div>
@@ -145,6 +145,7 @@ function UpdateGroup() {
                  3. What will you do at your events?</p>
             <textarea defaultValue={group.about} className='textareaGroup' placeholder="Please write atleast 50 characters" onChange={((e) => setAbout(e.target.value))}></textarea>
             {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
+            {about.length > 50 ? delete errors.about : null}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
@@ -168,7 +169,7 @@ function UpdateGroup() {
             {errors.previewImage && <p className='error'>{errors.previewImage}</p>}
             </div>
             <div className='divider'></div>
-            <button className='formButton' onClick={handleSubmit}>Update group</button>
+            <button className='formButton' onClick={handleSubmit}>Update Group</button>
                 </div>
             : <LoadingScreenTwo updateG={'update'}/>}
         </div>

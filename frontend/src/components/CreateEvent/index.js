@@ -39,7 +39,7 @@ function CreateEvent() {
 
         if (previewImage) {
              hasValidExtension = validExtensions.some(extension =>
-                previewImage.toLowerCase().includes(extension)
+                previewImage.toLowerCase().endsWith(extension)
             );
 
         }
@@ -71,7 +71,7 @@ function CreateEvent() {
         if (description.length < 30) {
             es['description'] = 'Description must be at least 30 characters long'
         }
-        if (previewImage && !hasValidExtension) {
+        if (!previewImage || previewImage && !hasValidExtension) {
             es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
         }
         if (!price) {
@@ -107,6 +107,13 @@ function CreateEvent() {
             setStartDate('')
             setEndDate('')
         }
+        else if (!name || !capacity || !price || !type) {
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth' // Optionally, use smooth scrolling animation
+              });
+        }
 
     }
 
@@ -116,9 +123,9 @@ function CreateEvent() {
         <div>
             {!isLoading ?
             <div className='formEvent'>
-            <h1>Create an event for '{group ? group.name : null}'</h1>
+            <h1>Create a new event for '{group ? group.name : null}'</h1>
             <div className='createName2'>
-            <p className='pEvents'>What is the name of the event?</p>
+            <p className='pEvents'>What is the name of your event?</p>
             <input className='inputEvent' onChange={((e) => setName(e.target.value))} type='text' placeholder="Event name"></input>
             </div>
             {errors.name && <p className='error'>{errors.name}</p>}
@@ -136,8 +143,8 @@ function CreateEvent() {
             <input className='inputEventType' onChange={((e) => setCapacity(e.target.value))} type='number'></input>
             {errors.capacity && <p className='error'>{errors.capacity}</p>}
             <p className='pEvents'>What is the price for your event?</p>
-            <input placeholder='$' className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
-            {errors.capacity && <p className='error'>{errors.capacity}</p>}
+            <input placeholder='$ 0' className='inputEventPrice' onChange={((e) => setPrice(e.target.value))} type='number'></input>
+            {errors.price && <p className='error'>{errors.price}</p>}
             </div>
             <div className='divider'></div>
             <div className='createDate2'>
@@ -159,6 +166,7 @@ function CreateEvent() {
             <p className='pEvents'>Please describe your event:</p>
             <textarea placeholder='Please include at least 30 characters' className='textareaEvent' value={description} onChange={((e) => setDescription(e.target.value))} type='text'></textarea>
             {errors.description || description.length < 31 && description.length >= 1 ? <p className='error'>Please write at least 30 characters</p> : <div></div>}
+            {description.length > 30 ? delete errors.description : null}
             <button className='eventButton2' onClick={handleSubmit} >Create Event</button>
             </div>
             </div>

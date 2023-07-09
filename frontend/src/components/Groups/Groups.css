@@ -64,6 +64,7 @@
     align-items: flex-start;
     width: 600px;
     height: 200px;
+    cursor: pointer;
 
 }
 

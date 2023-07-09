@@ -33,7 +33,7 @@ function CreateGroup() {
 
             if (previewImage) {
                 hasValidExtension = validExtensions.some(extension =>
-                   previewImage.toLowerCase().includes(extension)
+                   previewImage.toLowerCase().endsWith(extension)
                );
 
            }
@@ -60,7 +60,7 @@ function CreateGroup() {
             if (priv === '') {
                 es['priv'] = "Visibility type is required"
             }
-            if (previewImage && !hasValidExtension) {
+            if (!previewImage || previewImage && !hasValidExtension) {
                 es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
             }
 
@@ -95,6 +95,13 @@ function CreateGroup() {
                 setPriv('');
                 setIsLoading(true)
             }
+            else if (!name || !location) {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                  });
+            }
 
         }
 
@@ -104,13 +111,13 @@ function CreateGroup() {
             {!isLoading ?
             <div className='formGroup'>
             <div className='introCreate'>
-            <h2 className='formTitle'>BECOME AN ORGANIZER</h2>
+            <h2 className='formTitle'>START A NEW GROUP</h2>
             <h1>We'll walk you through a few steps to build your local community</h1>
             </div>
             <div className='divider'></div>
             <div className='createLocation'>
-            <h1>First, set your group's location.</h1>
-            <p>Meetup groups meet locally, in person and online. We'll connect you with people in your area and more can join you online.</p>
+            <h1>Set your group's location.</h1>
+            <p>Meetus groups meet locally, in person and online. We'll connect you with people in your area.</p>
             <input className='inputGroup' type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
             {errors.location && <p className='error'>{errors.location}</p>}
             </div>
@@ -118,19 +125,20 @@ function CreateGroup() {
             <div className='createName'>
             <h1>What will your groups name be?</h1>
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
-            <input className='inputGroup' type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
+            <input className='inputGroup' type='text' placeholder="What is your group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
             {name.length > 60 && <p className='error'>{"Name must be less than 60 characters"}</p>}
             </div>
             <div className='divider'></div>
             <div className='createAbout'>
-            <h1>Now describe what your group will be about.</h1>
+            <h1>Describe the purpose of your group.</h1>
             <p>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
             <textarea className='textareaGroup' placeholder="Please write at least 50 characters" onChange={((e) => setAbout(e.target.value))} value={about} ></textarea>
             {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
+            {about.length > 50 ? delete errors.about : null}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
@@ -154,7 +162,7 @@ function CreateGroup() {
             {errors.previewImage && <p className='error'>{errors.previewImage}</p>}
             </div>
             <div className='divider'></div>
-            <button className='formButton' onClick={handleSubmit}>Create group</button>
+            <button className='formButton' onClick={handleSubmit}>Create Group</button>
                 </div>
             : <LoadingScreenTwo group={'groups'}/>}
         </div>

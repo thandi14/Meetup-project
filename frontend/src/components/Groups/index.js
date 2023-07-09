@@ -37,7 +37,7 @@ function Groups() {
             {eachG.length ? eachG.map((g) =>
             <>
             <div className='divider'></div>
-            <div className='groups'>
+            <div onClick={(() => history.push(`/groups/${g.id}`))} className='groups'>
                 <div className='img'>
                 <img onClick={(() => history.push(`/groups/${g.id}`))} className='groupImg' src={g.previewImage}></img>
                 </div>

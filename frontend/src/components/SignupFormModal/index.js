@@ -48,6 +48,8 @@ function SignupFormModal() {
     });
   };
 
+  console.log(errors)
+
   return (
     <div className='signup'>
       <h1>Sign Up</h1>
@@ -102,6 +104,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.password && <p className='error'>{errors.password}</p>}
+        {password.length < 6 ? <p className='error'>Password must be longer than 6 characters</p> : null}
         <label>
           <input className="input"
             type="password"
@@ -112,7 +115,8 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
-        <button className="buttonForm" type="submit">Sign Up</button>
+        {/* <button className="buttonForm" type="submit">Sign Up</button> */}
+        {password.length > 6 && username.length > 4 && firstName && lastName && email && username && confirmPassword && password === confirmPassword ? <button className='buttonForm' type="submit">Sign Up</button> : <button disabled={true} className='buttonForm1' type="submit">Sign Up</button>}
         <h3 class='log'>Already have an account? <OpenModalButton
         buttonText="Log In"
         modalComponent={<LoginFormModal />}

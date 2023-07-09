@@ -39,10 +39,10 @@ function App() {
         {user ? <CreateGroup /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/events/new'>
-         {user ? <CreateEvent /> : <Home />}
+        {user ? <CreateEvent /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/edit'>
-          {user ? <UpdateGroup /> : <Home />}
+        {user ? <UpdateGroup /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/'>
           <GroupDetails />

@@ -26,6 +26,14 @@
     cursor: pointer;
 }
 
+.buttonForm1 {
+    width: 408px;
+    height: 45px;
+    background-color: #ccc;
+    color: white;
+    cursor: pointer;
+}
+
 .buttonForm:hover {
     box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
     border: 1.5px solid #9e2b2f;

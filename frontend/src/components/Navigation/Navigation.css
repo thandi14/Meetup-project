@@ -106,16 +106,24 @@
 .profile-dropdown {
     position: absolute;
     background-color: white;
-    border: 3px solid black;
-    margin-top: 165px;
+    border: 3px solid #999999;
+    margin-top: 215px;
     width: 190px;
-    height: 100px;
+    height: 150px;
     display: flex;
     align-items: center;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgb(158, 158, 150);
 }
 
 p {
     height: 10px;
+}
+
+.dropdown > a {
+    height: 10px;
+    padding-left: 8px;
+    font-size: 14px;
 }
 
 .logoutUser {
@@ -127,12 +135,12 @@ p {
 
 .divide {
     height: 1px;
-    background-color: black;
+    background-color: #999999;
     width: auto;
 }
 
 .dropdown > p {
-    padding-left: 10px;
+    padding-left: 8px;
     font-size: 14px;
     height: 10px;
 }
@@ -141,4 +149,14 @@ p {
     padding-top: 5px;
     padding-bottom: 5px;
     width: 200px;
+}
+
+.menuLink {
+    text-decoration: none;
+    color:#00525E
+}
+
+.menuLink:hover {
+    text-decoration: underline;
+    color:#FF5A5F;
 }

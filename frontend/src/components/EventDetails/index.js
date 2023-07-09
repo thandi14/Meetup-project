@@ -60,15 +60,15 @@ function EventDetails() {
                 <i class="fa-regular fa-clock"></i>
                  </div>
                 <div className='times'>
-                <p className='startDate3'><span>START</span>  {details.startDate.slice(0, 10)} · {time = new Date(details.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
-                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {time = new Date(details.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <p className='startDate3'><span>START</span>  {details.startDate.slice(0, 10)} · {time = new Date(details.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
+                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {time = new Date(details.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
                 </div>
                 </div>
                 <div className='eventPrice2'>
                 <div className='icon'>
                 <i class="fa-solid fa-dollar-sign"></i>
                 </div>
-                <p className='price3'>{details.price}</p>
+                <p className='price3'>{details.price === 0 ? "FREE" : details.price}</p>
                 </div>
                 <div className='eventType2'>
                 <div>

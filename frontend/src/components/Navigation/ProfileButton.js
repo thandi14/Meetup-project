@@ -1,29 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import MenuModal from "./menu";
 
+
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const [button, setButton] = useState(false)
   const ulRef = useRef();
   const history = useHistory()
 
-  const closeMenu = () => setShowMenu(false);
+  const closeMenu = () => {
+    setShowMenu(false)
+  }
 
 
   const openMenu = () => {
-    if (!button) {
-      setButton(true)
-    }
-    else if (button) {
-      setButton(false)
-    }
     if (showMenu) closeMenu();
     setShowMenu(true);
   };
@@ -49,9 +45,7 @@ function ProfileButton({ user }) {
 
   const ulClassName = showMenu ? "profile-dropdown" : " hidden";
 
-  const changeButton = button ? "profileButtonOn" : "profileButton"
-
-  console.log(button)
+  const changeButton = showMenu ? "profileButtonOn" : "profileButton"
 
   return (
     <>
@@ -60,7 +54,12 @@ function ProfileButton({ user }) {
         <>
           <div className='dropdown'>
             <p>Hello, {user.username}</p>
-            {/* <p>{user.firstName} {user.lastName}</p> */}
+            <p>
+              <Link className='menuLink' to="/groups">View groups</Link>
+              </p>
+              <p>
+            <Link className="menuLink" to="/events">View events</Link>
+              </p>
             <p>{user.email}</p>
             <div className='divide'></div>
             <p className='logoutUser' onClick={logout}>Log Out</p>

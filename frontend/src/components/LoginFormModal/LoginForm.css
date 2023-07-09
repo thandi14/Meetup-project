@@ -26,6 +26,25 @@
     cursor: pointer;
 }
 
+.buttonForm1 {
+    width: 408px;
+    height: 45px;
+    background-color: #ccc;
+    color: white;
+    cursor: pointer;
+}
+
+.demo {
+    cursor: pointer;
+    padding-top: 10px;
+    font-size: 14px
+}
+
+.demo:hover {
+    text-decoration: underline;
+    color:#FF5A5F
+}
+
 .sign {
     display: flex;
     align-items: center;

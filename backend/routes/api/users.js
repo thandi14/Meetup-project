@@ -79,7 +79,7 @@ router.post(
                     {
                         message: "User already exists",
                         errors: {
-                            email: "User with that username already exists"
+                            username: "User with that username already exists"
                         }
                     },
                     res.statusCode = 500

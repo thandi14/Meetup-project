@@ -118,8 +118,9 @@ const eventsReducer = (state = initialState, action) => {
             ...details
         }
         case REMOVE_EVENT:
-        const newState = { ...state };
-        delete newState.id;
+        let newState = {}
+        newState['state'] = state;
+        delete newState.state;
         return newState;
       default:
         return state;

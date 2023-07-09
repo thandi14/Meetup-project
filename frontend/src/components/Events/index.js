@@ -48,9 +48,9 @@ function Events() {
             const dateB = new Date(b.startDate);
 
             if (dateA > dateB) {
-              return 1; // dateA comes before dateB
+              return -1; // dateA comes before dateB
             } else if (dateA < dateB) {
-              return -1; // dateA comes after dateB
+              return 1; // dateA comes after dateB
             } else {
               return 0; // dateA and dateB are equal
             }
@@ -62,20 +62,8 @@ function Events() {
 
     if (eachE) {
         let time
-        let eachEve = upComing.concat(past)//eachE.sort((a, b) => {
+        let eachEve = upComing.concat(past)
 
-        //     const dateA = new Date(a.startDate);
-        //     const dateB = new Date(b.startDate);
-
-        //     if (dateA > dateB) {
-        //       return -1; // dateA comes before dateB
-        //     } else if (dateA < dateB) {
-        //       return 1; // dateA comes after dateB
-        //     } else {
-        //       return 0; // dateA and dateB are equal
-        //     }
-
-        // })
 
     return (
         <div className='eventsPage'>
@@ -97,7 +85,7 @@ function Events() {
                 </div>
                 <div className='info2'>
                 {e.startDate ?
-                <p className='eventDate'>{e.startDate.slice(0, 10)} · {time = new Date(e.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", second: "numeric" })}</p>
+                <p className='eventDate'>{e.startDate.slice(0, 10)} · {time = new Date(e.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric" })}</p>
                 : <p></p>}
                 <h2 onClick={(() => history.push(`/events/${e.id}`))} className='eventTitle'>{e.name}</h2>
                 {e.Venue ?
