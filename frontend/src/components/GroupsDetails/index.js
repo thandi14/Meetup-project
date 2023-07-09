@@ -84,7 +84,7 @@ function GroupDetails() {
             <div className='userAction'>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/events/new`))}>Create event</button>
                 <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/edit`))}>Update</button>
-                <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}/>))}>Delete</button>
+                <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}></DeleteGroupModal>))}>Delete</button>
 
             </div> : null}
             {user && user.id && user.id !== group.organizerId ? <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button> : null}

@@ -13,6 +13,7 @@ import CreateEvent from "./components/CreateEvent";
 import UpdateGroup from "./components/UpdateGroup";
 import LoadingScreenTwo from "./components/LoadingScreen2";
 import { useSelector } from "react-redux";
+import DeleteGroupModal from "./components/DeleteGroupModal";
 
 function App() {
   const dispatch = useDispatch();

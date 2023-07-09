@@ -10,11 +10,7 @@ function LoadingScreenTwo({ event, group, updateG }) {
     const eventDetails = useSelector((store) => store.events)
     const dispatch = useDispatch()
 
-    console.log(updateG)
-
     const history = useHistory()
-
-    console.log(eventDetails)
 
     setTimeout(() => {
 
