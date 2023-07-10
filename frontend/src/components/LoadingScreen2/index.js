@@ -23,6 +23,7 @@ function LoadingScreenTwo({ event, group, updateG }) {
         else if (updateG && updateG.length) {
             history.push(`/groups/${groupDetails.id}`)
         }
+        
     }, 5000)
 
     return (
