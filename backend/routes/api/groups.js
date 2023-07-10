@@ -195,29 +195,30 @@ router.get('/:id', async (req, res) => {
 
 
     let group = await Group.findByPk(firstId, {
-        // attributes: {
-        //     exclude: ['createdAt', 'updatedAt']
-        // },
         include: [{
             model: GroupImage,
             attributes: {
                 exclude: ['createdAt', 'updatedAt', 'groupId']
-            }
+            },
         },
         {
+
             model: User,
             attributes: ['id','firstName', 'lastName'],
-            through: {
-                  attributes: []
-            }
+            // where: {
+            //     id: ids.organizerId
+            // }
+
         },
         {
             model: Venue,
             attributes: {
                 exclude: ['createdAt', 'updatedAt']
-            }
+            },
+
         }],
     })
+
 
     let num = await Membership.count({
         where: {
@@ -246,6 +247,7 @@ router.get('/:id', async (req, res) => {
         numMembers
     })
 })
+
 
 router.post('/', validateGroup, requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;

@@ -86,9 +86,6 @@
     cursor: pointer;
 }
 
-.dropdown {
-
-}
 
 .meetIcon {
     width: 30px;
@@ -107,9 +104,9 @@
     position: absolute;
     background-color: white;
     border: 3px solid #999999;
-    margin-top: 215px;
+    margin-top: 265px;
     width: 190px;
-    height: 150px;
+    height: 200px;
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -142,7 +139,11 @@ p {
 .dropdown > p {
     padding-left: 8px;
     font-size: 14px;
-    height: 10px;
+    height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+
 }
 
 .dropdown {

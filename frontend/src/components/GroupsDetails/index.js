@@ -62,6 +62,7 @@ function GroupDetails() {
             }
 
         })
+        console.log(group)
 
     return (
         <div>
@@ -77,7 +78,7 @@ function GroupDetails() {
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
             <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
-            <p className='groupText1'>Organized by {group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
+            <p className='groupText1'>Organized by {group.Organizer.length ? group.Organizer[0].firstName : ""} {group.Organizer.length ? group.Organizer[0].lastName : ""}</p>
             </div>
             </div>
             {user && user.id && user.id === group.organizerId ?
@@ -93,7 +94,7 @@ function GroupDetails() {
             <div className='groupsDetailsBox'>
             <div className='details1'>
             <h2 className='organizer'>Organizer</h2>
-            <p className="firstLast">{group.Organizer[0].firstName} {group.Organizer[0].lastName}</p>
+            <p className="firstLast">{group.Organizer.length ? group.Organizer[0].firstName : ""} {group.Organizer.length ? group.Organizer[0].lastName : ""}</p>
             <h2 className="aboutGroup">What we're about</h2>
             <p className='aboutText'>{group.about}</p>
             </div>

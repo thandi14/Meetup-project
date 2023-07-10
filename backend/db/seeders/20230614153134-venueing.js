@@ -37,6 +37,14 @@ module.exports = {
         lat: 40.71,
         lng: -74.00
        },
+       {
+        groupId: 4,
+        address: "4321 Disney ln",
+        city: "Los Angeles",
+        state: "CA",
+        lat: 60.34,
+        lng: -33.65
+       }
      ], {});
   },
 

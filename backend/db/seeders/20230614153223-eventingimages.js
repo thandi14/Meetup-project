@@ -32,6 +32,16 @@ module.exports = {
          url: "https://snworksceo.imgix.net/dpn/c1f08449-d72c-493d-97aa-b5707f596399.sized-1000x1000.jpg?w=1000",
          preview: true
        },
+       {
+       eventId: 3,
+       url: "https://people.com/thmb/FVoCYM367QyPcqmCsWnNiZVrgso=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(779x545:781x547)/doja-cat-met-gala-050123-0a2f94d6fc8245839bbfdf3fcebd3148.jpg",
+       preview: true
+       },
+       {
+         eventId: 4,
+         url: "https://img.freepik.com/free-vector/chalkboard-with-math-elements_1411-88.jpg?w=2000",
+         preview: true
+       }
      ], {});
   },
 

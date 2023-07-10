@@ -36,8 +36,44 @@ module.exports = {
       type: "In person",
       private: true,
       city: "Southlake",
-      state: "Tx"
+      state: "TX"
        },
+       {
+        organizerId: 1,
+        name: "Movie night",
+        about: "Going out to see new movies at the theater with close friends",
+        type: "In person",
+        private: false,
+        city: "Dallas",
+        state: "TX"
+       },
+       {
+        organizerId: 3,
+        name: "Concerts",
+        about: "Buying tickets to go listen to our favorite artists and hear our favorite songs by them",
+        type: "In person",
+        private: false,
+        city: "Los Angeles",
+        state: "CA"
+       },
+       {
+        organizerId: 2,
+        name: "Study group",
+        about: "Me and the groups thursday night study session before test on friday",
+        type: "Online",
+        private: true,
+        city: "Dallas",
+        state: "TX"
+       },
+       {
+        organizerId: 1,
+        name: "Game night",
+        about: "Watching the game with friends or family that want to come and hangout",
+        type: "In person",
+        private: true,
+        city: "Denver",
+        state: "CO"
+       }
      ], {});
   },
 

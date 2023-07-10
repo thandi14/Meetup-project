@@ -43,6 +43,28 @@ module.exports = {
         startDate: "2021-11-19 20:00:00",
         endDate: "2021-11-19 22:00:00"
        },
+       {
+        venueId: 3,
+        groupId: 4,
+        name: "Doja cat tour",
+        description: "My favorite rapper/singer is playing this weekend",
+        type: "In person",
+        capacity: 4,
+        price: 250,
+        startDate: "2023-09-16 18:30:00",
+        endDate: "2023-09-16 20:30:00"
+       },
+       {
+        venueId: 2,
+        groupId: 5,
+        name: "Algebra",
+        description: "Upcoming test this friday on algebra to study with the group for",
+        type: "Online",
+        capacity: 6,
+        price: 0,
+        startDate: "2023-07-03 16:00:00",
+        endDate: "2023-07-03 17:30:00"
+       }
      ], {});
 
   },

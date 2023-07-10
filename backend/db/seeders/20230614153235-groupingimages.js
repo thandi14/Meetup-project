@@ -32,6 +32,26 @@ module.exports = {
          url: "https://static3.depositphotos.com/1003631/209/i/450/depositphotos_2099183-stock-photo-fine-table-setting-in-gourmet.jpg",
          preview: true
        },
+       {
+        groupId: 3,
+        url: "https://s7d2.scene7.com/is/image/TWCNews/getty_movie_theaterjpg",
+        preview: true
+       },
+       {
+        groupId: 4,
+        url: "https://media.istockphoto.com/id/1330424071/photo/large-group-of-people-at-a-concert-party.jpg?s=612x612&w=0&k=20&c=LwdiOCBqbfICjQ3j5AzwyugxmfkbyfL3StKEQhtx4hE=",
+        preview: true
+       },
+       {
+        groupId: 5,
+        url: "https://res.cloudinary.com/highereducation/image/upload/v1533591754/TheBestColleges.org/study-notebooks.jpg",
+        preview: true
+       },
+       {
+        groupId: 6,
+        url: "https://hips.hearstapps.com/hmg-prod/images/playing-a-board-game-royalty-free-image-1652461701.jpg",
+        preview: true
+       }
      ], {});
   },
 
