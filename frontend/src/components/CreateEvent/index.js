@@ -74,7 +74,7 @@ function CreateEvent() {
         if (!previewImage || previewImage && !hasValidExtension) {
             es['previewImage'] = "Image URL must end in .png, .jpg, or .jpeg"
         }
-        if (!price) {
+        if (!price || price <= -1 ) {
             es['price'] = "Price is required"
         }
 
