@@ -53,7 +53,7 @@ function CreateEvent() {
         if (!type) {
             es['type'] = 'Event type is required'
         }
-        if (capacity === 0) {
+        if (capacity <= 0) {
             es['capacity'] = 'Capacity is required'
         }
         if (!endDate) {
