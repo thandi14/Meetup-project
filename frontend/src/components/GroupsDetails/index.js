@@ -78,7 +78,7 @@ function GroupDetails() {
             <div className="textBox">
             <p className='groupText1'> {group.city}, {group.state}</p>
             <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
-            <p className='groupText1'>Organized by {group.Organizer.length ? group.Organizer[0].firstName : ""} {group.Organizer.length ? group.Organizer[0].lastName : ""}</p>
+            <p className='groupText1'>Organized by {group.Organizer ? group.Organizer[0].firstName : ""} {group.Organizer ? group.Organizer[0].lastName : ""}</p>
             </div>
             </div>
             {user && user.id && user.id === group.organizerId ?
