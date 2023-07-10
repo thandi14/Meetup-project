@@ -57,7 +57,7 @@ function CreateGroup() {
             if (!type) {
                 es['type'] = 'Group type is required'
             }
-            if (priv === '') {
+            if (!priv || priv === '') {
                 es['priv'] = "Visibility type is required"
             }
             if (!previewImage || previewImage && !hasValidExtension) {

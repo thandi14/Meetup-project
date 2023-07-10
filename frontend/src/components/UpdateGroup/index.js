@@ -64,13 +64,13 @@ function UpdateGroup() {
             if (location && !location.includes(',')) {
                 es['location'] = 'Invalid format (city, state)'
             }
-            if (about && about.length < 50) {
+            if (about.length < 50) {
                 es['about'] = 'Description must be at least 50 characters long'
             }
             if (!type) {
                 es['type'] = 'Group type is required'
             }
-            if (priv === '') {
+            if (!priv || priv === "") {
                 es['priv'] = "Visibility type is required"
             }
             if (previewImage && !hasValidExtension) {
