@@ -8,7 +8,7 @@ import LoadingScreen from '../LoadingScreen'
 function Events() {
     const dispatch1 = useDispatch()
     const history = useHistory()
-    let events = useSelector((state) => state.events)
+    let { events } = useSelector((state) => state.events)
 
 
     useEffect(() => {
@@ -17,14 +17,14 @@ function Events() {
 
     let eachE
 
-    if (events.Events) {
-        eachE = Object.values(events.Events)
+    if (Object.values(events).length) {
+        eachE = Object.values(events)
     }
 
     let currTime = new Date()
     let past
     let upComing
-    if (eachE) {
+    if ( eachE && eachE.length) {
         let upComingDates = eachE.filter((e) => new Date(e.startDate) > currTime)
              upComing = upComingDates.sort((a, b) => {
 
@@ -60,7 +60,7 @@ function Events() {
     }
 
 
-    if (eachE) {
+    if ( eachE && eachE.length) {
         let time
         let eachEve = upComing.concat(past)
 
