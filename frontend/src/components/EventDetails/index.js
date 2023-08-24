@@ -7,7 +7,6 @@ import LoadingScreen from '../LoadingScreen';
 import DeleteEventModal from '../DeleteEventModal';
 import { useModal } from "../../context/Modal";
 
-
 function EventDetails() {
     const { id } = useParams()
     const history = useHistory()
