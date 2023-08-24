@@ -4,11 +4,11 @@ contents of api
 
 ## Database Schema Design
 
-![meetup-db-schema]
+![meetus-db-schema]
 
-[meetup-db-schema]: ./images/meetup-db-schema.png
+[meetus-db-schema]: ./images/meetup-db-schema.png
 
-[meetup-db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-diagram-info.txt
+[meetus-db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-diagram-info.txt
 
 ## API Documentation
 ## USER AUTHENTICATION/AUTHORIZATION
