@@ -9,8 +9,6 @@ import DeleteGroupModal from '../DeleteGroupModal'
 import { useModal } from "../../context/Modal";
 
 
-
-
 function GroupDetails() {
     const { id } = useParams()
     const dispatch1 = useDispatch()
