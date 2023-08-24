@@ -8,12 +8,12 @@ import './UpdateGroup.css'
 
 function UpdateGroup() {
     const { id } = useParams()
-    const group = useSelector((store) => store.groups)
-    const [ location, setLocation ] = useState(`${group.city}, ${group.state}`);
-    const [ name, setName ] = useState(group.name);
-    const [ about, setAbout] = useState(group.about);
-    const [ type, setType ] = useState(group.type);
-    const [ priv, setPriv ] = useState(group.private ? "true" : "false")
+    const { singleGroup }= useSelector((store) => store.groups)
+    const [ location, setLocation ] = useState(`${singleGroup.city}, ${singleGroup.state}`);
+    const [ name, setName ] = useState(singleGroup.name);
+    const [ about, setAbout] = useState(singleGroup.about);
+    const [ type, setType ] = useState(singleGroup.type);
+    const [ priv, setPriv ] = useState(singleGroup.private ? "true" : "false")
     const [ data, setData ] = useState({})
     const [ errors, setErrors ] = useState({})
     const dispatch = useDispatch()
@@ -124,7 +124,7 @@ function UpdateGroup() {
             <div className='createLocation'>
             <h1>First, set your group's location.</h1>
             <p>Meetup groups meet locally, in person and online. We'll connect you with people in your area and more can join you online.</p>
-            <input className='inputGroup' defaultValue={`${group.city}, ${group.state}`} type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
+            <input className='inputGroup' defaultValue={`${singleGroup.city}, ${singleGroup.state}`} type='text' placeholder="City, STATE" onChange={((e) => setLocation(e.target.value))}></input>
             {errors.location && <p className='error'>{errors.location}</p>}
 
             </div>
@@ -132,9 +132,9 @@ function UpdateGroup() {
             <div className='createName'>
             <h1>What will your groups name be?</h1>
             <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
-            <input className='inputGroup' defaultValue={group.name} type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
+            <input className='inputGroup' defaultValue={singleGroup.name} type='text' placeholder="What is you group name?" onChange={((e) => setName(e.target.value))}></input>
             {errors.name && <p className='error'>{errors.name}</p>}
-            {name.length > 60 && <p className='error'>{"Name must be less than 60 characters"}</p>}
+            {name?.length > 60 && <p className='error'>{"Name must be less than 60 characters"}</p>}
             </div>
             <div className='divider'></div>
             <div className='createAbout'>
@@ -143,22 +143,22 @@ function UpdateGroup() {
             <p className='numbers'> 1. What's the purpose of the group? <br></br>
                  2. Who should join? <br></br>
                  3. What will you do at your events?</p>
-            <textarea defaultValue={group.about} className='textareaGroup' placeholder="Please write atleast 50 characters" onChange={((e) => setAbout(e.target.value))}></textarea>
-            {errors.about || about.length < 51 && about.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
-            {about.length > 50 ? delete errors.about : null}
+            <textarea defaultValue={singleGroup?.about} className='textareaGroup' placeholder="Please write atleast 50 characters" onChange={((e) => setAbout(e.target.value))}></textarea>
+            {errors?.about || about?.length < 51 && about?.length >= 1 ? <p className='error'>Please write at least 50 characters</p> : <div></div>}
+            {about?.length > 50 ? delete errors.about : null}
             </div>
             <div className='divider'></div>
             <div className='createFinale'>
             <h1>Final steps...</h1>
             <p>Is this an in person or online group?</p>
-            <select defaultValue={group.type === "In person" ? 'In person' : 'Online'} className='selectEvent2' onChange={((e) => setType(e.target.value))}>
+            <select defaultValue={singleGroup.type === "In person" ? 'In person' : 'Online'} className='selectEvent2' onChange={((e) => setType(e.target.value))}>
                 <option value=''>(select one)</option>
                 <option value='In person'>in person</option>
                 <option value='Online'>online</option>
             </select>
             {errors.type && <p className='error'>{errors.type}</p>}
             <p>Is this group private or public?</p>
-            <select defaultValue={group.private ? 'true' : 'false'} className='selectEvent2' onChange={((e) => e.target.value == 'true' ? setPriv(true) : setPriv(false))}>
+            <select defaultValue={singleGroup.private ? 'true' : 'false'} className='selectEvent2' onChange={((e) => e.target.value == 'true' ? setPriv(true) : setPriv(false))}>
                 <option >(select one)</option>
                 <option value='true'>private</option>
                 <option value='false'>public</option>

@@ -12,6 +12,51 @@
     font-size: 18pt;
 }
 
+#manage-butts {
+    position: absolute;
+    right: 0;
+    display: flex;
+    /* bottom: 1%; */
+    gap: 5px;
+}
+
+#joined {
+    position: absolute;
+    right: 0;
+    color: black;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+#joined:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: black;
+}
+
+#manage-butts > button {
+    background-color: #999999;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+#manage-butts > button:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
+}
+
+.groupLink4 {
+    color: #00525E;
+    text-decoration: none;
+    cursor: auto;
+}
+
 .groupLink2 {
     text-decoration: underline;
     color: #00525E;
@@ -89,6 +134,12 @@
 .info {
     width: 350px;
     text-align: left;
+}
+
+.info2 {
+    width: 350px;
+    text-align: left;
+    position: relative;
 }
 
 .location {

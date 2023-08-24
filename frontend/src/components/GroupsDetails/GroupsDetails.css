@@ -75,6 +75,27 @@
 
 }
 
+.groupButton3 {
+    margin-top: 295px;
+    height: 30px;
+    width: 180px;
+    color: black;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 425px;
+
+}
+
+.groupButton3:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #999999;
+    transition: box-shadow 0.1s ease;
+    color: black;
+}
+
+
 .groupButton1:hover {
     box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
     border: 1.5px solid #9e2b2f;

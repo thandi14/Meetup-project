@@ -5,6 +5,11 @@ h1 {
     padding-top: 10px;
 }
 
+#seven-eleven {
+    display: flex;
+    justify-content: center;
+}
+
 .pEvents {
     font-size: 12pt;
     /* height: 10px; */

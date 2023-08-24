@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import * as groupActions from '../../store/groups'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import './GroupsDetails.css'
 import LoadingScreen from "../LoadingScreen"
@@ -15,25 +15,26 @@ function GroupDetails() {
     const { id } = useParams()
     const dispatch1 = useDispatch()
     const history = useHistory()
-    const group = useSelector((state) => state.groups)
+    const { singleGroup } = useSelector((state) => state.groups)
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
+    const [ join, setJoin ] = useState(false)
 
-    console.log(group)
     useEffect(() => {
-        dispatch1(groupActions.getDetailsById(id))
-    }, [dispatch1, id])
+      dispatch1(groupActions.getDetailsById(id))
+      if (join) dispatch1(groupActions.createMembership(id))
 
-    const obj = Object.values(group)
-    if (obj && obj.length >= 15) {
+    }, [dispatch1, id, join])
+
+    if (Object.values(singleGroup).length) {
 
         let time
 
         let currTime = new Date()
 
-        let upComingDates = group.Events.filter((e) => new Date(e.startDate) > currTime)
+        let upComingDates = singleGroup.Events?.filter((e) => new Date(e.startDate) > currTime)
 
-        let upComing = upComingDates.sort((a, b) => {
+        let upComing = upComingDates?.sort((a, b) => {
 
             const dateA = new Date(a.startDate);
             const dateB = new Date(b.startDate);
@@ -47,8 +48,8 @@ function GroupDetails() {
             }
 
         })
-        let pastDates = group.Events.filter((e) => new Date(e.startDate) < currTime)
-        let past = pastDates.sort((a, b) => {
+        let pastDates = singleGroup.Events?.filter((e) => new Date(e.startDate) < currTime)
+        let past = pastDates?.sort((a, b) => {
 
             const dateA = new Date(a.startDate);
             const dateB = new Date(b.startDate);
@@ -62,7 +63,6 @@ function GroupDetails() {
             }
 
         })
-        console.log(group)
 
     return (
         <div>
@@ -71,32 +71,33 @@ function GroupDetails() {
             <div className="linkArea">
             <Link className='allGroups' to='/groups'>{'<'} Groups</Link>
             </div>
-            <img className='groupImg1' src={group.GroupImages && group.GroupImages.length ? group.GroupImages[group.GroupImages.length - 1].url : ''}></img>
+            <img className='groupImg1' src={singleGroup.GroupImages && singleGroup.GroupImages.length ? singleGroup.GroupImages[singleGroup.GroupImages.length - 1].url : ''}></img>
             </div>
             <div className='groupInfo1'>
-            <h2 className='groupTitle1'>{group.name}</h2>
+            <h2 className='groupTitle1'>{singleGroup.name}</h2>
             <div className="textBox">
-            <p className='groupText1'> {group.city}, {group.state}</p>
-            <p className='groupText1'> {group.Events && group.Events.length ? group.Events.length : 0} events · {group.private ? "Private" : "Public"} </p>
-            <p className='groupText1'>Organized by {group.Organizer ? group.Organizer[0].firstName : ""} {group.Organizer ? group.Organizer[0].lastName : ""}</p>
+            <p className='groupText1'> {singleGroup.city}, {singleGroup.state}</p>
+            <p className='groupText1'> {singleGroup.Events && singleGroup.Events.length ? singleGroup.Events.length : 0} events · {singleGroup.private ? "Private" : "Public"} </p>
+            <p className='groupText1'>Organized by {singleGroup.Organizer ? singleGroup.Organizer[0].firstName : ""} {singleGroup.Organizer ? singleGroup.Organizer[0].lastName : ""}</p>
             </div>
             </div>
-            {user && user.id && user.id === group.organizerId ?
+            {user && user.id && user.id === singleGroup.organizerId ?
             <div className='userAction'>
-                <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/events/new`))}>Create event</button>
-                <button className='groupButton2' onClick={(() => history.push(`/groups/${group.id}/edit`))}>Update</button>
+                <button className='groupButton2' onClick={(() => history.push(`/groups/${singleGroup.id}/events/new`))}>Create event</button>
+                <button className='groupButton2' onClick={(() => history.push(`/groups/${singleGroup.id}/edit`))}>Update</button>
                 <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}></DeleteGroupModal>))}>Delete</button>
 
-            </div> : null}
-            {user && user.id && user.id !== group.organizerId ? <button className="groupButton1" onClick={(() => window.alert("feature coming soon"))} >Join this group</button> : null}
+            </div> :
+            !singleGroup.Members?.find((m) => m.id === user.id) ? <button onClick={(() => setJoin(true))} className="groupButton1" >Join this group</button> : <button className="groupButton3">Unjoin</button>
+            }
             </div>
             <div className='groupsBackground1'>
             <div className='groupsDetailsBox'>
             <div className='details1'>
             <h2 className='organizer'>Organizer</h2>
-            <p className="firstLast">{group.Organizer.length ? group.Organizer[0].firstName : ""} {group.Organizer.length ? group.Organizer[0].lastName : ""}</p>
+            <p className="firstLast">{singleGroup.Organizer.length ? singleGroup.Organizer[0].firstName : ""} {singleGroup.Organizer.length ? singleGroup.Organizer[0].lastName : ""}</p>
             <h2 className="aboutGroup">What we're about</h2>
-            <p className='aboutText'>{group.about}</p>
+            <p className='aboutText'>{singleGroup.about}</p>
             </div>
             {upComing && upComing.length ?
             <div className='event1'>
@@ -142,7 +143,7 @@ function GroupDetails() {
             )}
             </div>
             : <div></div> }
-            {!past.length && !upComing.length && <h2 className='upcoming'>No upcoming events</h2>}
+            {!past?.length && !upComing?.length && <h2 className='upcoming'>No upcoming events</h2>}
            </div>
           </div>
         </div>
