@@ -59,6 +59,9 @@ function ProfileButton({ user }) {
               <p>
             <Link className="menuLink" to="/events">View events</Link>
               </p>
+              <p>
+            <Link className="menuLink" to="/groups/current">Your groups</Link>
+              </p>
             <p>{user.email}</p>
             <div className='divide'></div>
             <p className='logoutUser' onClick={logout}>Log Out</p>

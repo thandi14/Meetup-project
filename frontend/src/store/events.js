@@ -18,10 +18,10 @@ const getDetails = (details) => {
     }
 }
 
-const removeEvent = (id) => {
+const removeEvent = (eventId) => {
     return {
         type: REMOVE_EVENT,
-        id
+        eventId
     }
 }
 
@@ -45,7 +45,6 @@ export const getDetailsById = (id) => async (dispatch) => {
 
 export const createEvent = (data, img) => async (dispatch) => {
     const { name , description, type, capacity, price, startDate, endDate} = data
-    console.log(data)
     if (Object.values(data).length) {
         const response = await csrfFetch(`/api/groups/${data.groupId}/events`, {
             method: 'POST',
@@ -77,6 +76,43 @@ export const createEvent = (data, img) => async (dispatch) => {
     }
 }
 
+export const updateEvent = (id, data, img) => async (dispatch) => {
+    const { name , description, type, capacity, price, startDate, endDate} = data
+    console.log(data)
+    if (Object.values(data).length) {
+        const response = await csrfFetch(`/api/events/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                name,
+                description,
+                type,
+                capacity,
+                price,
+                startDate,
+                endDate
+            })
+        })
+        data = await response.json()
+        let eventId = parseInt(data.id)
+        let response1
+        if (eventId) {
+            response1 = await csrfFetch(`/api/events/${data.id}`)
+        }
+        const data1 = await response1.json()
+        dispatch(getDetails(data1))
+
+        if (img) dispatch(addEventImage(eventId, { url: img, preview: true}))
+
+        return response
+    }
+}
+
+
+
+
 export const deleteEvent = (id) => async (dispatch) => {
     const response = await csrfFetch(`/api/events/${id}`, {
         method: 'DELETE',
@@ -101,26 +137,37 @@ export const addEventImage = (id, data) => async (dispatch) => {
     return response
 }
 
-const initialState = {}
+let initialState = {
+    events: {},
+    userEvents: {},
+    singleEvent: {}
+};
 
 const eventsReducer = (state = initialState, action) => {
-    let events
+    let newState
     switch (action.type) {
         case GET_EVENTS:
-        events = action.events
-        return {
-            ...state,
-            ...events
-        }
+        newState = { ...state };
+        action.events.Events.forEach(
+          (event) => (newState.events[event.id] = event)
+        );
+        return newState
         case GET_DETAILS:
-        let details = action.details
-        return {
-            ...details
-        }
+        newState = { ...state };
+        console.log("REDUCER", action.details)
+        const event = action.details;
+        newState.singleEvent = { ...event };
+        return newState
         case REMOVE_EVENT:
-        let newState = {}
-        newState['state'] = state;
-        delete newState.state;
+        // newState = {}
+        // newState['state'] = state;
+        // delete newState.state;
+        newState = { ...state };
+        newState.events = { ...newState.events };
+        newState.userEvents = { ...newState.userEvents };
+        newState.singleEvent = {};
+        delete newState.events[action.eventId];
+        delete newState.userEvents[action.eventId];
         return newState;
       default:
         return state;

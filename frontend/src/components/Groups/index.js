@@ -8,7 +8,7 @@ import LoadingScreen from '../LoadingScreen'
 function Groups() {
     const dispatch1 = useDispatch()
     const history = useHistory()
-    let groups = useSelector((state) => state.groups)
+    let { groups } = useSelector((state) => state.groups)
 
 
     useEffect(() => {
@@ -17,12 +17,10 @@ function Groups() {
 
 
     let eachE
-    if (groups.Groups) {
+    if (Object.values(groups).length) {
 
-        let eachG = Object.values(groups.Groups)
-        eachE = groups.Groups.Events
-
-        eachG.pop()
+        let eachG = Object.values(groups)
+        console.log(eachG)
 
     return (
         <div className='groupsPage'>
@@ -47,7 +45,7 @@ function Groups() {
                 <div className='aboutSection'>
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='about'>{g.about}</p>
                 </div>
-                <div onClick={(() => history.push(`/groups/${g.id}`))} className='private'> #{eachE && eachE.length ? eachE.filter((e) => e.groupId === g.id).length : 0} events · {g.private ? "Private" : "Public"}</div>
+                <div onClick={(() => history.push(`/groups/${g.id}`))} className='private'> #{g.Events && g.Events.length ? g.Events.length : 0} events · {g.private ? "Private" : "Public"}</div>
                 </div>
             </div>
             </>

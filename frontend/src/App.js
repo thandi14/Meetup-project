@@ -14,6 +14,8 @@ import UpdateGroup from "./components/UpdateGroup";
 import LoadingScreenTwo from "./components/LoadingScreen2";
 import { useSelector } from "react-redux";
 import DeleteGroupModal from "./components/DeleteGroupModal";
+import UpdateEvent from "./components/UpdateEvent";
+import ManageGroups from "./components/ManageGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +38,9 @@ function App() {
         <Route exact path='/groups'>
         <Groups />
         </Route>
+        <Route exact path='/groups/current'>
+        <ManageGroups />
+        </Route>
         <Route exact path="/groups/new">
         {user ? <CreateGroup /> : <Home />}
         </Route>
@@ -44,6 +49,9 @@ function App() {
         </Route>
         <Route exact path='/groups/:id/edit'>
         {user ? <UpdateGroup /> : <Home />}
+        </Route>
+        <Route exact path='/events/:id/edit'>
+        {user ? <UpdateEvent /> : <Home />}
         </Route>
         <Route exact path='/groups/:id/'>
           <GroupDetails />

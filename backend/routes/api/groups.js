@@ -46,7 +46,12 @@ const validateEvent = [
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    let Groups = await Group.findAll({})
+    let Groups = await Group.findAll({
+        include: [
+            { model: Membership },
+        ]
+
+    })
 
     if (Groups.length > 0) {
     let arr = []
@@ -90,6 +95,101 @@ router.get('/', async (req, res) => {
     }
     }
     else {
+        let num = await Membership.count({
+            where: {
+                groupId: Groups[0].dataValues.groupId
+            }
+        })
+
+        let image = await GroupImage.findAll({
+            attributes: ['url'],
+            where: {
+                groupId: Groups[0].dataValues.groupId,
+
+            },
+            include: {
+                model: Group,
+                attributes: []
+            }
+        });
+
+        let images = ''
+        image.forEach((element, i) => {
+            if (i === 0) {
+                images += element.dataValues.url
+            }
+            images += ', ' + element.dataValues.url
+
+        });
+
+        Groups[0].dataValues.previewImage = images
+
+        Groups[0].dataValues.numMembers = num
+    }
+
+
+
+    res.json({Groups})
+
+})
+
+router.get('/other', async (req, res) => {
+    const { user } = req;
+
+    let Groups = await Group.findAll({
+        include:  [
+            {
+                model: Membership,
+                where: {
+                    userId: user.dataValues.id,
+                    status: "member"
+                }
+            }
+        ]
+    })
+
+    if (Groups.length > 0) {
+    let arr = []
+
+    for (let group of Groups) {
+        arr.push(group.dataValues.id)
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        let num = await Membership.count({
+            where: {
+                groupId: arr[i]
+            }
+        })
+
+        let image = await GroupImage.findAll({
+            attributes: ['url'],
+            where: {
+                groupId: arr[i],
+                preview: true
+
+            },
+            include: {
+                model: Group,
+                attributes: []
+            }
+        });
+
+        let images = ''
+
+
+        // image.forEach((element, i) => {
+        if (image.length) {
+        images += image[image.length - 1].dataValues.url
+        }
+
+        Groups[i].dataValues.previewImage = images
+
+        Groups[i].dataValues.numMembers = num
+
+    }
+    }
+    else if (Groups.length === 1) {
         let num = await Membership.count({
             where: {
                 groupId: Groups[0].dataValues.groupId

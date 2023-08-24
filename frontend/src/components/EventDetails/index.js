@@ -7,12 +7,11 @@ import LoadingScreen from '../LoadingScreen';
 import DeleteEventModal from '../DeleteEventModal';
 import { useModal } from "../../context/Modal";
 
-
 function EventDetails() {
     const { id } = useParams()
     const history = useHistory()
     const dispatch = useDispatch();
-    const details = useSelector((store) => store.events);
+    const { singleEvent } = useSelector((store) => store.events);
     const { setModalContent } = useModal();
     const { user } = useSelector((state) => state.session)
 
@@ -21,8 +20,10 @@ function EventDetails() {
         dispatch(eventActions.getDetailsById(id))
     }, [dispatch, id])
 
-    if (Object.values(details).length >= 13) {
-        const group = details.Group
+    console.log(singleEvent)
+
+    if (Object.values(singleEvent).length) {
+        const group = singleEvent.Group
         console.log(group)
         let time
 
@@ -33,7 +34,7 @@ function EventDetails() {
                 <div className='intro4'>
                 <div className='title3'>
                     <Link to='/events'>{'<'}Events</Link>
-                <h2 className='eventTitle3'>{details.name}</h2>
+                <h2 className='eventTitle3'>{singleEvent.name}</h2>
                 <p>Hosted by {group.Organizer ? group.Organizer[0].firstName : ""} {group.Organizer ? group.Organizer[0].lastName : ""}</p>
                  </div>
                 </div>
@@ -41,7 +42,7 @@ function EventDetails() {
                 <div className='wholeEvent'>
                 <div className='eventSections'>
                 <div className='eventSec1'>
-                <img className='eventImg2'src={details.EventImages.length ? details.EventImages[details.EventImages.length - 1].url : ""}></img>
+                <img className='eventImg2'src={singleEvent.EventImages.length ? singleEvent.EventImages[singleEvent.EventImages.length - 1].url : ""}></img>
                 </div>
                 <div className='eventSec2'>
                 <div className='eventGroup' onClick={(() => history.push(`/groups/${group.id}`))}>
@@ -60,25 +61,25 @@ function EventDetails() {
                 <i class="fa-regular fa-clock"></i>
                  </div>
                 <div className='times'>
-                <p className='startDate3'><span>START</span>  {details.startDate.slice(0, 10)} · {time = new Date(details.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
-                <p className='endDate3'><span>END</span>   {details.endDate.slice(0, 10)} · {time = new Date(details.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
+                <p className='startDate3'><span>START</span>  {singleEvent.startDate.slice(0, 10)} · {time = new Date(singleEvent.startDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
+                <p className='endDate3'><span>END</span>   {singleEvent.endDate.slice(0, 10)} · {time = new Date(singleEvent.endDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric"})}</p>
                 </div>
                 </div>
                 <div className='eventPrice2'>
                 <div className='icon'>
                 <i class="fa-solid fa-dollar-sign"></i>
                 </div>
-                <p className='price3'>{details.price === 0 ? "FREE" : details.price}</p>
+                <p className='price3'>{singleEvent.price === 0 ? "FREE" : singleEvent.price}</p>
                 </div>
                 <div className='eventType2'>
                 <div>
                 <i className="fa-solid fa-location-crosshairs"></i>
                 </div>
-                <p className='type3'>{details.type}</p>
+                <p className='type3'>{singleEvent.type}</p>
                 </div>
                 </div>
                 <div className='eventDeleteButton'>
-                    {  user && user.id && user.id === group.organizerId ? <button onClick={(() => window.alert("feature coming soon"))}className='updateAnEvent'>Update</button> : null}
+                    {  user && user.id && user.id === group.organizerId ? <button onClick={(() => history.push(`/events/${id}/edit`))}className='updateAnEvent'>Update</button> : null}
                     { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>
@@ -86,7 +87,7 @@ function EventDetails() {
                 </div>
                 <div className='details3'>
                 <h3 className='detailsTitle3'>Details</h3>
-                <p className='eventDescription'>{details.description}</p>
+                <p className='eventDescription'>{singleEvent.description}</p>
                 </div>
                 </div>
                 </div>
