@@ -1,6 +1,6 @@
 contents of api
 
-# [Meetup]
+# [Meetus]
 
 ## Database Schema Design
 
