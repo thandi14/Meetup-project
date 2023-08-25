@@ -21,6 +21,11 @@
     color: black;
 }
 
+#manageE {
+    position: relative;
+}
+
+
 .title {
     display: flex;
     width: 600px;

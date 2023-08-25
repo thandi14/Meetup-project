@@ -104,14 +104,24 @@
     position: absolute;
     background-color: white;
     border: 3px solid #999999;
-    margin-top: 285px;
+    margin-top: 310px;
     width: 190px;
-    height: 250px;
+    height: 280px;
     display: flex;
     align-items: center;
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgb(158, 158, 150);
 }
+
+#top-top {
+    border-top: 1px solid #999999;
+    padding-top: 15px;
+}
+
+/* #bottom-bottom {
+    border-bottom: 1px solid #999999;
+    padding-bottom: 15px;
+} */
 
 p {
     height: 10px;

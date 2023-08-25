@@ -14,18 +14,21 @@ function ManageGroups() {
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
     const [ groupId, setGroupId ] = useState(null)
+    const [ index, setIndex ] = useState(null)
 
+    console.log(userGroups)
 
     useEffect(() => {
-        dispatch1(groupActions.getAllUserGroups())
-       // if (groupId) dispatch1(groupActions.createMembership(groupId))
-        if (groupId) dispatch1(groupActions.deleteMembership(groupId))
+         dispatch1(groupActions.getAllUserGroups())
+        if (groupId) dispatch1(groupActions.deleteMembership(groupId, user.id))
 
     }, [dispatch1, groupId])
 
-    if (Object.values(userGroups).length) {
 
-      let eachG = Object.values(userGroups)
+    if (Object.values(userGroups).length) {
+       let eachG = Object.values(userGroups)
+
+
 
 
     return (
@@ -37,7 +40,7 @@ function ManageGroups() {
         <h2>Your groups in Meetus</h2>
         </div>
         <div className='allGroups'>
-            {eachG.length ? eachG.map((g) =>
+            {eachG.length ? eachG.map((g, i) =>
             <>
             <div className='divider'></div>
             <div className='groups'>
@@ -51,7 +54,9 @@ function ManageGroups() {
                 <p onClick={(() => history.push(`/groups/${g.id}`))} className='about'>{g.about}</p>
                 </div>
                 {user && user.id && user.id === g.organizerId ?
-                <div id="manage-butts"><button onClick={(() => history.push(`/groups/${g.id}/edit`))}>Update</button><button onClick={(() => setModalContent(<DeleteGroupModal groupId={g.id}></DeleteGroupModal>) )}>Delete</button></div> : <button onClick={(() => setGroupId(g.id))} id="joined">Unjoin</button>}
+                <div id="manage-butts"><button onClick={(() => history.push(`/groups/${g.id}/edit`))}>Update</button><button onClick={(() => setModalContent(<DeleteGroupModal groupId={g.id}></DeleteGroupModal>) )}>Delete</button></div> : <button onClick={(() => {
+                    setGroupId(g.id)
+                    })} id="joined">Unjoin</button>}
                 <div className='private'> #{g.Events && g.Events.length ? g.Events.length : 0} events · {g.private ? "Private" : "Public"}</div>
                 </div>
             </div>

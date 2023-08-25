@@ -26,7 +26,7 @@ function UpdateGroup() {
     useEffect(() => {
         dispatch(groupActions.updateGroup(id, data, previewImage))
         dispatch(groupActions.getDetailsById(id))
-    }, [dispatch, data, previewImage])
+    }, [dispatch, data, previewImage, id])
 
         console.log({
             name,

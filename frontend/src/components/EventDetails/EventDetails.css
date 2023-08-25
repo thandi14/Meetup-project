@@ -10,6 +10,33 @@
     align-items: center;
 }
 
+.updateAnEvent2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1%;
+    margin-right: 10px;
+    right: 0;
+    gap: 10px;
+    cursor: pointer;
+    height: 25px;
+    width: 80px;
+    color: white;
+    background-color: #999999;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 2px black;
+    border: 2px solid black;
+}
+
+
+.updateAnEvent2:hover {
+    box-shadow: 1px 1px 8px 4px rgb(244, 244, 229);
+    border: 1.5px solid #6f6e6e;
+    transition: box-shadow 0.1s ease;
+    color: rgb(244, 244, 229);
+}
+
 .eventGroup {
     background-color: white;
     display: flex;
@@ -29,6 +56,7 @@
 }
 
 .eventSec2 {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;

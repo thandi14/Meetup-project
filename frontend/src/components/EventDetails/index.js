@@ -1,27 +1,50 @@
 import * as eventActions from '../../store/events'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useHistory, Link} from 'react-router-dom';
 import './EventDetails.css'
 import LoadingScreen from '../LoadingScreen';
 import DeleteEventModal from '../DeleteEventModal';
 import { useModal } from "../../context/Modal";
-
+import * as groupActions from '../../store/groups'
 
 function EventDetails() {
     const { id } = useParams()
     const history = useHistory()
     const dispatch = useDispatch();
-    const { singleEvent } = useSelector((store) => store.events);
+    const { singleEvent, eventAttendances } = useSelector((state) => state.events);
+    const { groupMembers } = useSelector((state) => state.groups);
     const { setModalContent } = useModal();
     const { user } = useSelector((state) => state.session)
-
+    let attendances = Object.values(eventAttendances)
+    const [ join, setJoin ] = useState(attendances.some((m) => m.userId === user.id))
+    const [ unjoin, setUnjoin ] = useState(false)
 
     useEffect(() => {
         dispatch(eventActions.getDetailsById(id))
-    }, [dispatch, id])
+        if (join) dispatch(eventActions.createAttendance(id))
+        if (unjoin) dispatch(eventActions.deleteAttendance(id, user.id))
+        dispatch(groupActions.getAllMemberships(singleEvent.groupId))
+        dispatch(eventActions.getAllAttendance(id))
+    }, [dispatch, id, singleEvent.groupId, join, unjoin])
 
-    console.log(singleEvent)
+    let members = Object.values(groupMembers)
+
+    const handleJoin = () => {
+        if (join) {
+          setUnjoin(true)
+          setJoin(false)
+          return
+        }
+        if (!join) {
+          setJoin(true)
+          setUnjoin(false)
+          return
+        }
+      }
+
+    console.log(attendances)
+    console.log(join)
 
     if (Object.values(singleEvent).length) {
         const group = singleEvent.Group
@@ -81,6 +104,7 @@ function EventDetails() {
                 </div>
                 <div className='eventDeleteButton'>
                     {  user && user.id && user.id === group.organizerId ? <button onClick={(() => history.push(`/events/${id}/edit`))}className='updateAnEvent'>Update</button> : null}
+                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId ? <button onClick={handleJoin} className='updateAnEvent2'>{ attendances.some((m) => m.userId === user.id) ? "Pending" : "Attend"} </button> : null}
                     { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>
