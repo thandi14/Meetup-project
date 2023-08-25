@@ -43,7 +43,6 @@ const getAttendance = (events) => {
     }
 }
 
-
 const removeEvent = (eventId) => {
     return {
         type: REMOVE_EVENT,
