@@ -17,7 +17,7 @@ function GroupDetails() {
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
     let members = Object.values(groupMembers)
-    const [ join, setJoin ] = useState(members.some((m) => m.userId === user.id))
+    const [ join, setJoin ] = useState(members.some((m) => m.userId === user?.id))
     const [ unjoin, setUnjoin ] = useState(false)
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function GroupDetails() {
 
       dispatch1(groupActions.getAllMemberships(id))
 
-    }, [dispatch1, id, join, unjoin])
+    }, [dispatch1, id, join, unjoin, user?.id])
 
 
     console.log(singleGroup.Organizer?.filter((g) => g.id === singleGroup.organizerId))
@@ -107,7 +107,7 @@ function GroupDetails() {
                 <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}></DeleteGroupModal>))}>Delete</button>
 
             </div> :
-             !members.some((m) => m.userId === user.id) && members.some((m) => m.status === "member") ? <button onClick={handleJoin} className="groupButton1" >{ members.some((m) => m.userId === user.id && m.status === "pending") ? "Pending" : "Join this group"}</button> : <button className="groupButton3">Unjoin</button>
+             !members.some((m) => m.userId === user.id) && !members.some((m) => m.status === "member") ? <button onClick={handleJoin} className="groupButton1" >{ members.some((m) => m.userId === user.id && m.status === "pending") ? "Pending" : "Join this group"}</button> : <button onClick={handleJoin} className="groupButton3">Unjoin</button>
             }
             </div>
             <div className='groupsBackground1'>
