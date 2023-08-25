@@ -35,7 +35,7 @@ module.exports = {
        {
         eventId: 2,
         userId: 3,
-        status: 'pending'
+        status: 'attending'
        },
        {
         eventId: 3,

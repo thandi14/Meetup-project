@@ -1,9 +1,11 @@
 import { csrfFetch } from "./csrf";
 
 const GET_GROUPS = 'groups/getGroups';
+const GET_MEMBERSHIP = 'groups/getMembership';
 const GET_USER_GROUPS = 'groups/getUserGroups';
 const GET_DETAILS = 'groups/getDetails';
 const REMOVE_GROUP = 'groups/removeGroup'
+const REMOVE_MEMBERSHIP = 'groups/removeMembership'
 
 const getGroups = (groups) => {
     return {
@@ -15,6 +17,21 @@ const getGroups = (groups) => {
 const getUserGroups = (groups) => {
     return {
         type: GET_USER_GROUPS,
+        groups
+    }
+}
+
+const removeMembership = (groupId, userId) => {
+    return {
+        type: REMOVE_MEMBERSHIP,
+        groupId,
+        userId
+    }
+}
+
+const getMembership = (groups) => {
+    return {
+        type: GET_MEMBERSHIP,
         groups
     }
 }
@@ -108,29 +125,47 @@ export const createGroup = (data, img) => async (dispatch) => {
     }
 }
 
-export const createMembership = (id) => async (dispatch) => {
+export const getAllMemberships = (id) => async (dispatch) => {
+
+    const response = await csrfFetch(`/api/groups/${id}/members`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        // body: JSON.stringify({ userId, status: "pending" })
+    })
+    let data = await response.json()
+    dispatch(getMembership(data))
+    console.log("!!!!!", data)
+    return data
+
+}
+
+export const createMembership = (id, userId) => async (dispatch) => {
 
         const response = await csrfFetch(`/api/groups/${id}/membership`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            // body: JSON.stringify(data)
+             body: JSON.stringify({ userId, status: "pending" })
         })
         let data = await response.json()
+        dispatch(getMembership(data))
         return data
 
 }
 
-export const deleteMembership = (id) => async (dispatch) => {
+export const deleteMembership = (id, userId) => async (dispatch) => {
         const response = await csrfFetch(`/api/groups/${id}/membership`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
               },
-            // body: JSON.stringify(data)
+             body: JSON.stringify({userId})
         })
         let data = await response.json()
+        dispatch(removeMembership(id, userId))
         return data
 }
 
@@ -180,7 +215,8 @@ export const addGroupImage = (id, data) => async (dispatch) => {
 let initialState = {
     groups: {},
     userGroups: {},
-    singleGroup: {}
+    singleGroup: {},
+    groupMembers: {}
 };
 
 function groupsReducer (state = initialState, action) {
@@ -190,6 +226,12 @@ function groupsReducer (state = initialState, action) {
         newState = { ...state };
         action.groups.Groups.forEach(
           (group) => (newState.groups[group.id] = group)
+        );
+        return newState;
+        case GET_MEMBERSHIP:
+        newState = { ...state };
+        action.groups.Members.forEach(
+          (member) => (newState.groupMembers[member.userId] = member)
         );
         return newState;
         case GET_USER_GROUPS:
@@ -213,6 +255,13 @@ function groupsReducer (state = initialState, action) {
         newState.userGroups = { ...newState.userGroups };
         newState.singleGroup = {};
         delete newState.groups[action.groupId];
+        delete newState.userGroups[action.groupId];
+        return newState;
+        case REMOVE_MEMBERSHIP:
+        newState = { ...state };
+        newState.groupMembers = { ...newState.groupMembers };
+        newState.userGroups = { ...newState.userGroups };
+        delete newState.groupMembers[action.userId];
         delete newState.userGroups[action.groupId];
         return newState;
       default:

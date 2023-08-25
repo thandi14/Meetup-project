@@ -13,16 +13,37 @@ function GroupDetails() {
     const { id } = useParams()
     const dispatch1 = useDispatch()
     const history = useHistory()
-    const { singleGroup } = useSelector((state) => state.groups)
+    const { singleGroup, groupMembers } = useSelector((state) => state.groups)
     const { user } = useSelector((state) => state.session)
     const { setModalContent } = useModal();
-    const [ join, setJoin ] = useState(false)
+    let members = Object.values(groupMembers)
+    const [ join, setJoin ] = useState(members.some((m) => m.userId === user.id))
+    const [ unjoin, setUnjoin ] = useState(false)
 
     useEffect(() => {
       dispatch1(groupActions.getDetailsById(id))
       if (join) dispatch1(groupActions.createMembership(id))
+      if (unjoin) dispatch1(groupActions.deleteMembership(id, user.id))
 
-    }, [dispatch1, id, join])
+      dispatch1(groupActions.getAllMemberships(id))
+
+    }, [dispatch1, id, join, unjoin])
+
+
+    console.log(members)
+
+    const handleJoin = () => {
+      if (join) {
+        setUnjoin(true)
+        setJoin(false)
+        return
+      }
+      if (!join) {
+        setJoin(true)
+        setUnjoin(false)
+        return
+      }
+    }
 
     if (Object.values(singleGroup).length) {
 
@@ -86,7 +107,7 @@ function GroupDetails() {
                 <button className='groupButton2' onClick={(() => setModalContent(<DeleteGroupModal groupId={id}></DeleteGroupModal>))}>Delete</button>
 
             </div> :
-            !singleGroup.Members?.find((m) => m.id === user.id) ? <button onClick={(() => setJoin(true))} className="groupButton1" >Join this group</button> : <button className="groupButton3">Unjoin</button>
+             !members.some((m) => m.userId === user.id) && members.some((m) => m.status === "member") ? <button onClick={handleJoin} className="groupButton1" >{ members.some((m) => m.userId === user.id && m.status === "pending") ? "Pending" : "Join this group"}</button> : <button className="groupButton3">Unjoin</button>
             }
             </div>
             <div className='groupsBackground1'>

@@ -789,34 +789,7 @@ router.post('/:id/events', validateEvent, requireAuth, async (req, res) => {
 
 router.get('/:id/members', async (req, res) => {
     let id = req.params.id;
-    let { user }= req
-
-    let Members
-
-    let member = await Membership.findOne({
-        where: {
-            userId: user.dataValues.id,
-            groupId: id
-        }
-    })
-
-    if (!member) {
-        Members = await User.findAll({
-            attributes: {
-                exclude: ['username']
-            },
-            include: {
-                model: Membership,
-                attributes: ['status'],
-                where: {
-                    groupId: id,
-                    status: ['member', 'co-host']
-
-                }
-            },
-        });
-    }
-
+    let { user } = req
 
     let group = await Group.findByPk(id);
 
@@ -826,52 +799,16 @@ router.get('/:id/members', async (req, res) => {
         })
     }
 
-    if (!member) {
-        Members = await User.findAll({
-            attributes: {
-                exclude: ['username']
-            },
-            include: {
-                model: Membership,
-                attributes: ['status'],
-                where: {
-                    groupId: id,
-                    status: ['member', 'co-host']
+    let Members
 
-                }
-            },
-        });
-    }
-    else if (member.dataValues.status !== 'co-host') {
-        Members = await User.findAll({
-            attributes: {
-                exclude: ['username']
-            },
-           include: {
-               model: Membership,
-               attributes: ['status'],
-               where: {
-                   groupId: id,
-                   status: ['member', 'co-host']
-
-               }
-           },
-       });
-    }
-    else if (member.dataValues.status === 'co-host' ){
-        Members = await User.findAll({
-            attributes: {
-                exclude: ['username']
-            },
-            include: {
-                model: Membership,
-                attributes: ['status'],
-                where: {
-                    groupId: id
-                }
-            },
-        })
-    }
+    Members = await Membership.findAll({
+        where: {
+            groupId: id
+        },
+        include: [
+            { model: User }
+        ]
+    })
 
     res.json({
         Members
@@ -884,15 +821,9 @@ router.get('/:id/members', async (req, res) => {
 router.post('/:id/membership', requireAuth, async (req, res) => {
     let id = req.params.id;
     let { user } = req
-    const { memberId, status } = req.body
+    // const { memberId, status } = req.body
 
-    if (memberId !== user.dataValues.id) {
-        res.status(404).json({message: "Only the user may add a membership"});
-
-    }
-
-
-    let pendingMember = await User.findByPk(memberId)
+    let pendingMember = await User.findByPk(user.dataValues.id)
 
     if (!pendingMember) {
         res.status(404).json({
@@ -938,9 +869,18 @@ router.post('/:id/membership', requireAuth, async (req, res) => {
           })
     }
 
-    res.json(
-        membership
-    )
+    let Members = await Membership.findAll({
+        where: {
+            groupId: id
+        },
+        include: [
+            { model: User }
+        ]
+    })
+
+    res.json({
+        Members
+    })
 
 })
 
@@ -1023,7 +963,7 @@ router.put('/:id/membership', requireAuth, async (req, res) => {
 })
 
 router.delete('/:id/membership', requireAuth, async (req, res) => {
-    const { memberId } = req.body
+    console.log("!!!!!!!!!!!!!!!")
 
     let id = req.params.id;
     let { user } = req
@@ -1036,7 +976,7 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
-    let pendingMember = await User.findByPk(memberId)
+    let pendingMember = await User.findByPk(user.dataValues.id)
 
 
     if (!pendingMember) {
@@ -1063,38 +1003,15 @@ router.delete('/:id/membership', requireAuth, async (req, res) => {
         })
     }
 
-    let otherMember = await Membership.findOne({
-        where: {
-            userId: memberId,
-            groupId: parseInt(id)
-        }
-    })
-
-    if (!otherMember) {
-        res.status(404).json({
-            message: "Membership between the user and the group does not exist"
-        })
-    }
-
-    if (member.dataValues.status === 'co-host') {
-        otherMember.destroy()
-
-        res.json({
-            message: "Successfully deleted membership from group"
-          })
-
-    } else if (member.dataValues.status === 'member' && memberId === user.dataValues.id) {
+    if (member) {
         member.destroy()
 
         res.json({
             message: "Successfully deleted membership from group"
           })
+
     }
-    else {
-        res.status(404).json({
-            message: "Only the organizer may delete a membership"
-        })
-    }
+
 
 })
 

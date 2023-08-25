@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import DeleteGroupModal from "./components/DeleteGroupModal";
 import UpdateEvent from "./components/UpdateEvent";
 import ManageGroups from "./components/ManageGroups";
+import ManageEvents from "./components/ManageEvents";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
         </Route>
         <Route exact path='/groups/current'>
         <ManageGroups />
+        </Route>
+        <Route exact path='/events/current'>
+        <ManageEvents />
         </Route>
         <Route exact path="/groups/new">
         {user ? <CreateGroup /> : <Home />}
