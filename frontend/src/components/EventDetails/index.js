@@ -8,7 +8,6 @@ import DeleteEventModal from '../DeleteEventModal';
 import { useModal } from "../../context/Modal";
 
 import * as groupActions from '../../store/groups'
-=======
 
 
 function EventDetails() {
