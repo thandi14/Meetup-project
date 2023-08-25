@@ -6,28 +6,34 @@ import * as eventActions from '../../store/events'
 import './LoadingScreenTwo.css'
 
 function LoadingScreenTwo({ event, group, updateG, updateE }) {
-    const groupDetails = useSelector((store) => store.groups)
-    const eventDetails = useSelector((store) => store.events)
+    const { singleGroup } = useSelector((state) => state.groups)
+    const { singleEvent } = useSelector((state) => state.events)
     const dispatch = useDispatch()
 
     const history = useHistory()
 
-    setTimeout(() => {
+    console.log(singleGroup)
 
-        if (group && group.length) {
-            history.push(`/groups/${groupDetails.id}`)
-        }
-        else if (event && event.length) {
-            history.push(`/events/${eventDetails.id}`)
-        }
-        else if (updateE && updateE.length) {
-            history.push(`/events/${eventDetails.id}`)
-        }
-        else if (updateG && updateG.length) {
-            history.push(`/groups/${groupDetails.id}`)
-        }
+    useEffect(() => {
 
-    }, 5000)
+        setTimeout(() => {
+            if (group && group.length) {
+                history.push(`/groups/${singleGroup.id}`)
+            }
+            else if (event && event.length) {
+                history.push(`/events/${singleEvent.id}`)
+            }
+            else if (updateE && updateE.length) {
+                history.push(`/events/${singleEvent.id}`)
+            }
+            else if (updateG && updateG.length) {
+                history.push(`/groups/${singleGroup.id}`)
+            }
+        }, 5000)
+
+
+        }, [singleGroup.id, singleEvent.id])
+
 
     return (
         <div className='backgroundLoad'>
