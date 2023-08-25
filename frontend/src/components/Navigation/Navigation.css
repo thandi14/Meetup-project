@@ -104,9 +104,9 @@
     position: absolute;
     background-color: white;
     border: 3px solid #999999;
-    margin-top: 310px;
+    margin-top: 320px;
     width: 190px;
-    height: 280px;
+    height: 290px;
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -157,7 +157,7 @@ p {
 }
 
 .dropdown {
-    padding-top: 5px;
+    padding-top: 15px;
     padding-bottom: 5px;
     width: 200px;
 }
