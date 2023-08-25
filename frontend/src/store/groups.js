@@ -201,6 +201,7 @@ export const deleteGroup = (id) => async (dispatch) => {
     return response
 }
 
+
 export const addGroupImage = (id, data) => async (dispatch) => {
     const response = await csrfFetch(`/api/groups/${id}/images`, {
         method: 'POST',
