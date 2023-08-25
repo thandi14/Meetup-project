@@ -22,7 +22,6 @@ function DeleteGroupModal({ groupId }) {
             history.push('/groups')
         }, 3000)
     }
-    console.log(isLoading)
 
     return (
         <>

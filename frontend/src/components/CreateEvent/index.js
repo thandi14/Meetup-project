@@ -29,8 +29,6 @@ function CreateEvent() {
     }, [dispatch, data, previewImage])
 
 
-
-    console.log(new Date(startDate) > new Date())
     const handleSubmit = () => {
         const es = {}
         const validExtensions = ['.jpg', '.jpeg', '.png'];
@@ -81,7 +79,6 @@ function CreateEvent() {
 
         setErrors(es)
 
-        console.log(es)
         if (Object.values(es).length === 0) {
 
            let request = {
@@ -117,7 +114,6 @@ function CreateEvent() {
 
     }
 
-    console.log(group)
 
     return (
         <div id="seven-eleven">
