@@ -46,12 +46,8 @@ function EventDetails() {
         }
       }
 
-    console.log(attendances)
-    console.log(join)
-
     if (Object.values(singleEvent).length) {
         const group = singleEvent.Group
-        console.log(group)
         let time
 
         return (

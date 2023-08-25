@@ -29,7 +29,6 @@ function CreateGroup() {
             const validExtensions = ['.jpg', '.jpeg', '.png'];
 
             let hasValidExtension
-            console.log(priv)
 
             if (previewImage) {
                 hasValidExtension = validExtensions.some(extension =>
@@ -37,7 +36,6 @@ function CreateGroup() {
                );
 
            }
-           console.log(hasValidExtension, previewImage)
 
             if (!name) {
                 es['name'] = "Name is required"
