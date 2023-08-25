@@ -100,7 +100,8 @@ function EventDetails() {
                 </div>
                 <div className='eventDeleteButton'>
                     {  user && user.id && user.id === group.organizerId ? <button onClick={(() => history.push(`/events/${id}/edit`))}className='updateAnEvent'>Update</button> : null}
-                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId ? <button onClick={handleJoin} className='updateAnEvent2'>{ attendances.some((m) => m.userId === user.id) ? "Pending" : "Attend"} </button> : null}
+                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId && attendances.some((m) => m.userId === user.id && m.status !== "attending") ? <button onClick={handleJoin} className='updateAnEvent2'>{ attendances.some((m) => m.userId === user.id) ? "Pending" : "Attend"} </button> : null}
+                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId && attendances.some((m) => m.status === "attending") ? <button onClick={handleJoin} className='updateAnEvent2'>Unattend</button> : null}
                     { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>
