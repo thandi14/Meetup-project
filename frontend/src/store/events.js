@@ -153,15 +153,14 @@ export const deleteAttendance = (id, userId) => async (dispatch) => {
     })
     let data = await response.json()
     dispatch(removeAttendance(id, userId))
-    console.log("STORE", data)
     return data
 }
 
 
 export const updateEvent = (id, data, img) => async (dispatch) => {
     const { name , description, type, capacity, price, startDate, endDate} = data
-    console.log(data)
     if (Object.values(data).length) {
+        if (img) dispatch(addEventImage(id, { url: img, preview: true}))
         const response = await csrfFetch(`/api/events/${id}`, {
             method: 'PUT',
             headers: {
@@ -178,16 +177,8 @@ export const updateEvent = (id, data, img) => async (dispatch) => {
             })
         })
         data = await response.json()
-        let eventId = parseInt(data.id)
-        let response1
-        if (eventId) {
-            response1 = await csrfFetch(`/api/events/${data.id}`)
-        }
-        const data1 = await response1.json()
-        dispatch(getDetails(data1))
-
-        if (img) dispatch(addEventImage(eventId, { url: img, preview: true}))
-
+        dispatch(getDetails(data))
+        console.log("THIS IS FROM THE STORE", img)
         return response
     }
 }
@@ -208,7 +199,7 @@ export const deleteEvent = (id) => async (dispatch) => {
 }
 
 export const addEventImage = (id, data) => async (dispatch) => {
-    console.log(data)
+    console.log("STOREEEEEEEE", data)
     const response = await csrfFetch(`/api/events/${id}/images`, {
         method: 'POST',
         headers: {

@@ -32,6 +32,8 @@ function EventDetails() {
 
     let members = Object.values(groupMembers)
 
+    console.log(singleEvent)
+
     const handleJoin = () => {
         if (join) {
           setUnjoin(true)

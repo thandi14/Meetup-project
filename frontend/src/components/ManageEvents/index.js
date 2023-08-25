@@ -102,7 +102,7 @@ function ManageEvents() {
                 </div>
             </div>
             {user && user.id && user.id === e.Group.organizerId ?
-                <div id="manage-butts"><button onClick={(() => history.push(`/events/${e.id}/edit`))}>Update</button><button onClick={(() => setModalContent(<DeleteEventModal eventId={e.id}></DeleteEventModal>) )}>Delete</button></div> : <button onClick={(() => {
+                <div id="manage-butts"><button onClick={(() => history.push(`/events/${e.id}/edit`))}>Update</button><button onClick={(() => setModalContent(<DeleteEventModal eventId={e.id} groupId={e.groupId}></DeleteEventModal>) )}>Delete</button></div> : <button onClick={(() => {
                     setEventId(e.id)
                     })} id="joined">Unattend</button>}
             <p onClick={(() => history.push(`/events/${e.id}`))} className='description'>{e.description}</p>
