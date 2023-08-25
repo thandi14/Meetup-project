@@ -121,7 +121,7 @@ export const createGroup = (data, img) => async (dispatch) => {
 
         if (img) dispatch(addGroupImage(groupId, { url: img, preview: true}))
 
-        return response
+        return data1
     }
 }
 

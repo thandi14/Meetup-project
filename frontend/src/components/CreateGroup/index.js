@@ -16,11 +16,11 @@ function CreateGroup() {
     const [ previewImage, setPreviewImage ] = useState('')
     const dispatch = useDispatch()
     const group = useSelector((store) => store.groups)
-    const [isLoading, setIsLoading] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
 
     useEffect(() => {
-        dispatch(groupActions.createGroup(data, previewImage))
+            dispatch(groupActions.createGroup(data, previewImage))
     }, [dispatch, data, previewImage])
 
 
@@ -55,7 +55,7 @@ function CreateGroup() {
             if (!type) {
                 es['type'] = 'Group type is required'
             }
-            if (!priv || priv === '') {
+            if (!priv) {
                 es['priv'] = "Visibility type is required"
             }
             if (!previewImage || previewImage && !hasValidExtension) {
@@ -83,7 +83,7 @@ function CreateGroup() {
                     state,
                 }
 
-                request['private'] = priv
+                request['private'] = priv === "t" ? true : false
                 setData(request)
 
                 setName('');
@@ -149,10 +149,10 @@ function CreateGroup() {
             </select>
             {errors.type && <p className='error'>{errors.type}</p>}
             <p>Is this group private or public?</p>
-            <select className='selectEvent2' onChange={((e) => e.target.value == 'true' ? setPriv(true) : setPriv(false))}>
+            <select className='selectEvent2' onChange={((e) => e.target.value == 't' ? setPriv("t") : setPriv("f"))}>
                 <option >(select one)</option>
-                <option value='true'>private</option>
-                <option value='false'>public</option>
+                <option value='t'>private</option>
+                <option value='f'>public</option>
             </select>
             {errors.priv && <p className='error'>{errors.priv}</p>}
             <p>Please add an image url for your group below:</p>
