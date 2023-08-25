@@ -30,7 +30,7 @@ function GroupDetails() {
     }, [dispatch1, id, join, unjoin])
 
 
-    console.log(members)
+    console.log(singleGroup)
 
     const handleJoin = () => {
       if (join) {
@@ -97,7 +97,7 @@ function GroupDetails() {
             <div className="textBox">
             <p className='groupText1'> {singleGroup.city}, {singleGroup.state}</p>
             <p className='groupText1'> {singleGroup.Events && singleGroup.Events.length ? singleGroup.Events.length : 0} events · {singleGroup.private ? "Private" : "Public"} </p>
-            <p className='groupText1'>Organized by {singleGroup.Organizer ? singleGroup.Organizer[0].firstName : ""} {singleGroup.Organizer ? singleGroup.Organizer[0].lastName : ""}</p>
+            <p className='groupText1'>Organized by {singleGroup.Organizer ? singleGroup.Organizer.filter((g) => g.id === singleGroup.id)[0].firstName : ""} {singleGroup.Organizer ? singleGroup.Organizer.filter((g) => g.id === singleGroup.id)[0].lastName : ""}</p>
             </div>
             </div>
             {user && user.id && user.id === singleGroup.organizerId ?
