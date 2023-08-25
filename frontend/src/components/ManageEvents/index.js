@@ -89,7 +89,7 @@ function ManageEvents() {
             <div className='divider'></div>
             <div className='events'>
                 <div className='img2'>
-                <img onClick={(() => history.push(`/events/${e.id}`))} className='eventImg' src={e.EventImages[0].url}></img>
+                <img onClick={(() => history.push(`/events/${e.id}`))} className='eventImg' src={e.EventImages[e.EventImages.length - 1].url}></img>
                 </div>
                 <div className='info2'>
                 {e.startDate ?

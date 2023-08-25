@@ -25,14 +25,14 @@ function EventDetails() {
     useEffect(() => {
         dispatch(eventActions.getDetailsById(id))
         if (join) dispatch(eventActions.createAttendance(id))
-        if (unjoin) dispatch(eventActions.deleteAttendance(id, user.id))
+        if (unjoin) dispatch(eventActions.deleteAttendance(id, user?.id))
         dispatch(groupActions.getAllMemberships(singleEvent.groupId))
         dispatch(eventActions.getAllAttendance(id))
     }, [dispatch, id, singleEvent.groupId, join, unjoin])
 
     let members = Object.values(groupMembers)
 
-    console.log(singleEvent)
+    console.log(members.some((m) => m.userId === user.id && m.status === "member"))
 
     const handleJoin = () => {
         if (join) {
@@ -104,8 +104,8 @@ function EventDetails() {
                 </div>
                 <div className='eventDeleteButton'>
                     {  user && user.id && user.id === group.organizerId ? <button onClick={(() => history.push(`/events/${id}/edit`))}className='updateAnEvent'>Update</button> : null}
-                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId && attendances.some((m) => m.userId === user.id && m.status !== "attending") ? <button onClick={handleJoin} className='updateAnEvent2'>{ attendances.some((m) => m.userId === user.id) ? "Pending" : "Attend"} </button> : null}
-                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId && attendances.some((m) => m.status === "attending") ? <button onClick={handleJoin} className='updateAnEvent2'>Unattend</button> : null}
+                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId ? <button onClick={handleJoin} className='updateAnEvent2'>{ attendances.some((m) => m.userId === user.id && m.status === "pending") ? "Pending" : "Attend"} </button> : null}
+                    {  user && user.id && members.some((m) => m.userId === user.id && m.status === "member") && user.id !== group.organizerId && attendances.some((m) => m.userId === user.id && m.status === "attending") ? <button onClick={handleJoin} className='updateAnEvent2'>Unattend</button> : null}
                     { user && user.id && user.id === group.organizerId ? <button className='deleteAnEvent' onClick={(() => setModalContent(<DeleteEventModal eventId={id} groupId={group.id}/>))}>Delete</button> : null}
                 </div>
                 </div>
