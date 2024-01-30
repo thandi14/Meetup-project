@@ -17,7 +17,7 @@ function EventDetails() {
     const { setModalContent } = useModal();
     const { user } = useSelector((state) => state.session)
     let attendances = Object.values(eventAttendances)
-    const [ join, setJoin ] = useState(attendances.some((m) => m.userId === user.id))
+    const [ join, setJoin ] = useState(attendances.some((m) => m?.userId === user?.id))
     const [ unjoin, setUnjoin ] = useState(false)
 
     useEffect(() => {
@@ -30,7 +30,6 @@ function EventDetails() {
 
     let members = Object.values(groupMembers)
 
-    console.log(members.some((m) => m.userId === user.id && m.status === "member"))
 
     const handleJoin = () => {
         if (join) {
